@@ -1,0 +1,152 @@
+/* General */
+@import 'imports/general/reset.css';
+@import 'imports/general/variables.css';
+@import 'imports/general/base_old.css';
+@import 'imports/general/base.css';
+@import 'imports/general/animations.css';
+@import 'imports/general/apps.css';
+
+/* Forms */
+@import 'imports/general/forms.css';
+@import 'imports/forms/button.css';
+@import 'imports/forms/input.css';
+@import 'imports/forms/select.css';
+@import 'imports/forms/popup-list.css';
+@import 'imports/forms/select-avatar.css';
+@import 'imports/forms/switch.css';
+@import 'imports/forms/tags.css';
+@import 'imports/forms/checkbox.css';
+
+/* Typography */
+@import 'imports/general/typography.css';
+
+/* Sidebar */
+@import 'imports/components/sidebar/sidebar.css';
+@import 'imports/components/sidebar/sidebar-header.css';
+@import 'imports/components/sidebar/sidebar-item.scss';
+@import 'imports/components/sidebar/sidebar-flex.css';
+@import 'imports/components/sidebar/toolbar.css';
+@import 'imports/components/sidebar/rooms-list.css';
+
+/* Main */
+@import 'imports/components/setup-wizard.css';
+@import 'imports/components/flex-nav.css';
+@import 'imports/components/header.css';
+@import 'imports/components/memberlist.css';
+@import 'imports/components/main-content.css';
+@import 'imports/components/message-box.css';
+@import 'imports/components/avatar.css';
+@import 'imports/components/badge.css';
+@import 'imports/components/popover.css';
+@import 'imports/components/alerts.css';
+@import 'imports/components/popout.css';
+@import 'imports/components/modal.css';
+@import 'imports/components/tooltip.css';
+@import 'imports/components/slider.css';
+@import 'imports/components/chip.css';
+@import 'imports/components/messages.css';
+@import 'imports/components/contextual-bar.css';
+@import 'imports/components/emojiPicker.css';
+@import 'imports/components/table.css';
+@import 'imports/components/tabs.css';
+
+/* Modal */
+@import 'imports/components/modal/full-modal.css';
+@import 'imports/components/modal/create-channel.css';
+@import 'imports/components/modal/directory.css';
+
+/* User Info */
+@import 'imports/components/userInfo.css';
+
+/* RTL */
+@import 'imports/general/rtl.css';
+
+
+.sidebar{
+    background-color: #6A67CE !important;
+}
+
+.sidebar__toolbar-button.rc-tooltip.rc-tooltip--down.js-button {
+    color: #FFFF;
+}
+
+.rooms-list {
+    background-color: #273347;
+}
+
+.rooms-list__type-text {
+    color: #ffffff;
+    margin-top: 10px;
+}
+
+.sidebar-item__ellipsis {
+    color: #FFF;
+}
+
+.sidebar-light.sidebar--medium {
+    background-color: #273347;
+}
+
+.sidebar-item__room-type {
+    color: #FFFF;
+}
+
+.sidebar-item.sidebar-item--active {
+    background-color: #6A67CE;
+}
+
+.loading-animation{
+    background-color: #FFFF;
+}
+
+.bounce{
+    background-color: #6A67CE;
+}
+
+.sidebar-flex__title {
+    color: #FFF;
+}
+
+:root {
+--status-online: #3BE8B0 !important;
+--status-away: #FD9A00 !important;
+--status-busy: #E63B3B !important;
+--status-invisible: #8897A3 !important;
+--status-invisible-sidebar: #1B2432 !important;
+}
+
+section.rc-old.full-page.color-tertiary-font-color {
+    background: linear-gradient(to bottom,#f7b424 0,#f46569 100%);
+    background-image: linear-gradient(rgb(247, 180, 36) 0px, rgb(244, 101, 105) 100%);
+    background-position-x: initial;
+    background-position-y: initial;
+    background-size: initial;
+    background-repeat-x: initial;
+    background-repeat-y: initial;
+    background-attachment: initial;
+    background-origin: initial;
+    background-clip: initial;
+    background-color: initial;
+}
+
+form#login-card {
+    background-color: #3be8b0;
+}
+
+button.rc-button.rc-button--primary.login {
+    background-color: #ffd200;
+}
+
+.message .mention-link.mention-link-me {
+    background: #4F4DA7 !important;
+    color: #fff;
+    border-radius: 0px;
+}
+
+.rc-button.rc-button--nude.js-close {
+    margin-left: 200px;
+}
+
+.rc-button.rc-button--primary.js-confirm {
+    background-color: #4F4DA7;
+}

@@ -1,0 +1,3 @@
+*:not(i):not(.fa) {
+	font-family: 'Montserrat' !important;
+}
