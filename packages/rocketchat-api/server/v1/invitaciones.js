@@ -21,12 +21,14 @@ import { HTTP } from 'meteor/http'
 import _ from 'underscore';
 //APIS Invitaciones
 
-API.v1.addRoute('invitaciones/:token/:dominio', {
+API.v1.addRoute('invitaciones/:token/:dominio/:idUser', {
 	post() {
 		let token = this.urlParams.token;
-		let dominio = this.urlParams.dominio;
+		let dominio = this.urlParams.dominio.toLowerCase();
+		let idUsuario = this.urlParams.idUser
 		let rooms = Rooms.find({}).fetch();
-		console.log("t " + token + " d " + dominio);
+		const { username } = Users.findOneById(idUsuario)
+
 		let salas = []
 		rooms.forEach(element => {
 			if (element.name != undefined) {
@@ -34,33 +36,24 @@ API.v1.addRoute('invitaciones/:token/:dominio', {
 				let contextoRoom = element.name.substring(element.name.indexOf('-') + 1, element.name.lenght)
 				console.log("Dominio Room: " + dominioRoom + " Contexto Room: " + contextoRoom);
 				if (dominioRoom == dominio) {
-					console.log(element._id);
+					//console.log(element._id);
+					const { _id: rid, t: type } = Rooms.findOneByIdOrName(element._id);
+					console.log(rid)
+					if (!rid || type !== 'p') {
+						throw new Meteor.Error('error-room-not-found', 'The required "roomId" or "roomName" param provided does not match any group');
+					}
 
+					Meteor.runAsUser(idUsuario, () => Meteor.call('addUserToRoom', { rid, username }));
 				}
 			}
 		});
 
-		let id = 'NrNwzwvs5s3xLvCsy';
-		//let username = 'FacundoMiño-facu_s2@hotmail.com'
-		//const { username } = this.getUserFromParams();
-		let idUser = 'rbfnwvxpF5D3GSfsL';
-		//Meteor.call('addUserToRoom', { id, username});
-		const data =  { roomId: 'NrNwzwvs5s3xLvCsy', userId: '8DfKGpZeerFRroADN' }
 		
-		const { _id: rid, t: type } = Rooms.findOneByIdOrName(id);
-		
-		if (!rid || type !== 'p') {
-			throw new Meteor.Error('error-room-not-found', 'The required "roomId" or "roomName" param provided does not match any group');
-		}
-		const {username} = Users.findOneById(idUser)
-		Meteor.runAsUser(idUser, () => Meteor.call('addUserToRoom', { rid, username}));
-		console.log(username)
-		//Meteor.call('addUserToRoom', { rid, username });
 
 		return API.v1.success({
 			status: 'ok',
 			group: this.composeRoomWithLastMessage(Rooms.findOneById(rid, { fields: API.v1.defaultFieldsToExclude }), idUser),
-		
+
 		});
 	},
 });

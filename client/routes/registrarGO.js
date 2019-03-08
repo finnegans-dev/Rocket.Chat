@@ -33,9 +33,9 @@ Template.registrarGO.onCreated(function () {
                                 i++;
                             }
 
-                            let username = res.data.firstName + res.data.lastName + "-" + email ;
+                            let username = res.data.firstName + res.data.lastName + "-" + email;
                             let name = res.data.firstName + " " + res.data.lastName
-                            
+
                             /*
                             let de = 'ÁÃÀÄÂÉËÈÊÍÏÌÎÓÖÒÔÚÜÙÛÑÇáãàäâéëèêíïìîóöòôúüùûñç',
                                 a = 'AAAAAEEEEIIIIOOOOUUUUNCaaaaaeeeeiiiioooouuuunc',
@@ -57,7 +57,10 @@ Template.registrarGO.onCreated(function () {
                                 } else {
                                     console.log("Usuario registrado correctamente")
                                     console.log(data);
-                                    FlowRouter.go(`/loginGO/${token}&email=${email}`);
+                                    HTTP.post(`http://localhost:3000/api/v1/invitaciones/${token}/${dominio}/${data.data.user._id}`, {}, function (err, data) {
+                                        FlowRouter.go(`/loginGO/${token}&email=${email}`);
+                                    })
+
                                 }
                             });
 
