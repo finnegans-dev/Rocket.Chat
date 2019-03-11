@@ -55,14 +55,26 @@ API.v1.addRoute('invitaciones/:token/:dominio/:idUser', {
 			group: this.composeRoomWithLastMessage(Rooms.findOneById(rid, { fields: API.v1.defaultFieldsToExclude }), idUser),
 
 		});
+		
 	},
 });
 
-API.v1.addRoute('administrador/:token', {
+API.v1.addRoute('administrador/:token/:dominio/:idUsuario/:roomId', {
 	post() {
-		let token = this.urlParams.token
+		let token = this.urlParams.token;
+		let dominio = this.urlParams.dominio;
+		let idUsuario = this.urlParams.idUsuario;
+		let roomId = this.urlParams.roomId;
+
+		const { username } = Users.findOneById(idUsuario);
+
+		Meteor.runAsUser(this.userId, () => {
+			Meteor.call('authorization:addUserToRole', 'admin', username, roomId);
+		});
+
 		return API.v1.success({
-			status: 'ok'
+			status: 'ok',
+			role: Roles.findOneByIdOrName('admin', { fields: API.v1.defaultFieldsToExclude })
 		});
 	},
 });
