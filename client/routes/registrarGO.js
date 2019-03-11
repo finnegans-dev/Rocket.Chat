@@ -61,6 +61,7 @@ Template.registrarGO.onCreated(function () {
                                         FlowRouter.go(`/loginGO/${token}&email=${email}`);
                                     })
 
+
                                 }
                             });
 
