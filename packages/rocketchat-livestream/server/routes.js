@@ -2,11 +2,12 @@ import { Meteor } from 'meteor/meteor';
 import { settings } from 'meteor/rocketchat:settings';
 import { Users } from 'meteor/rocketchat:models';
 import { API } from 'meteor/rocketchat:api';
-import google from 'googleapis';
-const { OAuth2 } = google.auth;
+//import google from 'googleapis';
+//const { OAuth2 } = google.auth;
 
 API.v1.addRoute('livestream/oauth', {
 	get: function functionName() {
+		/*
 		const clientAuth = new OAuth2(settings.get('Broadcasting_client_id'), settings.get('Broadcasting_client_secret'), `${ settings.get('Site_Url') }/api/v1/livestream/oauth/callback`.replace(/\/{2}api/g, '/api'));
 		const { userId } = this.queryParams;
 		const url = clientAuth.generateAuthUrl({
@@ -23,11 +24,17 @@ API.v1.addRoute('livestream/oauth', {
 				Location: url,
 			}, body: 'Oauth redirect',
 		};
+		*/
+		return{
+			statusCode: 200
+		}
+	
 	},
 });
 
 API.v1.addRoute('livestream/oauth/callback', {
 	get: function functionName() {
+		/*
 		const { code, state } = this.queryParams;
 
 		const { userId } = JSON.parse(state);
@@ -45,5 +52,9 @@ API.v1.addRoute('livestream/oauth/callback', {
 				'content-type' : 'text/html',
 			}, body: '<script>window.close()</script>',
 		};
+		*/
+		return{
+			statusCode: 200
+		}
 	},
 });

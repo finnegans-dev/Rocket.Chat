@@ -1,7 +1,7 @@
 import { check } from 'meteor/check';
 import { UploadFS } from 'meteor/jalik:ufs';
 import { Random } from 'meteor/random';
-import { Storage } from '@google-cloud/storage';
+//import { Storage } from '@google-cloud/storage';
 
 /**
  * GoogleStorage store

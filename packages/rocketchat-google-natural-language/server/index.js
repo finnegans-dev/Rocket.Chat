@@ -3,7 +3,7 @@ import { Rooms } from 'meteor/rocketchat:models';
 import { settings } from 'meteor/rocketchat:settings';
 import { callbacks } from 'meteor/rocketchat:callbacks';
 import './settings.js';
-import googleLanguage from '@google-cloud/language';
+//import googleLanguage from '@google-cloud/language';
 
 let languageClient;
 

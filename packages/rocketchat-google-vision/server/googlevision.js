@@ -9,8 +9,8 @@ import { FileUpload } from 'meteor/rocketchat:file-upload';
 
 class GoogleVision {
 	constructor() {
-		this.storage = require('@google-cloud/storage');
-		this.vision = require('@google-cloud/vision');
+		//this.storage = require('@google-cloud/storage');
+		//this.vision = require('@google-cloud/vision');
 		this.storageClient = {};
 		this.visionClient = {};
 		this.enabled = settings.get('GoogleVision_Enable');
