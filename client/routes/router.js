@@ -10,13 +10,13 @@ import s from 'underscore.string';
 
 //import '../../packages/test/test.html'
 
-Blaze.registerHelper('pathFor', function(path, kw) {
+Blaze.registerHelper('pathFor', function (path, kw) {
 	return FlowRouter.path(path, kw.hash);
 });
 
 BlazeLayout.setRoot('body');
 
-FlowRouter.subscriptions = function() {
+FlowRouter.subscriptions = function () {
 	Tracker.autorun(() => {
 		if (Meteor.userId()) {
 			this.register('userData', Meteor.subscribe('userData'));
@@ -34,9 +34,9 @@ FlowRouter.route('/', {
 			return FlowRouter.go('home');
 		}
 
-		Tracker.autorun(function(c) {
+		Tracker.autorun(function (c) {
 			if (FlowRouter.subsReady() === true) {
-				Meteor.defer(function() {
+				Meteor.defer(function () {
 					if (Meteor.user() && Meteor.user().defaultRoom) {
 						const room = Meteor.user().defaultRoom.split('/');
 						FlowRouter.go(room[0], { name: room[1] }, FlowRouter.current().queryParams);
@@ -84,7 +84,7 @@ FlowRouter.route('/directory', {
 	action() {
 		BlazeLayout.render('main', { center: 'directory' });
 	},
-	triggersExit: [function() {
+	triggersExit: [function () {
 		$('.main-content').addClass('rc-old');
 	}],
 });
@@ -97,9 +97,9 @@ FlowRouter.route('/account/:group?', {
 			params.group = 'Preferences';
 		}
 		params.group = s.capitalize(params.group, true);
-		BlazeLayout.render('main', { center: `account${ params.group }` });
+		BlazeLayout.render('main', { center: `account${params.group}` });
 	},
-	triggersExit: [function() {
+	triggersExit: [function () {
 		$('.main-content').addClass('rc-old');
 	}],
 });
@@ -185,21 +185,22 @@ Modificaciones Albano
 */
 
 FlowRouter.route('/loginGO/:token&email=:email', {
-//FlowRouter.route('/testAlbano/:email/:dominio/:token', {
-	name: 'testAlbano',
+	//FlowRouter.route('/testAlbano/:email/:dominio/:token', {
+	name: 'LoginGO',
 	action() {
-		BlazeLayout.render('pageTest');
+		BlazeLayout.render('loginGO');
 	},
- 
+
 });
 
 FlowRouter.route('/registrarGO/:token&email=:email', {
 	//FlowRouter.route('/testAlbano/:email/:dominio/:token', {
-		name: 'RegistrarGO',
-		action() {
-			BlazeLayout.render('registrarGO');
-		},
-	 
-	});
-	
+	name: 'RegistrarGO',
+	action() {
+		BlazeLayout.render('registrarGO');
+	},
+
+});
+
+
 

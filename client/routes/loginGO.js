@@ -16,7 +16,7 @@ import { HTTP } from 'meteor/http'
 Modificaciones Albano
 */
 
-Template.pageTest.onCreated(function () {
+Template.loginGO.onCreated(function () {
     //{ "user": "albano", "password": "1234" }
     console.log(FlowRouter.getParam("email"))
     //https://go-test.finneg.com/auth/token/info?access_token={}
