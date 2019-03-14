@@ -59,7 +59,7 @@ Template.chatRoomItem.helpers({
 
 		return roomData;
 	},
-	//Modificaciones Albano
+	//Modificaciones Finneg
 	dominio() {
 		let { name } = this;
 		//let dominioURL = FlowRouter.getParam("dominio");

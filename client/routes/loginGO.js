@@ -1,32 +1,20 @@
 
 import { Meteor } from 'meteor/meteor';
-import { ReactiveVar } from 'meteor/reactive-var';
-import { Tracker } from 'meteor/tracker';
 import { FlowRouter } from 'meteor/kadira:flow-router';
-import { Session } from 'meteor/session';
 import { Template } from 'meteor/templating';
-import { RocketChat, handleError } from 'meteor/rocketchat:lib';
-import { t } from 'meteor/rocketchat:utils';
 import _ from 'underscore';
-import s from 'underscore.string';
-import toastr from 'toastr';
 import { HTTP } from 'meteor/http'
 
 /*
-Modificaciones Albano
+Finneg
 */
 
 Template.loginGO.onCreated(function () {
-    //{ "user": "albano", "password": "1234" }
-    console.log(FlowRouter.getParam("email"))
-    //https://go-test.finneg.com/auth/token/info?access_token={}
     let token = FlowRouter.getParam("token");
-    //let dominio = FlowRouter.getParam("dominio") +"";
-    //let domLowe = dominio.toLowerCase();
     let email = FlowRouter.getParam("email");
-
+    let url = 'https://go-test.finneg.com'
     let urlTokenGo =
-        HTTP.call('GET', `https://go-test.finneg.com/auth/token/info?access_token=${token}`, function (err, res) {
+        HTTP.call('GET', `${url}/auth/token/info?access_token=${token}`, function (err, res) {
             if (err) {
                 console.log("Error de Autenticacion")
             } else { 
@@ -45,7 +33,7 @@ Template.loginGO.onCreated(function () {
                             i++;
                         }
                 
-                    HTTP.call('POST', 'http://localhost:3000/api/v1/login', {
+                    HTTP.call('POST', '/api/v1/login', {
                         data: {
                             "user": email,
                             "password": pass
@@ -54,6 +42,7 @@ Template.loginGO.onCreated(function () {
                         if (error) {
                             //Redirigo a registrar
                             console.log(error);
+                            FlowRouter.go(`/registrarGO/${token}&email=${email}`);
                             //  FlowRouter.go
                         } else {
                             //console.log(response.data);

@@ -136,7 +136,6 @@ Template.loginForm.events({
 				if (RocketChat.settings.get('CROWD_Enable')) {
 					loginMethod = 'loginWithCrowd';
 				}
-				//return Meteor[loginMethod](s.trim('albano'), '1234', function(error) {
 				return Meteor[loginMethod](s.trim(formData.emailOrUsername), formData.pass, function(error) {
 					instance.loading.set(false);
 					if (error != null) {

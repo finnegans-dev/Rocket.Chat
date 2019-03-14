@@ -16,10 +16,6 @@
 
 # Rutas
 
-* Registro
-* http://localhost:3000/registrarGO/{token}&email={email} 
-
-
 * Login
 * http://localhost:3000/loginGO/{token}&email={email} 
 

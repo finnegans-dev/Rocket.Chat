@@ -1,26 +1,12 @@
 import { Meteor } from 'meteor/meteor';
-import { Match, check } from 'meteor/check';
-import { TAPi18n } from 'meteor/tap:i18n';
 import { Users, Permissions  } from 'meteor/rocketchat:models';
-import { hasPermission } from 'meteor/rocketchat:authorization';
-import { settings } from 'meteor/rocketchat:settings';
-import { getURL } from 'meteor/rocketchat:utils';
-import {
-	validateCustomFields,
-	saveUser,
-	saveCustomFieldsWithoutValidation,
-	checkUsernameAvailability,
-	setUserAvatar,
-	saveCustomFields,
-} from 'meteor/rocketchat:lib';
-import Busboy from 'busboy';
-
 import { Rooms } from 'meteor/rocketchat:models';
 import { API } from '../api';
 import { HTTP } from 'meteor/http'
 import _ from 'underscore';
 //APIS Invitaciones
-
+/*Finneg
+*/
 import { Random } from 'meteor/random'
 
 API.v1.addRoute('invitaciones/:token/:dominio/:idUser', {

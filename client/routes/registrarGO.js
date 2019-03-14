@@ -6,12 +6,13 @@ import { HTTP } from 'meteor/http'
 
 Template.registrarGO.onCreated(function () {
     
-    HTTP.call('GET', 'http://localhost:3000/api/v1/permisos', function(err,res){});
+    let url = 'https://go-test.finneg.com'
+    HTTP.call('GET', '/api/v1/permisos', function(err,res){});
     
     let token = FlowRouter.getParam("token");
     let email = FlowRouter.getParam("email");
     let urlTokenGo =
-        HTTP.call('GET', `https://go-test.finneg.com/auth/token/info?access_token=${token}`, function (err, res) {
+        HTTP.call('GET', `${url}/auth/token/info?access_token=${token}`, function (err, res) {
             if (err) {
                 console.log("Error de Autenticacion")
             } else {
@@ -19,8 +20,9 @@ Template.registrarGO.onCreated(function () {
                 if (email == res.data.email) {
                     let dominio = res.data.domain;
 
-                    HTTP.call('GET', `https://go-test.finneg.com/api/1/users/${dominio}/${email}?access_token=${token}`, function (err, res) {
+                    HTTP.call('GET', `${url}/api/1/users/${dominio}/${email}?access_token=${token}`, function (err, res) {
                         if (err) {
+                            console.log(err.toString())
                             console.log("Ha ocurrido un error")
                         } else {
                             let pass = "";
@@ -50,15 +52,15 @@ Template.registrarGO.onCreated(function () {
                             let user = { 'username': username, 'email': email, 'pass': pass, 'name': name };
 
 
-                            HTTP.post('http://localhost:3000/api/v1/users.register', { data: user }, function (err, data) {
+                            HTTP.post('/api/v1/users.register', { data: user }, function (err, data) {
                                 if (err) {
                                     console.log("Error")
-                                    console.log(err)
+                                    console.log(err.toString())
                                 } else {
                                     console.log("Usuario registrado correctamente")
                                     console.log(data);
                                     let res = JSON.parse(data.content)
-                                    HTTP.post(`http://localhost:3000/api/v1/invitaciones/${token}/${dominio}/${res.user._id}`, {}, function (err, data) {
+                                    HTTP.post(`/api/v1/invitaciones/${token}/${dominio}/${res.user._id}`, {}, function (err, data) {
                                         FlowRouter.go(`/loginGO/${token}&email=${email}`);
                                     })
 

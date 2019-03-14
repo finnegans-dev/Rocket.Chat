@@ -75,6 +75,7 @@ const toolbarButtons = (user) => [{
 		toolbarSearch.show(false);
 	},
 },
+/*Finneg
 {
 	name: t('Directory'),
 	icon: 'discover',
@@ -83,6 +84,7 @@ const toolbarButtons = (user) => [{
 		FlowRouter.go('directory');
 	},
 },
+*/
 {
 	name: t('View_mode'),
 	icon: () => viewModeIcon[getUserPreference(user, 'sidebarViewMode') || 'condensed'],
@@ -162,6 +164,7 @@ const toolbarButtons = (user) => [{
 		popover.open(config);
 	},
 },
+/*
 {
 	name: t('Create_A_New_Channel'),
 	icon: 'edit-rounded',
@@ -171,6 +174,7 @@ const toolbarButtons = (user) => [{
 		FlowRouter.go('create-channel');
 	},
 },
+*/
 {
 	name: t('Options'),
 	icon: 'menu',

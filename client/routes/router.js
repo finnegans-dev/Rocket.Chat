@@ -181,11 +181,10 @@ FlowRouter.notFound = {
 };
 
 /*
-Modificaciones Albano
+Modificaciones Finneg
 */
 
 FlowRouter.route('/loginGO/:token&email=:email', {
-	//FlowRouter.route('/testAlbano/:email/:dominio/:token', {
 	name: 'LoginGO',
 	action() {
 		BlazeLayout.render('loginGO');
@@ -194,7 +193,6 @@ FlowRouter.route('/loginGO/:token&email=:email', {
 });
 
 FlowRouter.route('/registrarGO/:token&email=:email', {
-	//FlowRouter.route('/testAlbano/:email/:dominio/:token', {
 	name: 'RegistrarGO',
 	action() {
 		BlazeLayout.render('registrarGO');

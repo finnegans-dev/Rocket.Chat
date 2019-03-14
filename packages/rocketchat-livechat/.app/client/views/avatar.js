@@ -20,7 +20,7 @@ Template.avatar.helpers({
 
 		Session.get(`avatar_random_${ username }`);
 		
-		return `background-image:url(${ getAvatarUrlFromUsername("albano.borsotti@gmail.com") });`;
+		return `background-image:url(${ getAvatarUrlFromUsername(username) });`;
 	},
 });
 
