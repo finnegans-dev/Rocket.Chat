@@ -16,7 +16,19 @@
 
 # Rutas
 
-* Login
-* http://localhost:3000/loginGO/{token}&email={email} 
+* http://localhost:3000/chat/loginGO/{token}&email={email} 
+
+# Docker
+
+* Build
+meteor build --directory /tmp/rocketchat-build
+
+* Imagen de docker
+cp Dockerfile /tmp/rocketchat-build
+cd /tmp/rocketchat-build
+docker build -t rocketchat:custombuild .
+
+* Run
+docker run --name rocketchat-custombuild -p 3000:3000 --env MONGO_URL={URL Mongo} --env ROOT_URL={URL} -d rocketchat:custombuild
 
 
