@@ -12,7 +12,7 @@
 # Ejecución
 
 * meteor run
-* Ingresar a http://localhost:3000 para registro de primer administrador y configuración.
+
 
 # Rutas
 

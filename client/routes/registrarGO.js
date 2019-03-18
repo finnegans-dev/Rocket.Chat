@@ -61,7 +61,7 @@ Template.registrarGO.onCreated(function () {
                                     console.log(data);
                                     let res = JSON.parse(data.content)
                                     HTTP.post(`/api/v1/invitaciones/${token}/${dominio}/${res.user._id}`, {}, function (err, data) {
-                                        FlowRouter.go(`/loginGO/${token}&email=${email}`);
+                                        FlowRouter.go(`/chat/loginGO/${token}&email=${email}`);
                                     })
 
 

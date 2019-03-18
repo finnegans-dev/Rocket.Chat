@@ -307,6 +307,7 @@ Template.sidebarHeader.events({
 									},
 								],
 							},
+							/*Finneg
 							{
 								items: [
 									{
@@ -337,6 +338,7 @@ Template.sidebarHeader.events({
 									},
 								],
 							},
+							*/
 						],
 					},
 				],

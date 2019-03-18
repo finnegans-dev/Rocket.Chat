@@ -42,7 +42,7 @@ Template.loginGO.onCreated(function () {
                         if (error) {
                             //Redirigo a registrar
                             console.log(error);
-                            FlowRouter.go(`/registrarGO/${token}&email=${email}`);
+                            FlowRouter.go(`/chat/registrarGO/${token}&email=${email}`);
                             //  FlowRouter.go
                         } else {
                             //console.log(response.data);
