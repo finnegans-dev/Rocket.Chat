@@ -1,5 +1,5 @@
-#FROM rocketchat/base:8
-FROM alpine
+FROM rocketchat/base:8
+#FROM alpine
 
 ARG SRC_PATH
 
