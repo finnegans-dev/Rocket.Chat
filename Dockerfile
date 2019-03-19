@@ -13,11 +13,12 @@ ENV PORT=3000 \
     MONGO_URL=mongodb://mongo:27017/rocketchat \
     Accounts_AvatarStorePath=/app/uploads
 
+COPY ${SRC_PATH} /app/bundle
+
 RUN set -x \
   && cd /app/bundle/programs/server/ \
   && npm install 
 
-COPY ${SRC_PATH} /app/bundle
 
 COPY ./traefik /app/bundle
 
