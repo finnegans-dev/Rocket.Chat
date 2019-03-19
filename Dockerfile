@@ -1,4 +1,5 @@
-FROM rocketchat/base:8
+#FROM rocketchat/base:8
+FROM alpine
 
 ADD . /app
 

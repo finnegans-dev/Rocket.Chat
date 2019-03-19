@@ -13,6 +13,13 @@ Template.loginGO.onCreated(function () {
     let token = FlowRouter.getParam("token");
     let email = FlowRouter.getParam("email");
     let url = 'https://go-test.finneg.com'
+
+    Meteor.call('getEnv', "ROOT_URL", function (err, results) {
+        if(results){
+            url = results;
+        }
+    });
+
     let urlTokenGo =
         HTTP.call('GET', `${url}/auth/token/info?access_token=${token}`, function (err, res) {
             if (err) {

@@ -5,10 +5,18 @@ import { HTTP } from 'meteor/http'
 
 
 Template.registrarGO.onCreated(function () {
-    
+
     let url = 'https://go-test.finneg.com'
-    HTTP.call('GET', '/api/v1/permisos', function(err,res){});
-    
+
+    Meteor.call('getEnv', "ROOT_URL", function (err, results) {
+        if(results){
+            url = results;
+        }
+    });
+
+
+    HTTP.call('GET', '/api/v1/permisos', function (err, res) { });
+
     let token = FlowRouter.getParam("token");
     let email = FlowRouter.getParam("email");
     let urlTokenGo =
