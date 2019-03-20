@@ -3,8 +3,8 @@ import { roleNameUsers, roleNameSubscriptions, roleScopeUsers, roleScopeSubscrip
 import { username, email, adminUsername, adminPassword } from '../data/user.js';
 import supertest from 'supertest';
 export const request = supertest('http://localhost:3000');
-const prefix = '/api/v1/';
-
+const prefix = 'api/v1/';
+ 
 export const apiUsername = `api${ username }`;
 export const apiEmail = `api${ email }`;
 export const apiPublicChannelName = `api${ publicChannelName }`;

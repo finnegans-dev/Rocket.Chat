@@ -147,7 +147,7 @@ class APIClass extends Restivus {
 		}
 		const nameRoute = (route) => {
 			const routeActions = Object.keys(endpoints);
-			return routeActions.map((endpoint) => `/api/${ apiVersion }/${ route }${ endpoint }`);
+			return routeActions.map((endpoint) => `chat/api/${ apiVersion }/${ route }${ endpoint }`);
 		};
 		const addRateLimitRuleToEveryRoute = (routes) => {
 			routes.forEach((route) => {
