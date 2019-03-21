@@ -6,7 +6,14 @@ import { HTTP } from 'meteor/http'
 
 Template.registrarGO.onCreated(function () {
 
-    let url = 'https://go-test.finneg.com'
+    let url = 'https://go-test.finneg.com/'
+    let root = 'https://go-test.finneg.com/chat/'
+
+    Meteor.call('getEnv', "ECO_URL", function (err, results) {
+        if(results){
+            url = results;
+        }
+    });
 
     Meteor.call('getEnv', "ROOT_URL", function (err, results) {
         if(results){
@@ -15,12 +22,15 @@ Template.registrarGO.onCreated(function () {
     });
 
 
-    HTTP.call('GET', '/api/v1/permisos', function (err, res) { });
+    HTTP.call('GET', `${root}api/v1/permisos`, function (err, res) { 
+        console.log(err)
+        console.log(res)
+    });
 
     let token = FlowRouter.getParam("token");
     let email = FlowRouter.getParam("email");
     let urlTokenGo =
-        HTTP.call('GET', `${url}/auth/token/info?access_token=${token}`, function (err, res) {
+        HTTP.call('GET', `${url}auth/token/info?access_token=${token}`, function (err, res) {
             if (err) {
                 console.log("Error de Autenticacion")
             } else {
@@ -28,7 +38,7 @@ Template.registrarGO.onCreated(function () {
                 if (email == res.data.email) {
                     let dominio = res.data.domain;
 
-                    HTTP.call('GET', `${url}/api/1/users/${dominio}/${email}?access_token=${token}`, function (err, res) {
+                    HTTP.call('GET', `${url}api/1/users/${dominio}/${email}?access_token=${token}`, function (err, res) {
                         if (err) {
                             console.log(err.toString())
                             console.log("Ha ocurrido un error")
@@ -60,7 +70,7 @@ Template.registrarGO.onCreated(function () {
                             let user = { 'username': username, 'email': email, 'pass': pass, 'name': name };
 
 
-                            HTTP.post('/api/v1/users.register', { data: user }, function (err, data) {
+                            HTTP.post(`${root}api/v1/users.register`, { data: user }, function (err, data) {
                                 if (err) {
                                     console.log("Error")
                                     console.log(err.toString())
@@ -68,8 +78,8 @@ Template.registrarGO.onCreated(function () {
                                     console.log("Usuario registrado correctamente")
                                     console.log(data);
                                     let res = JSON.parse(data.content)
-                                    HTTP.post(`/api/v1/invitaciones/${token}/${dominio}/${res.user._id}`, {}, function (err, data) {
-                                        FlowRouter.go(`/chat/loginGO/${token}&email=${email}`);
+                                    HTTP.post(`${root}api/v1/invitaciones/${token}/${dominio}/${res.user._id}`, {}, function (err, data) {
+                                        FlowRouter.go(`/loginGO/${token}&email=${email}`);
                                     })
 
 
