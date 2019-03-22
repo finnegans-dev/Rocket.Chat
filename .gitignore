@@ -78,3 +78,4 @@ packages/rocketchat-i18n/i18n/livechat.*
 traefik/crt/
 
 updateECSChat-TEST\.sh
+updateECSChat-PRODUCTION\.sh

@@ -15,21 +15,15 @@ Template.loginGO.onCreated(function () {
     let url = 'https://go-test.finneg.com/'
     let root = 'https://go-test.finneg.com/chat/'
 
-    Meteor.call('getEnv', "ECO_URL", function (err, results) {
-        if (results) {
-            url = results;
-        }
-    });
-
-    Meteor.call('getEnv', "ROOT_URL", function (err, results) {
-        if (results) {
-            url = results;
-        }
-    });
-
+    //let root = 'http://localhost:3000'
+    console.log(__meteor_runtime_config__.ROOT_URL)
+    console.log(__meteor_runtime_config__)
+    //let url = 'https://go.finneg.com/'
+    //let root = 'https://go.finneg.com/chat/'
 
     HTTP.call('GET', `${url}auth/token/info?access_token=${token}`, function (err, res) {
         if (err) {
+            console.log(err)
             console.log("Error de Autenticacion")
         } else {
             console.log(res);
@@ -64,6 +58,7 @@ Template.loginGO.onCreated(function () {
                         console.log(data)
                         let token = data.data.authToken;
                         window.localStorage.setItem("Meteor.loginToken:/:/chat", token);
+                        //window.localStorage.setItem("Meteor.loginToken", token);
                         window.localStorage.setItem("dominio", dominioLow);
                         FlowRouter.go(`/home`);
                     }
@@ -74,7 +69,22 @@ Template.loginGO.onCreated(function () {
         }
     });
 
-
-
 });
-
+/*
+Meteor.methods({
+    getEnv: function(node){
+         return process.env[node];;
+    },
+    getMongoUrlEnv: function(){
+        var mongoURL = process.env.MONGO_URL;
+        return mongoURL;
+   },
+   getEnvironment: function(){
+    if(process.env.ROOT_URL == "http://localhost:3000"){
+        return "development";
+    }else{
+        return "staging";
+    }
+  }
+ });
+*/

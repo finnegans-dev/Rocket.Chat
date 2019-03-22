@@ -9,19 +9,10 @@ Template.registrarGO.onCreated(function () {
     let url = 'https://go-test.finneg.com/'
     let root = 'https://go-test.finneg.com/chat/'
 
-    Meteor.call('getEnv', "ECO_URL", function (err, results) {
-        if(results){
-            url = results;
-        }
-    });
+    //let url = 'https://go.finneg.com/'
+    //let root = 'https://go.finneg.com/chat/'
 
-    Meteor.call('getEnv', "ROOT_URL", function (err, results) {
-        if(results){
-            url = results;
-        }
-    });
-
-
+   
     HTTP.call('GET', `${root}api/v1/permisos`, function (err, res) { 
         console.log(err)
         console.log(res)

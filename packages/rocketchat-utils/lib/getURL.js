@@ -17,6 +17,6 @@ export const getURL = (path, { cdn = true, full = false } = {}) => {
 	} else {
 		basePath = pathPrefix;
 	}
-
-	return `${ basePath }/${ finalPath }`;
+	return __meteor_runtime_config__.ROOT_URL;
+	//return `${ basePath }/${ finalPath }`;
 };
