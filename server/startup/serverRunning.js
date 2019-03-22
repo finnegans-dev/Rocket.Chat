@@ -14,6 +14,8 @@ Meteor.startup(function() {
 		}
 	}
 
+
+
 	const desiredNodeVersion = semver.clean(fs.readFileSync(path.join(process.cwd(), '../../.node_version.txt')).toString());
 	const desiredNodeVersionMajor = String(semver.parse(desiredNodeVersion).major);
 
@@ -26,6 +28,15 @@ Meteor.startup(function() {
 			`           Site URL: ${ RocketChat.settings.get('Site_Url') }`,
 			`   ReplicaSet OpLog: ${ oplogState }`,
 		];
+
+		//console.log(RocketChat.settings.Site_Url())
+
+		if(__meteor_runtime_config__ !== undefined && __meteor_runtime_config__ !==null){
+			console.log("ACA")
+			__meteor_runtime_config__.ECO_URL = "https://go.finneg.com";
+			console.log(process.env.ECO_URL)
+			//console.log(__meteor_runtime_config__.ECO_URL)
+		}
 
 		if (RocketChat.Info.commit && RocketChat.Info.commit.hash) {
 			msg.push(`        Commit Hash: ${ RocketChat.Info.commit.hash.substr(0, 10) }`);

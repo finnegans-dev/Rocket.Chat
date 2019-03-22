@@ -16,11 +16,16 @@ Template.loginGO.onCreated(function () {
     let root = 'https://go-test.finneg.com/chat/'
 
     //let root = 'http://localhost:3000'
-    console.log(__meteor_runtime_config__.ROOT_URL)
-    console.log(__meteor_runtime_config__)
+    Meteor.setTimeout(function(){
+        console.log(__meteor_runtime_config__.ROOT_URL)
+        console.log(__meteor_runtime_config__.ECO_URL)
+        console.log(process.env.ECO_URL)
+    },1000)
+
     //let url = 'https://go.finneg.com/'
     //let root = 'https://go.finneg.com/chat/'
 
+    /*
     HTTP.call('GET', `${url}auth/token/info?access_token=${token}`, function (err, res) {
         if (err) {
             console.log(err)
@@ -68,6 +73,7 @@ Template.loginGO.onCreated(function () {
 
         }
     });
+    */
 
 });
 /*
