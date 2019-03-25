@@ -8,6 +8,9 @@ import { settings } from 'meteor/rocketchat:settings';
 import { roomTypes, getUserPreference } from 'meteor/rocketchat:utils';
 import { Users } from 'meteor/rocketchat:models';
 
+
+import { HTTP } from 'meteor/http'
+
 Template.sideNav.helpers({
 	flexTemplate() {
 		return SideNav.getFlex().template;
@@ -22,7 +25,6 @@ Template.sideNav.helpers({
 	},
 
 	roomType() {
-		
 		return roomTypes.getTypes().map((roomType) => ({
 			template: roomType.customTemplate || 'roomList',
 			data: {
@@ -45,6 +47,36 @@ Template.sideNav.helpers({
 
 	sidebarHideAvatar() {
 		return getUserPreference(Meteor.userId(), 'sidebarHideAvatar');
+	},
+
+	/*Finneg
+	*/
+	usuarios(){
+		let name = "dpcomercializadoratest-contexto1"
+		let token = window.localStorage.getItem("Meteor.loginToken")
+		let userId = window.localStorage.getItem("Meteor.userId")
+		let usersArray = [];
+		HTTP.get(`/api/v1/groups.members?roomName=${name}`,{
+			headers:{
+				"X-Auth-Token": token,
+				"X-User-Id": userId
+			}
+		}, function(err,res){
+			if(err){
+				console.log(err)
+			}else{
+				if(res){
+					console.log(res.data.members)
+					usersArray = res.data.members;
+					res.data.members.forEach(element => {
+						usersArray.push(element.username)
+					});
+				}
+				
+			}
+			
+		});
+		return usersArray;
 	},
 
 });
@@ -88,8 +120,7 @@ Template.sideNav.onRendered(function() {
 	lazyloadtick();
 	const first_channel_login = settings.get('First_Channel_After_Login');
 	const room = roomTypes.findRoom('c', first_channel_login, Meteor.userId());
-	console.log("Room")
-	console.log(room);
+
 	if (room !== undefined && room._id !== '') {
 		FlowRouter.go(`/channel/${ first_channel_login }`);
 	}

@@ -31,10 +31,13 @@ Meteor.startup(function() {
 
 		//console.log(RocketChat.settings.Site_Url())
 
+		/*Finneg
+		*/
+
 		if(__meteor_runtime_config__ !== undefined && __meteor_runtime_config__ !==null){
-			console.log("ACA")
-			__meteor_runtime_config__.ECO_URL = "https://go.finneg.com";
-			console.log(process.env.ECO_URL)
+			
+			__meteor_runtime_config__.ECO_URL = process.env.ECO_URL;
+			//console.log(process.env.ECO_URL)
 			//console.log(__meteor_runtime_config__.ECO_URL)
 		}
 

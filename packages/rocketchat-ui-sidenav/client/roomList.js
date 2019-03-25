@@ -18,7 +18,7 @@ Template.roomList.helpers({
 		let dominio = "hola";
 
 		if (this.anonymous) {
-			return Rooms.find({ t: 'c' }, { sort: { name: 1 } });
+			//return Rooms.find({ t: 'c' }, { sort: { name: 1 } });
 		}
 		
 		const user = Users.findOne(Meteor.userId(), {
@@ -58,14 +58,17 @@ Template.roomList.helpers({
 			let types = [this.identifier];
 
 			if (this.identifier === 'merged') {
-				types = ['c', 'p', 'd'];
+				//types = ['c', 'p', 'd'];
+				types = ['p', 'd'];
 			}
 
 			if (this.identifier === 'unread' || this.identifier === 'tokens') {
-				types = ['c', 'p'];
+				types = ['p'];
+				//types = ['c', 'p'];
 			}
 
-			if (['c', 'p'].includes(this.identifier)) {
+			//if (['c', 'p'].includes(this.identifier)) {
+			if (['p'].includes(this.identifier)) {
 				query.tokens = { $exists: false };
 			} else if (this.identifier === 'tokens' && user && user.services && user.services.tokenpass) {
 				query.tokens = { $exists: true };
@@ -96,13 +99,19 @@ Template.roomList.helpers({
 		or is favorite and has one room
 		or is unread and has one room
 		*/
-
-		return !['unread', 'f'].includes(group.identifier) || (rooms.length || (rooms.count && rooms.count()));
+		//return !['unread', 'f'].includes(group.identifier) || (rooms.length || (rooms.count && rooms.count()));
+		console.log(group)
+		return !['f', 'c'].includes(group.identifier);
 	},
 
 	roomType(room) {
-		
+		/*
 		if (room.header || room.identifier) {
+			console.log(room)
+			return `type-${ room.header || room.identifier }`;
+		}*/
+		if (room.identifier!="c") {
+			console.log(room)
 			return `type-${ room.header || room.identifier }`;
 		}
 	},
@@ -116,6 +125,10 @@ Template.roomList.helpers({
 		return getUserPreference(Meteor.userId(), 'roomCounterSidebar');
 	},
 
+	showRoom(){
+		console.log(room)
+		return true;
+	}
 
 });
 

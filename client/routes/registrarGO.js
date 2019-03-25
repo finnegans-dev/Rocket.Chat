@@ -5,12 +5,14 @@ import { HTTP } from 'meteor/http'
 
 
 Template.registrarGO.onCreated(function () {
-
+    let token = FlowRouter.getParam("token");
+    let email = FlowRouter.getParam("email");
     let url = 'https://go-test.finneg.com/'
     let root = 'https://go-test.finneg.com/chat/'
 
     //let url = 'https://go.finneg.com/'
     //let root = 'https://go.finneg.com/chat/'
+
 
    
     HTTP.call('GET', `${root}api/v1/permisos`, function (err, res) { 
@@ -18,9 +20,10 @@ Template.registrarGO.onCreated(function () {
         console.log(res)
     });
 
-    let token = FlowRouter.getParam("token");
-    let email = FlowRouter.getParam("email");
-    let urlTokenGo =
+    Meteor.setTimeout(function(){
+        url = __meteor_runtime_config__.ECO_URL;
+        root = __meteor_runtime_config__.ROOT_URL;
+
         HTTP.call('GET', `${url}auth/token/info?access_token=${token}`, function (err, res) {
             if (err) {
                 console.log("Error de Autenticacion")
@@ -84,6 +87,10 @@ Template.registrarGO.onCreated(function () {
                 }
             }
         });
+
+    },200);
+
+    
 
 });
 

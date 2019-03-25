@@ -7,6 +7,9 @@ import { roomTypes } from 'meteor/rocketchat:utils';
 import { Rooms } from 'meteor/rocketchat:models';
 import { callbacks } from 'meteor/rocketchat:callbacks';
 
+
+import { RoomManager } from 'meteor/rocketchat:ui-utils';
+
 Template.chatRoomItem.helpers({
 	roomData() {
 		let { name } = this;
@@ -60,11 +63,13 @@ Template.chatRoomItem.helpers({
 		return roomData;
 	},
 	//Modificaciones Finneg
+	//Finneg
 	dominio() {
 		let { name } = this;
-		//let dominioURL = FlowRouter.getParam("dominio");
+		//const onlineUsers = RoomManager.onlineUsers.get();
+		//console.log(onlineUsers)
+
 		let dominioURL = window.localStorage.getItem('dominio');
-		//console.log("Dominio URL " + dominioURL);
 		let dominio = name.substring(0, name.indexOf('-'));
 		//console.log("Dominio " + dominio)
 		return dominio == dominioURL.toLowerCase() || dominio == ""; 

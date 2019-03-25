@@ -48,10 +48,14 @@
 				<button class="rc-button rc-button--secondary show-more-users">{{_ "Show_more"}}</button>
 			{{/if}}
 		</div>
-
+		
+		<!-- Finneg
+			Agregar usuarios
+					-->
 		{{#if canAddUser}}
 			<button class="rc-button rc-button--primary js-add">{{> icon block="rc-input__icon-svg" icon="plus"}}{{_ "Invite_Users"}}</button>
 		{{/if}}
+
 		{{/with}}
 	{{/if}}
 	<div class="rc-user-info-container flex-nav animated{{#unless showUserInfo}} animated-hidden{{/unless}}">

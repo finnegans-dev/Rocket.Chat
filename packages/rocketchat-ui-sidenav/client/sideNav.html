@@ -17,12 +17,18 @@
 			{{> Template.dynamic template=flexTemplate data=flexData }}
 		</div>
 		{{else}}
-		<div class="rooms-list" aria-label="{{_ "Channels"}}" role="region">
+		<div class="rooms-list" aria-label="{{_ "Channels "}}" role="region">
 			<div class="wrapper">
 				{{> roomList anonymous=true label="Channels" }}
 			</div>
 		</div>
 		{{/if}}
+
+		<div class="lista-usuarios">
+			{{#each usuarios}}
+			<li>{{this}}</li>
+			{{/each}}
+		</div>
 
 		<!--
 			<footer class="sidebar__footer">{{{footer}}}</footer>

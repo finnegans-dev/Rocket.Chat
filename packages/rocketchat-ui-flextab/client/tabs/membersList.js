@@ -114,7 +114,8 @@ Template.membersList.helpers({
 	canAddUser() {
 		const roomData = Session.get(`roomData${ this._id }`);
 		if (!roomData) { return ''; }
-		return (() => RocketChat.roomTypes.roomTypes[roomData.t].canAddUser(roomData))();
+		//return (() => RocketChat.roomTypes.roomTypes[roomData.t].canAddUser(roomData))();
+		return false;
 	},
 
 	autocompleteSettingsAddUser() {
