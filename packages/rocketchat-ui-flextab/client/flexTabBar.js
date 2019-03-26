@@ -240,9 +240,10 @@ Template.RoomsActionTab.helpers({
 		const buttons = RocketChat.TabBar.getButtons()
 			.filter((button) => filterButtons(button, Template.instance().anonymous, Template.instance().data.rid));
 		/*Finneg
+		|| element.id == "members-list"
 		*/
 		buttons.forEach((element, i) => {
-			if (element.id == "channel-settings" || element.id == "members-list") {
+			if (element.id == "channel-settings") {
 				buttons.splice(i, 1);
 			}
 		});

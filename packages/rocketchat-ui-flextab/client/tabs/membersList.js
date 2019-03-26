@@ -287,6 +287,8 @@ Template.membersList.onCreated(function() {
 
 	this.tabBar = Template.instance().tabBar;
 
+	//this.showAllUsers.set(true);
+
 	Tracker.autorun(() => {
 		if (this.data.rid == null) { return; }
 		this.loading.set(true);

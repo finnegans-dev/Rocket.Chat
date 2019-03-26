@@ -51,33 +51,13 @@ Template.sideNav.helpers({
 
 	/*Finneg
 	*/
-	usuarios(){
-		let name = "dpcomercializadoratest-contexto1"
-		let token = window.localStorage.getItem("Meteor.loginToken")
-		let userId = window.localStorage.getItem("Meteor.userId")
-		let usersArray = [];
-		HTTP.get(`/api/v1/groups.members?roomName=${name}`,{
-			headers:{
-				"X-Auth-Token": token,
-				"X-User-Id": userId
-			}
-		}, function(err,res){
-			if(err){
-				console.log(err)
-			}else{
-				if(res){
-					console.log(res.data.members)
-					usersArray = res.data.members;
-					res.data.members.forEach(element => {
-						usersArray.push(element.username)
-					});
-				}
-				
-			}
-			
-		});
-		return usersArray;
-	},
+	usuarios: function () {
+		/*
+		const instance = Template.instance();
+		return instance.usersArray;
+		*/
+		return Template.instance().state.get('usuarios')
+	}
 
 });
 
@@ -112,24 +92,40 @@ Template.sideNav.events({
 			}
 		}, 0);
 	},
+	'click .button-usuarios'() {
+		console.log("BOTON")
+		console.log(this.usersArray)
+
+	},
 });
 
-Template.sideNav.onRendered(function() {
+Template.sideNav.onRendered(function () {
 	SideNav.init();
 	menu.init();
 	lazyloadtick();
+
 	const first_channel_login = settings.get('First_Channel_After_Login');
 	const room = roomTypes.findRoom('c', first_channel_login, Meteor.userId());
 
 	if (room !== undefined && room._id !== '') {
-		FlowRouter.go(`/channel/${ first_channel_login }`);
+		FlowRouter.go(`/channel/${first_channel_login}`);
 	}
 
 	return Meteor.defer(() => menu.updateUnreadBars());
 });
 
-Template.sideNav.onCreated(function() {
+Template.sideNav.onCreated(function () {
 	this.groupedByType = new ReactiveVar(false);
+
+	var instance = this;
+	let name = "dpcomercializadoratest-contexto1"
+	let token = window.localStorage.getItem("Meteor.loginToken")
+	let userId = window.localStorage.getItem("Meteor.userId")
+	this.usersArray = ["TEST", "TEST2"];
+
+	//const instance = this
+	instance.state = new ReactiveDict()
+	instance.state.set('usuarios', [])
 
 	this.autorun(() => {
 		const user = Users.findOne(Meteor.userId(), {
@@ -137,6 +133,25 @@ Template.sideNav.onCreated(function() {
 				'settings.preferences.sidebarGroupByType': 1,
 			},
 		});
+		
+		HTTP.get(`/api/v1/groups.members?roomName=${name}`, {
+			headers: {
+				"X-Auth-Token": token,
+				"X-User-Id": userId
+			}
+		}, function (err, res) {
+			if (err) {
+				console.log(err)
+			} else {
+				if (res) {
+					console.log(res.data.members)
+					//usersArray = res.data.members;
+					instance.state.set('usuarios', res.data.members);
+				}
+				
+			}
+		});
+
 		const userPref = getUserPreference(user, 'sidebarGroupByType');
 		this.groupedByType.set(userPref ? userPref : settings.get('UI_Group_Channels_By_Type'));
 	});
