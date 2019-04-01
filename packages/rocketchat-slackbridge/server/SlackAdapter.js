@@ -146,7 +146,7 @@ export default class SlackAdapter {
 		*	event_ts: [ts.milli]
 		* }
 		 **/
-		this.rtm.on('channel_created', Meteor.bindEnvironment(() => {}));
+		this.rtm.on('channel_created', Meteor.bindEnvironment(() => { }));
 
 		/**
 		 * Event fired when the bot joins a public channel
@@ -179,7 +179,7 @@ export default class SlackAdapter {
 		* 	}
 		* }
 		 **/
-		this.rtm.on('channel_joined', Meteor.bindEnvironment(() => {}));
+		this.rtm.on('channel_joined', Meteor.bindEnvironment(() => { }));
 
 		/**
 		 * Event fired when the bot leaves (or is removed from) a public channel
@@ -209,7 +209,7 @@ export default class SlackAdapter {
 		*	event_ts: [ts.milli]
 		* }
 		 **/
-		this.rtm.on('channel_deleted', Meteor.bindEnvironment(() => {}));
+		this.rtm.on('channel_deleted', Meteor.bindEnvironment(() => { }));
 
 		/**
 		 * Event fired when the channel has its name changed
@@ -224,7 +224,7 @@ export default class SlackAdapter {
 		*	event_ts: [ts.milli]
 		* }
 		 **/
-		this.rtm.on('channel_rename', Meteor.bindEnvironment(() => {}));
+		this.rtm.on('channel_rename', Meteor.bindEnvironment(() => { }));
 
 		/**
 		 * Event fired when the bot joins a private channel
@@ -257,7 +257,7 @@ export default class SlackAdapter {
 		* 	}
 		* }
 		 **/
-		this.rtm.on('group_joined', Meteor.bindEnvironment(() => {}));
+		this.rtm.on('group_joined', Meteor.bindEnvironment(() => { }));
 
 		/**
 		 * Event fired when the bot leaves (or is removed from) a private channel
@@ -266,7 +266,7 @@ export default class SlackAdapter {
 		* 	channel: [channel_id]
 		* }
 		 **/
-		this.rtm.on('group_left', Meteor.bindEnvironment(() => {}));
+		this.rtm.on('group_left', Meteor.bindEnvironment(() => { }));
 
 		/**
 		 * Event fired when the private channel has its name changed
@@ -281,7 +281,7 @@ export default class SlackAdapter {
 		*	event_ts: [ts.milli]
 		* }
 		 **/
-		this.rtm.on('group_rename', Meteor.bindEnvironment(() => {}));
+		this.rtm.on('group_rename', Meteor.bindEnvironment(() => { }));
 
 		/**
 		 * Event fired when a new user joins the team
@@ -324,7 +324,7 @@ export default class SlackAdapter {
 		* 	cache_ts: [ts]
 		* }
 		 **/
-		this.rtm.on('team_join', Meteor.bindEnvironment(() => {}));
+		this.rtm.on('team_join', Meteor.bindEnvironment(() => { }));
 	}
 
 	/*
@@ -332,7 +332,7 @@ export default class SlackAdapter {
 	 */
 	onReactionRemoved(slackReactionMsg) {
 		if (slackReactionMsg) {
-			if (! this.slackBridge.isReactionsEnabled) {
+			if (!this.slackBridge.isReactionsEnabled) {
 				return;
 			}
 			const rocketUser = this.rocket.getUser(slackReactionMsg.user);
@@ -346,7 +346,7 @@ export default class SlackAdapter {
 			}
 
 			if (rocketMsg && rocketUser) {
-				const rocketReaction = `:${ slackReactionMsg.reaction }:`;
+				const rocketReaction = `:${slackReactionMsg.reaction}:`;
 
 				// If the Rocket user has already been removed, then this is an echo back from slack
 				if (rocketMsg.reactions) {
@@ -362,7 +362,7 @@ export default class SlackAdapter {
 				}
 
 				// Stash this away to key off it later so we don't send it back to Slack
-				this.slackBridge.reactionsMap.set(`unset${ rocketMsg._id }${ rocketReaction }`, rocketUser);
+				this.slackBridge.reactionsMap.set(`unset${rocketMsg._id}${rocketReaction}`, rocketUser);
 				logger.slack.debug('Removing reaction from Slack');
 				Meteor.runAsUser(rocketUser._id, () => {
 					Meteor.call('setReaction', rocketReaction, rocketMsg._id);
@@ -376,7 +376,7 @@ export default class SlackAdapter {
 	 */
 	onReactionAdded(slackReactionMsg) {
 		if (slackReactionMsg) {
-			if (! this.slackBridge.isReactionsEnabled) {
+			if (!this.slackBridge.isReactionsEnabled) {
 				return;
 			}
 			const rocketUser = this.rocket.getUser(slackReactionMsg.user);
@@ -395,7 +395,7 @@ export default class SlackAdapter {
 			}
 
 			if (rocketMsg && rocketUser) {
-				const rocketReaction = `:${ slackReactionMsg.reaction }:`;
+				const rocketReaction = `:${slackReactionMsg.reaction}:`;
 
 				// If the Rocket user has already reacted, then this is Slack echoing back to us
 				if (rocketMsg.reactions) {
@@ -408,7 +408,7 @@ export default class SlackAdapter {
 				}
 
 				// Stash this away to key off it later so we don't send it back to Slack
-				this.slackBridge.reactionsMap.set(`set${ rocketMsg._id }${ rocketReaction }`, rocketUser);
+				this.slackBridge.reactionsMap.set(`set${rocketMsg._id}${rocketReaction}`, rocketUser);
 				logger.slack.debug('Adding reaction from Slack');
 				Meteor.runAsUser(rocketUser._id, () => {
 					Meteor.call('setReaction', rocketReaction, rocketMsg._id);
@@ -644,7 +644,7 @@ export default class SlackAdapter {
 			const postResult = HTTP.post('https://slack.com/api/chat.postMessage', { params: data });
 			if (postResult.statusCode === 200 && postResult.data && postResult.data.message && postResult.data.message.bot_id && postResult.data.message.ts) {
 				Messages.setSlackBotIdAndSlackTs(rocketMessage._id, postResult.data.message.bot_id, postResult.data.message.ts);
-				logger.slack.debug(`RocketMsgID=${ rocketMessage._id } SlackMsgID=${ postResult.data.message.ts } SlackBotID=${ postResult.data.message.bot_id }`);
+				logger.slack.debug(`RocketMsgID=${rocketMessage._id} SlackMsgID=${postResult.data.message.ts} SlackBotID=${postResult.data.message.bot_id}`);
 			}
 		}
 	}
@@ -678,7 +678,7 @@ export default class SlackAdapter {
 	}
 
 	processFileShare(slackMessage) {
-		if (! settings.get('SlackBridge_FileUpload_Enabled')) {
+		if (!settings.get('SlackBridge_FileUpload_Enabled')) {
 			return;
 		}
 
@@ -815,7 +815,7 @@ export default class SlackAdapter {
 
 	processMeMessage(rocketUser, slackMessage) {
 		return this.rocket.addAliasToMsg(rocketUser.username, {
-			msg: `_${ this.rocket.convertSlackMsgTxtToRocketTxtFormat(slackMessage.text) }_`,
+			msg: `_${this.rocket.convertSlackMsgTxtToRocketTxtFormat(slackMessage.text)}_`,
 		});
 	}
 
@@ -883,7 +883,7 @@ export default class SlackAdapter {
 	processShareMessage(rocketChannel, rocketUser, slackMessage, isImporting) {
 		if (slackMessage.file && slackMessage.file.url_private_download !== undefined) {
 			const details = {
-				message_id: `slack-${ slackMessage.ts.replace(/\./g, '-') }`,
+				message_id: `slack-${slackMessage.ts.replace(/\./g, '-')}`,
 				name: slackMessage.file.name,
 				size: slackMessage.file.size,
 				type: slackMessage.file.mimetype,
@@ -895,6 +895,14 @@ export default class SlackAdapter {
 
 	processPinnedItemMessage(rocketChannel, rocketUser, slackMessage, isImporting) {
 		if (slackMessage.attachments && slackMessage.attachments[0] && slackMessage.attachments[0].text) {
+
+			/*Finneg Avatar
+											*/
+			let userName = slackMessage.attachments[0].author_subname;
+			let email = userName.substring(userName.indexOf('-') + 1, userName.lenght);
+			url = getAvatarUrlFromUsername(email);
+			console.log(email);
+
 			const rocketMsgObj = {
 				rid: rocketChannel._id,
 				t: 'message_pinned',
@@ -904,15 +912,16 @@ export default class SlackAdapter {
 					username: rocketUser.username,
 				},
 				attachments: [{
-					text : this.rocket.convertSlackMsgTxtToRocketTxtFormat(slackMessage.attachments[0].text),
-					author_name : slackMessage.attachments[0].author_subname,
-					author_icon : getAvatarUrlFromUsername(slackMessage.attachments[0].author_subname),
-					ts : new Date(parseInt(slackMessage.attachments[0].ts.split('.')[0]) * 1000),
+					text: this.rocket.convertSlackMsgTxtToRocketTxtFormat(slackMessage.attachments[0].text),
+					author_name: slackMessage.attachments[0].author_subname,
+					//author_icon: getAvatarUrlFromUsername(slackMessage.attachments[0].author_subname),
+					author_icon: getAvatarUrlFromUsername(email),
+					ts: new Date(parseInt(slackMessage.attachments[0].ts.split('.')[0]) * 1000),
 				}],
 			};
 
 			if (!isImporting) {
-				Messages.setPinnedByIdAndUserId(`slack-${ slackMessage.attachments[0].channel_id }-${ slackMessage.attachments[0].ts.replace(/\./g, '-') }`, rocketMsgObj.u, true, new Date(parseInt(slackMessage.ts.split('.')[0]) * 1000));
+				Messages.setPinnedByIdAndUserId(`slack-${slackMessage.attachments[0].channel_id}-${slackMessage.attachments[0].ts.replace(/\./g, '-')}`, rocketMsgObj.u, true, new Date(parseInt(slackMessage.ts.split('.')[0]) * 1000));
 			}
 
 			return rocketMsgObj;
@@ -983,7 +992,7 @@ export default class SlackAdapter {
 	uploadFileFromSlack(details, slackFileURL, rocketUser, rocketChannel, timeStamp, isImporting) {
 		const requestModule = /https/i.test(slackFileURL) ? https : http;
 		const parsedUrl = url.parse(slackFileURL, true);
-		parsedUrl.headers = { Authorization: `Bearer ${ this.apiToken }` };
+		parsedUrl.headers = { Authorization: `Bearer ${this.apiToken}` };
 		requestModule.get(parsedUrl, Meteor.bindEnvironment((stream) => {
 			const fileStore = FileUpload.getStore('Uploads');
 
@@ -1041,7 +1050,7 @@ export default class SlackAdapter {
 
 	importFromHistory(family, options) {
 		logger.slack.debug('Importing messages history');
-		const response = HTTP.get(`https://slack.com/api/${ family }.history`, { params: _.extend({ token: this.apiToken }, options) });
+		const response = HTTP.get(`https://slack.com/api/${family}.history`, { params: _.extend({ token: this.apiToken }, options) });
 		if (response && response.data && _.isArray(response.data.messages) && response.data.messages.length > 0) {
 			let latest = 0;
 			for (const message of response.data.messages.reverse()) {
@@ -1058,7 +1067,7 @@ export default class SlackAdapter {
 
 	copyChannelInfo(rid, channelMap) {
 		logger.slack.debug('Copying users from Slack channel to Rocket.Chat', channelMap.id, rid);
-		const response = HTTP.get(`https://slack.com/api/${ channelMap.family }.info`, { params: { token: this.apiToken, channel: channelMap.id } });
+		const response = HTTP.get(`https://slack.com/api/${channelMap.family}.info`, { params: { token: this.apiToken, channel: channelMap.id } });
 		if (response && response.data) {
 			const data = channelMap.family === 'channels' ? response.data.channel : response.data.group;
 			if (data && _.isArray(data.members) && data.members.length > 0) {
@@ -1106,6 +1115,13 @@ export default class SlackAdapter {
 			for (const pin of response.data.items) {
 				if (pin.message) {
 					const user = this.rocket.findUser(pin.message.user);
+					/*Finneg Avatar
+											*/
+					let userName = user.username;
+					let email = userName.substring(userName.indexOf('-') + 1, userName.lenght);
+					url = getAvatarUrlFromUsername(email);
+					console.log(email);
+					
 					const msgObj = {
 						rid,
 						t: 'message_pinned',
@@ -1115,14 +1131,15 @@ export default class SlackAdapter {
 							username: user.username,
 						},
 						attachments: [{
-							text : this.rocket.convertSlackMsgTxtToRocketTxtFormat(pin.message.text),
-							author_name : user.username,
-							author_icon : getAvatarUrlFromUsername(user.username),
-							ts : new Date(parseInt(pin.message.ts.split('.')[0]) * 1000),
+							text: this.rocket.convertSlackMsgTxtToRocketTxtFormat(pin.message.text),
+							author_name: user.username,
+							//author_icon: getAvatarUrlFromUsername(user.username),
+							author_icon: getAvatarUrlFromUsername(email),
+							ts: new Date(parseInt(pin.message.ts.split('.')[0]) * 1000),
 						}],
 					};
 
-					Messages.setPinnedByIdAndUserId(`slack-${ pin.channel }-${ pin.message.ts.replace(/\./g, '-') }`, msgObj.u, true, new Date(parseInt(pin.message.ts.split('.')[0]) * 1000));
+					Messages.setPinnedByIdAndUserId(`slack-${pin.channel}-${pin.message.ts.replace(/\./g, '-')}`, msgObj.u, true, new Date(parseInt(pin.message.ts.split('.')[0]) * 1000));
 				}
 			}
 		}

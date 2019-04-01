@@ -150,3 +150,7 @@ button.rc-button.rc-button--primary.login {
 .rc-button.rc-button--primary.js-confirm {
     background-color: #4F4DA7;
 }
+
+.lista-usuarios.room-list {
+    padding-bottom: 0px;
+}

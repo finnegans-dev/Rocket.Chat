@@ -17,6 +17,8 @@ Template.roomList.helpers({
 		*/
 		let dominio = "hola";
 
+		//console.log(this)
+
 		if (this.anonymous) {
 			//return Rooms.find({ t: 'c' }, { sort: { name: 1 } });
 		}
@@ -100,8 +102,10 @@ Template.roomList.helpers({
 		or is unread and has one room
 		*/
 		//return !['unread', 'f'].includes(group.identifier) || (rooms.length || (rooms.count && rooms.count()));
-		console.log(group)
-		return !['f', 'c'].includes(group.identifier);
+		//console.log(group)
+		//console.log(rooms)
+		return !['f', 'c'].includes(group.identifier || (rooms.length || (rooms.count && rooms.count())));
+		//return !['f', 'c','d'].includes(group.identifier);
 	},
 
 	roomType(room) {
@@ -111,7 +115,7 @@ Template.roomList.helpers({
 			return `type-${ room.header || room.identifier }`;
 		}*/
 		if (room.identifier!="c") {
-			console.log(room)
+			//console.log(room)
 			return `type-${ room.header || room.identifier }`;
 		}
 	},
@@ -126,7 +130,7 @@ Template.roomList.helpers({
 	},
 
 	showRoom(){
-		console.log(room)
+		//console.log(room)
 		return true;
 	}
 

@@ -10,12 +10,14 @@ function findDirectMessageRoom(params, user) {
 	if ((!params.roomId || !params.roomId.trim()) && (!params.username || !params.username.trim())) {
 		throw new Meteor.Error('error-room-param-not-provided', 'Body param "roomId" or "username" is required');
 	}
-
+	console.log(params.username)
 	const room = getRoomByNameOrIdWithOptionToJoin({
 		currentUserId: user._id,
-		nameOrId: params.username || params.roomId,
+		nameOrId: params.username,
 		type: 'd',
 	});
+
+	console.log(room)
 
 	const canAccess = Meteor.call('canAccessRoom', room._id, user._id);
 	if (!canAccess || !room || room.t !== 'd') {
@@ -32,8 +34,15 @@ function findDirectMessageRoom(params, user) {
 
 API.v1.addRoute(['dm.create', 'im.create'], { authRequired: true }, {
 	post() {
+		console.log("ENTER")
 		const findResult = findDirectMessageRoom(this.requestParams(), this.user);
-
+		/*
+		console.log(this.requestParams())
+		console.log("================")
+		console.log(this.user)
+		*/
+		console.log(findResult)
+		
 		return API.v1.success({
 			room: findResult.room,
 		});

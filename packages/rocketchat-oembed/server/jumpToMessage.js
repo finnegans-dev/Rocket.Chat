@@ -12,7 +12,7 @@ const recursiveRemove = (message, deep = 1) => {
 		if ('attachments' in message && message.attachments !== null && deep < settings.get('Message_QuoteChainLimit')) {
 			message.attachments.map((msg) => recursiveRemove(msg, deep + 1));
 		} else {
-			delete(message.attachments);
+			delete (message.attachments);
 		}
 	}
 	return message;
@@ -34,12 +34,19 @@ callbacks.add('beforeSaveMessage', (msg) => {
 							if (index > -1) {
 								msg.attachments.splice(index, 1);
 							}
-
+							/*Finneg Avatar
+											*/
+							let userName = jumpToMessage.u.username;
+							let email = userName.substring(userName.indexOf('-') + 1, userName.lenght);
+							url = getAvatarUrlFromUsername(email);
+							console.log(email);
+							
 							msg.attachments.push({
 								text: jumpToMessage.msg,
 								translations: jumpToMessage.translations,
 								author_name: jumpToMessage.alias || jumpToMessage.u.username,
-								author_icon: getAvatarUrlFromUsername(jumpToMessage.u.username),
+								//author_icon: getAvatarUrlFromUsername(jumpToMessage.u.username),
+								author_icon: getAvatarUrlFromUsername(email),
 								message_link: item.url,
 								attachments: jumpToMessage.attachments || [],
 								ts: jumpToMessage.ts,

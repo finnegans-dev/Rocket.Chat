@@ -25,31 +25,7 @@
 			</div>
 		</div>
 		{{/if}}
-
-		<div class="lista-usuarios room-list" style="background-color:#273347">
-			{{#each text in usuarios}}
-			<li class="sidebar-item">
-
-				<a class="sidebar-item__link" href="/direct/{{text.username}}">
-
-					<div class="sidebar-item__user-thumb">
-						{{> avatar username=text.username}}
-					</div>
-
-					<div class="sidebar-item__user-status {{#if text.status}}sidebar-item__user-status--{{text.status}}{{/if}}"
-						aria-label="{{text.status}}"></div>
-					<div style="color:white">{{text.username}}</div>
-
-
-
-
-				</a>
-
-			</li>
-
-			{{/each}}
-		</div>
-
+		
 
 		<!--
 			<footer class="sidebar__footer">{{{footer}}}</footer>

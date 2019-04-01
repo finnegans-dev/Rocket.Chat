@@ -88,6 +88,11 @@ Meteor.methods({
 				}
 			});
 		}
+		/*Finneg Avatar
+												*/
+		let userName = originalMessage.u.username;
+		let email = userName.substring(userName.indexOf('-') + 1, userName.lenght);
+		url = getAvatarUrlFromUsername(email);
 
 		return Messages.createWithTypeRoomIdMessageAndUser(
 			'message_pinned',
@@ -99,9 +104,12 @@ Meteor.methods({
 					{
 						text: originalMessage.msg,
 						author_name: originalMessage.u.username,
+						/*
 						author_icon: getAvatarUrlFromUsername(
 							originalMessage.u.username
 						),
+						*/
+						author_icon: getAvatarUrlFromUsername(email),
 						ts: originalMessage.ts,
 						attachments: recursiveRemove(attachments),
 					},

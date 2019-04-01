@@ -10,25 +10,20 @@ Template.registrarGO.onCreated(function () {
     let url = 'https://go-test.finneg.com/'
     let root = 'https://go-test.finneg.com/chat/'
 
-    //let url = 'https://go.finneg.com/'
-    //let root = 'https://go.finneg.com/chat/'
-
-
-   
-    HTTP.call('GET', `${root}api/v1/permisos`, function (err, res) { 
-        console.log(err)
-        console.log(res)
-    });
-
     Meteor.setTimeout(function(){
-        url = __meteor_runtime_config__.ECO_URL;
-        root = __meteor_runtime_config__.ROOT_URL;
+        //url = __meteor_runtime_config__.ECO_URL;
+        //root = __meteor_runtime_config__.ROOT_URL;
+        root = "http://localhost:3000/";
+        HTTP.call('GET', `${root}api/v1/permisos`, function (err, res) { 
+            console.log(err)
+            console.log(res)
+        });
 
         HTTP.call('GET', `${url}auth/token/info?access_token=${token}`, function (err, res) {
             if (err) {
                 console.log("Error de Autenticacion")
             } else {
-                console.log(res.data)
+                console.log(res)
                 if (email == res.data.email) {
                     let dominio = res.data.domain;
 
@@ -47,7 +42,7 @@ Template.registrarGO.onCreated(function () {
                                 i++;
                             }
 
-                            let username = res.data.firstName + res.data.lastName + "-" + email;
+                            let username = res.data.firstName + " "+ res.data.lastName + "-" + email;
                             let name = res.data.firstName + " " + res.data.lastName
 
                             /*
@@ -88,7 +83,7 @@ Template.registrarGO.onCreated(function () {
             }
         });
 
-    },200);
+    },1000);
 
     
 

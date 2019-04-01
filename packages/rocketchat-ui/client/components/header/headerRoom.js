@@ -46,10 +46,23 @@ Template.headerRoom.helpers({
 	},
 
 	roomName() {
+		/*Finneg
+		*/
 		const roomData = Session.get(`roomData${ this._id }`);
 		if (!roomData) { return ''; }
-
-		return roomTypes.getRoomName(roomData.t, roomData);
+		
+		let nameRoom = roomTypes.getRoomName(roomData.t, roomData);
+		if(roomData.t == 'd'){
+			if(nameRoom.substring(0, nameRoom.indexOf('-'))!=""){
+				return nameRoom.substring(0, nameRoom.indexOf('-'));
+			}else{
+				return nameRoom;
+			}
+			
+		}else{
+			return nameRoom.substring(nameRoom.indexOf('-') +1, nameRoom.length);
+		}
+		//return roomTypes.getRoomName(roomData.t, roomData);
 	},
 
 	secondaryName() {

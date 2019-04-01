@@ -13,7 +13,10 @@
 					<div class="attachment-author">
 						{{#if author_icon}}
 						<span>author_name</span>
+						<!-- Finneg
 							<img src="{{fixCordova author_icon}}" class="avatar-image">
+							-->
+							{{>avatar username=author_name}}
 						{{/if}}
 						<a href="{{fixCordova author_link}}" target="_blank" rel="noopener noreferrer">{{author_name}}</a>
 						{{#if ts}}
@@ -31,7 +34,10 @@
 				{{else}}
 					<div class="attachment-author">
 						{{#if author_icon}}
+						<!--Finneg
 							<img src="{{fixCordova author_icon}}">
+							-->
+							{{>avatar username=author_name}}
 						{{/if}}
 						{{author_name}}
 					{{#if ts}}

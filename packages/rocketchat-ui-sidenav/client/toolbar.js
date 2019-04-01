@@ -12,6 +12,7 @@ import { menu } from 'meteor/rocketchat:ui-utils';
 import { toolbarSearch } from './sidebarHeader';
 import _ from 'underscore';
 
+
 let filterText = '';
 let usernamesFromClient;
 let resultsFromClient;
@@ -21,6 +22,7 @@ const isLoading = new ReactiveVar(false);
 const getFromServer = (cb, type) => {
 	isLoading.set(true);
 	const currentFilter = filterText;
+
 
 	Meteor.call('spotlight', currentFilter, usernamesFromClient, type, (err, results) => {
 		if (currentFilter !== filterText) {
@@ -38,37 +40,75 @@ const getFromServer = (cb, type) => {
 		const usersLength = results.users.length;
 		const roomsLength = results.rooms.length;
 
-		if (usersLength) {
-			for (let i = 0; i < usersLength; i++) {
-				resultsFromServer.push({
-					_id: results.users[i]._id,
-					t: 'd',
-					name: results.users[i].username,
-					fname: results.users[i].name,
-				});
-			}
-		}
+		/*Finneg
+	Busco si pertenece a la sala
+	*/
 
-		if (roomsLength) {
-			for (let i = 0; i < roomsLength; i++) {
-				const alreadyOnClient = resultsFromClient.find((item) => item._id === results.rooms[i]._id);
-				if (alreadyOnClient) {
-					continue;
+		let dominio = window.localStorage.getItem('dominio');
+		let contexto = window.localStorage.getItem('contexto');
+		let nameRoom;
+		if(!contexto){
+			nameRoom = dominio+"-"+dominio;
+		}else{
+			nameRoom = dominio+"-"+contexto;
+		}
+		let roomsSearch = Rooms.find({ name: nameRoom}).fetch();
+		let idRoom = roomsSearch[0]._id;
+
+		Meteor.call('getUsersOfRoom', idRoom, true, (error, users) => {
+			if (error) {
+				console.log(error)
+			} else {
+				let usuariosRoom = users.records;
+				if (usersLength) {
+					for (let i = 0; i < usersLength; i++) {
+						usuariosRoom.forEach(element => {
+							if (element._id == results.users[i]._id) {
+								resultsFromServer.push({
+									_id: results.users[i]._id,
+									t: 'd',
+									name: results.users[i].username,
+									fname: results.users[i].name,
+								});
+							}
+						});
+
+					}
 				}
 
-				resultsFromServer.push({
-					_id: results.rooms[i]._id,
-					t: results.rooms[i].t,
-					name: results.rooms[i].name,
-					lastMessage: results.rooms[i].lastMessage,
-				});
-			}
-		}
+				if (roomsLength) {
+					for (let i = 0; i < roomsLength; i++) {
+						const alreadyOnClient = resultsFromClient.find((item) => item._id === results.rooms[i]._id);
+						if (alreadyOnClient) {
+							continue;
+						}
+						//Finneg
+						// No muetra los canales
+						if (results.rooms[i].t != 'c') {
+							resultsFromServer.push({
+								_id: results.rooms[i]._id,
+								t: results.rooms[i].t,
+								name: results.rooms[i].name,
+								lastMessage: results.rooms[i].lastMessage,
+							});
+						}
 
-		if (resultsFromServer.length) {
-			cb(resultsFromClient.concat(resultsFromServer));
-		}
+
+
+					}
+				}
+
+				if (resultsFromServer.length) {
+					cb(resultsFromClient.concat(resultsFromServer));
+				}
+			}
+		});
+
+
+
 	});
+
+
 };
 
 const getFromServerDebounced = _.debounce(getFromServer, 500);
@@ -83,9 +123,9 @@ Template.toolbar.helpers({
 		if (!Meteor.Device.isDesktop()) {
 			return placeholder;
 		} else if (window.navigator.platform.toLowerCase().includes('mac')) {
-			placeholder = `${ placeholder } (\u2318+K)`;
+			placeholder = `${placeholder} (\u2318+K)`;
 		} else {
-			placeholder = `${ placeholder } (\u2303+K)`;
+			placeholder = `${placeholder} (\u2303+K)`;
 		}
 
 		return placeholder;
@@ -104,6 +144,7 @@ Template.toolbar.helpers({
 			isLoading,
 			open: Template.instance().open,
 			getFilter(collection, filter, cb) {
+
 				filterText = filter;
 
 				const type = {
@@ -124,9 +165,9 @@ Template.toolbar.helpers({
 				const searchForChannels = filterText[0] === '#';
 				const searchForDMs = filterText[0] === '@';
 				if (searchForChannels) {
-					filterText = filterText.slice(1);
-					type.users = false;
-					query.t = 'c';
+					//filterText = filterText.slice(1);
+					//type.users = false;
+					//query.t = 'c';
 				}
 
 				if (searchForDMs) {
@@ -138,13 +179,15 @@ Template.toolbar.helpers({
 				const searchQuery = new RegExp((RegExp.escape(filterText)), 'i');
 				query.$or = [
 					{ name: searchQuery },
-					{ fname: searchQuery },
+					{ fname: searchQuery }
 				];
 
-				resultsFromClient = collection.find(query, { limit: 20, sort: { unread: -1, ls: -1 } }).fetch();
+				//Finneg Solo busco msj directos o usuarios
+				query.t = 'd';
 
+				resultsFromClient = collection.find(query, { limit: 20, sort: { unread: -1, ls: -1 } }).fetch();
 				const resultsFromClientLength = resultsFromClient.length;
-				const user = Meteor.users.findOne(Meteor.userId(), { fields: { name: 1, username:1 } });
+				const user = Meteor.users.findOne(Meteor.userId(), { fields: { name: 1, username: 1 } });
 				if (user) {
 					usernamesFromClient = [user];
 				}
@@ -154,7 +197,6 @@ Template.toolbar.helpers({
 						usernamesFromClient.push(resultsFromClient[i].name);
 					}
 				}
-
 				cb(resultsFromClient);
 
 				// Use `filter` here to get results for `#` or `@` filter only
@@ -205,12 +247,22 @@ Template.toolbar.events({
 	},
 });
 
-Template.toolbar.onRendered(function() {
+Template.toolbar.onRendered(function () {
 	this.$('.js-search').select().focus();
 });
 
-Template.toolbar.onCreated(function() {
+Template.toolbar.onCreated(function () {
 	this.open = new ReactiveVar(true);
+	//NrNwzwvs5s3xLvCsy //ID DE SALA
+	/*
+	Meteor.call('getUsersOfRoom', "NrNwzwvs5s3xLvCsy", true, (error, users) => {
+		if (error) {
+			console.log(error)
+		} else {
+			console.log(users)
+		}
+	});
+	*/
 
 	Tracker.autorun(() => !this.open.get() && toolbarSearch.close());
 });

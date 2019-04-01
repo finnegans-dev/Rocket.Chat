@@ -21,6 +21,7 @@ export const getRoomByNameOrIdWithOptionToJoin = function _getRoomByNameOrIdWith
 				$or: [{ _id: nameOrId }, { username: nameOrId }],
 			});
 		}
+		console.log("ROMMUSER" + roomUser)
 
 		const rid = _.isObject(roomUser) ? [currentUserId, roomUser._id].sort().join('') : nameOrId;
 		room = Rooms.findOneById(rid);

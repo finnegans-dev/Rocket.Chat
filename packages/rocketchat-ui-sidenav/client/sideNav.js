@@ -56,8 +56,17 @@ Template.sideNav.helpers({
 		const instance = Template.instance();
 		return instance.usersArray;
 		*/
-		return Template.instance().state.get('usuarios')
-	}
+		//return Template.instance().state.get('usuarios')
+	},
+
+	username: function (user) {
+		let userName = user.substring(0, user.indexOf('-'));
+		if (userName != "") {
+			return userName;
+		} else {
+			return user;
+		}
+	},
 
 });
 
@@ -118,7 +127,7 @@ Template.sideNav.onCreated(function () {
 	this.groupedByType = new ReactiveVar(false);
 
 	var instance = this;
-	let name = "dpcomercializadoratest-contexto1"
+	let name = "dpcomercializadoratest-dpcomercializadoratest"
 	let token = window.localStorage.getItem("Meteor.loginToken")
 	let userId = window.localStorage.getItem("Meteor.userId")
 	this.usersArray = ["TEST", "TEST2"];
@@ -133,7 +142,7 @@ Template.sideNav.onCreated(function () {
 				'settings.preferences.sidebarGroupByType': 1,
 			},
 		});
-		
+		/*
 		HTTP.get(`/api/v1/groups.members?roomName=${name}`, {
 			headers: {
 				"X-Auth-Token": token,
@@ -144,13 +153,30 @@ Template.sideNav.onCreated(function () {
 				console.log(err)
 			} else {
 				if (res) {
-					console.log(res.data.members)
+					//console.log(res)
+					let data = JSON.parse(res.content)
 					//usersArray = res.data.members;
-					instance.state.set('usuarios', res.data.members);
+
+					data.members.forEach(element => {
+						//console.log(element.username);
+						HTTP.post('/api/v1/im.create', {
+							headers: {
+								"X-Auth-Token": token,
+								"X-User-Id": userId
+							},
+							data: { "username": element._id }
+						}, function (err, res) {
+							console.log(err)
+						});
+						
+					});
+
+					instance.state.set('usuarios', data.members);
 				}
-				
+
 			}
 		});
+		*/
 
 		const userPref = getUserPreference(user, 'sidebarGroupByType');
 		this.groupedByType.set(userPref ? userPref : settings.get('UI_Group_Channels_By_Type'));

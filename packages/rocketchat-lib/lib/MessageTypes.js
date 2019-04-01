@@ -22,7 +22,7 @@ Meteor.startup(function() {
 		message: 'User_added_by',
 		data(message) {
 			return {
-				user_added: message.msg,
+				user_added: message.msg.substring(0, message.msg.indexOf("-")),
 				user_by: message.u.username,
 			};
 		},
