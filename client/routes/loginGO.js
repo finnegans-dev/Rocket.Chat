@@ -13,14 +13,14 @@ Template.loginGO.onCreated(function () {
     let token = FlowRouter.getParam("token");
     let email = FlowRouter.getParam("email");
     let url = 'https://go-test.finneg.com/'
-    //let root = 'https://go-test.finneg.com/chat/'
+    let root = 'https://go-test.finneg.com/chat/'
 
     //let root = 'http://localhost:3000'
     Meteor.setTimeout(function () {
         console.log(__meteor_runtime_config__.ROOT_URL)
         console.log(__meteor_runtime_config__.ECO_URL)
         //let url = 'https://go-test.finneg.com/';
-        let root = 'http://localhost:3000/';
+        //let root = 'http://localhost:3000/';
 
         //url = __meteor_runtime_config__.ECO_URL;
         //root = __meteor_runtime_config__.ROOT_URL;
@@ -74,8 +74,8 @@ Template.loginGO.onCreated(function () {
                         //window.localStorage.setItem("Meteor.loginToken", token);
                         window.localStorage.setItem("dominio", dominioLow);
                         window.localStorage.setItem("contexto", dominioLow);
-                        FlowRouter.go(`/home`);
-                        //FlowRouter.go(`/group/${dominioLow}-${contexto}`);
+                        //FlowRouter.go(`/home`);
+                        FlowRouter.go(`/group/${dominioLow}-${dominioLow}`);
                     }
                 });
 

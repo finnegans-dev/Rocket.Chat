@@ -35,7 +35,7 @@ API.v1.addRoute('invitaciones/:token/:dominio/:idUser', {
 					}
 
 					Meteor.runAsUser(idUsuario, () => Meteor.call('addUserToRoom', { rid, username }));
-					HTTP.get(`api/v1/addBot/${idUsuario}/${rid}`, {}, function (err, res) {
+					HTTP.get(`api/v1/addBot/${rid}`, {}, function (err, res) {
 						if (err) {
 							console.log(err);
 						} else {
@@ -117,21 +117,19 @@ API.v1.addRoute('administrador/:token/:dominio/:idUsuario/:roomId', {
 });
 
 
-API.v1.addRoute('addBot/:idUsuario/:idRoom', {
+API.v1.addRoute('addBot/:idRoom', {
 	get() {
-		let idUsuario = this.urlParams.idUsuario;
+
 		let idRoom = this.urlParams.idRoom;
 		let usuarios = Users.find({ roles: "bot" }).fetch();
-
-		let usernameBot = usuarios[0].username;
 		let idUserBot = usuarios[0]._id;
 		const { _id: rid, t: type } = Rooms.findOneByIdOrName(idRoom);
 		if (!rid || type !== 'p') {
 			throw new Meteor.Error('error-room-not-found', 'The required "roomId" or "roomName" param provided does not match any group');
 		}
-
-		console.log(usernameBot);
-		Meteor.runAsUser(idUserBot, () => Meteor.call('addUserToRoom', { rid, usernameBot }));
+		const { username } = Users.findOneById(idUserBot)
+		
+		Meteor.runAsUser(idUserBot, () => Meteor.call('addUserToRoom', { rid, username }));
 
 
 		return API.v1.success({
@@ -143,7 +141,7 @@ API.v1.addRoute('addBot/:idUsuario/:idRoom', {
 
 API.v1.addRoute('permisos', {
 	get() {
-		let permisos = [{ "_id": "add-user-to-any-p-room", "roles": ["admin", "user"] },
+		let permisos = [{ "_id": "add-user-to-any-p-room", "roles": ["admin", "user","bot"] },
 		{ "_id": "call-management", "roles": ["admin", "user"] },
 		{ "_id": "create-p", "roles": ["admin", "user"] },
 		{ "_id": "create-d", "roles": ["admin", "user"] }]

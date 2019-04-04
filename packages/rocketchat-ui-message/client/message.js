@@ -143,6 +143,9 @@ Template.message.helpers({
 			return '';
 		}
 		let usernameFinneg = this.u.username.substring(0, this.u.username.indexOf('-'))
+		if(usernameFinneg == ""){
+			usernameFinneg = this.u.username;
+		}
 		return (RocketChat.settings.get('UI_Use_Real_Name') && this.u.name) || usernameFinneg;
 		//return (RocketChat.settings.get('UI_Use_Real_Name') && this.u.name) || this.u.username;
 	},
