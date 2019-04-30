@@ -15,25 +15,26 @@ Template.loginGO.onCreated(function () {
     let url = 'https://go-test.finneg.com/'
     let root = 'https://go-test.finneg.com/chat/'
 
-    //let root = 'http://localhost:3000'
-    Meteor.setTimeout(function () {
-        console.log(__meteor_runtime_config__.ROOT_URL)
-        console.log(__meteor_runtime_config__.ECO_URL)
-        //let url = 'https://go-test.finneg.com/';
-        //let root = 'http://localhost:3000/';
 
-        //url = __meteor_runtime_config__.ECO_URL;
-        //root = __meteor_runtime_config__.ROOT_URL;
 
+    //window.localStorage.setItem("Meteor.loginToken", "");
+    window.localStorage.setItem("Meteor.loginToken:/:/chat", "");
+
+    //console.log("URL: " + root.substring(0,root.lastIndexOf(`/c`)+1))
+    root = __meteor_runtime_config__.ROOT_URL;
+    url = root.substring(0,root.lastIndexOf(`/c`)+1);
+    //root = 'http://localhost:3000/';
+    
     HTTP.call('GET', `${url}auth/token/info?access_token=${token}`, function (err, res) {
         if (err) {
             console.log(err)
             console.log("Error de Autenticacion")
         } else {
-            console.log(res);
+            //console.log(res);
             let dominio = res.data.domain;
             let dominioLow = dominio.toLowerCase();
             let emailRes = res.data.email;
+
             if (email == emailRes) {
 
                 let pass = "";
@@ -57,16 +58,17 @@ Template.loginGO.onCreated(function () {
                         FlowRouter.go(`/registrarGO/${token}&email=${email}`);
                         //  FlowRouter.go
                     } else {
+
                         //console.log(response.data);
                         let data = JSON.parse(response.content)
-                        console.log(data)
+                        //console.log(data)
                         let idUser = data.data.userId;
                         let token = data.data.authToken;
                         //invitacionesLogin/:idUser/:dominio/:contexto
                         HTTP.post(`${root}api/v1/invitacionesLogin/${idUser}/${dominio}/${dominio}`, {}, function (err, data) {
-                            if(err){
+                            if (err) {
                                 //console.log(err)
-                            }else{
+                            } else {
                                 //console.log(data)
                             }
                         })
@@ -74,8 +76,11 @@ Template.loginGO.onCreated(function () {
                         //window.localStorage.setItem("Meteor.loginToken", token);
                         window.localStorage.setItem("dominio", dominioLow);
                         window.localStorage.setItem("contexto", dominioLow);
-                        //FlowRouter.go(`/home`);
-                        FlowRouter.go(`/group/${dominioLow}-${dominioLow}`);
+                        FlowRouter.go(`/home`);
+                        Meteor.setTimeout(function(){
+                            FlowRouter.go(`/group/${dominioLow}-${dominioLow}`);
+                        },100)
+                        
                     }
                 });
 
@@ -83,9 +88,5 @@ Template.loginGO.onCreated(function () {
 
         }
     });
-
-
-
-    }, 1000)
 
 });
