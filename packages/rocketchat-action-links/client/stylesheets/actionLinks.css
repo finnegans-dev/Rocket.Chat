@@ -20,8 +20,8 @@
 			& .action-link {
 				margin: 0 2px;
 				padding: 5px;
-
-				border-radius: 7px;
+				background-color: #4F4DA7;
+				border-radius: 0px;
 			}
 		}
 

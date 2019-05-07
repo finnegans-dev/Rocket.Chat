@@ -38,6 +38,70 @@ const getFromServer = (cb, type) => {
 		const usersLength = results.users.length;
 		const roomsLength = results.rooms.length;
 
+		/*Finneg
+	Busco si pertenece a la sala
+	*/
+		/* ESTO ES LO VIEJO
+	let dominio = window.localStorage.getItem('dominio');
+	let contexto = window.localStorage.getItem('contexto');
+	let nameRoom;
+	if(!contexto){
+		nameRoom = dominio+"-"+dominio;
+	}else{
+		nameRoom = dominio+"-"+contexto;
+	}
+	let roomsSearch = Rooms.find({ name: nameRoom}).fetch();
+	let idRoom = roomsSearch[0]._id;
+
+	Meteor.call('getUsersOfRoom', idRoom, true, (error, users) => {
+		if (error) {
+			console.log(error)
+		} else {
+			let usuariosRoom = users.records;
+			if (usersLength) {
+				for (let i = 0; i < usersLength; i++) {
+					usuariosRoom.forEach(element => {
+						if (element._id == results.users[i]._id) {
+							resultsFromServer.push({
+								_id: results.users[i]._id,
+								t: 'd',
+								name: results.users[i].username,
+								fname: results.users[i].name,
+							});
+						}
+					});
+
+				}
+			}
+
+			if (roomsLength) {
+				for (let i = 0; i < roomsLength; i++) {
+					const alreadyOnClient = resultsFromClient.find((item) => item._id === results.rooms[i]._id);
+					if (alreadyOnClient) {
+						continue;
+					}
+					//Finneg
+					// No muetra los canales
+					if (results.rooms[i].t != 'c') {
+						resultsFromServer.push({
+							_id: results.rooms[i]._id,
+							t: results.rooms[i].t,
+							name: results.rooms[i].name,
+							lastMessage: results.rooms[i].lastMessage,
+						});
+					}
+
+
+
+				}
+			}
+
+			if (resultsFromServer.length) {
+				cb(resultsFromClient.concat(resultsFromServer));
+			}
+		}
+		*/
+
 		if (usersLength) {
 			for (let i = 0; i < usersLength; i++) {
 				resultsFromServer.push({
@@ -56,12 +120,23 @@ const getFromServer = (cb, type) => {
 					continue;
 				}
 
+				//Finneg
+				// No muetra los canales
+				if (results.rooms[i].t != 'c') {
+					resultsFromServer.push({
+						_id: results.rooms[i]._id,
+						t: results.rooms[i].t,
+						name: results.rooms[i].name,
+						lastMessage: results.rooms[i].lastMessage,
+					});
+				}
+				/*
 				resultsFromServer.push({
 					_id: results.rooms[i]._id,
 					t: results.rooms[i].t,
 					name: results.rooms[i].name,
 					lastMessage: results.rooms[i].lastMessage,
-				});
+				});*/
 			}
 		}
 
@@ -83,9 +158,9 @@ Template.toolbar.helpers({
 		if (!Meteor.Device.isDesktop()) {
 			return placeholder;
 		} else if (window.navigator.platform.toLowerCase().includes('mac')) {
-			placeholder = `${ placeholder } (\u2318+K)`;
+			placeholder = `${placeholder} (\u2318+K)`;
 		} else {
-			placeholder = `${ placeholder } (\u2303+K)`;
+			placeholder = `${placeholder} (\u2303+K)`;
 		}
 
 		return placeholder;
@@ -144,7 +219,7 @@ Template.toolbar.helpers({
 				resultsFromClient = collection.find(query, { limit: 20, sort: { unread: -1, ls: -1 } }).fetch();
 
 				const resultsFromClientLength = resultsFromClient.length;
-				const user = Meteor.users.findOne(Meteor.userId(), { fields: { name: 1, username:1 } });
+				const user = Meteor.users.findOne(Meteor.userId(), { fields: { name: 1, username: 1 } });
 				if (user) {
 					usernamesFromClient = [user];
 				}
@@ -205,11 +280,11 @@ Template.toolbar.events({
 	},
 });
 
-Template.toolbar.onRendered(function() {
+Template.toolbar.onRendered(function () {
 	this.$('.js-search').select().focus();
 });
 
-Template.toolbar.onCreated(function() {
+Template.toolbar.onCreated(function () {
 	this.open = new ReactiveVar(true);
 
 	Tracker.autorun(() => !this.open.get() && toolbarSearch.close());

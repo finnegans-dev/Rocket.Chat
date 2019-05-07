@@ -15,7 +15,7 @@ Template.roomList.helpers({
 				show unread
 		*/
 		if (this.anonymous) {
-			return Rooms.find({ t: 'c' }, { sort: { name: 1 } });
+			//return Rooms.find({ t: 'c' }, { sort: { name: 1 } });
 		}
 
 		const user = Users.findOne(Meteor.userId(), {
@@ -56,19 +56,22 @@ Template.roomList.helpers({
 			let types = [this.identifier];
 
 			if (this.identifier === 'merged') {
-				types = ['c', 'p', 'd'];
+				//types = ['c', 'p', 'd'];
+				types = ['p', 'd'];
 			}
 
 			if (this.identifier === 'thread') {
-				types = ['c', 'p', 'd'];
+				//types = ['c', 'p', 'd'];
+				types = ['p', 'd'];
 				query.prid = { $exists: true };
 			}
 
 			if (this.identifier === 'unread' || this.identifier === 'tokens') {
-				types = ['c', 'p'];
+				types = ['p'];
+				//types = ['c', 'p'];
 			}
 
-			if (['c', 'p'].includes(this.identifier)) {
+			if (['p'].includes(this.identifier)) {
 				query.tokens = { $exists: false };
 			} else if (this.identifier === 'tokens' && user && user.services && user.services.tokenpass) {
 				query.tokens = { $exists: true };
@@ -104,13 +107,22 @@ Template.roomList.helpers({
 		or is unread and has one room
 		*/
 
-		return !['unread', 'f'].includes(group.identifier) || (rooms.length || (rooms.count && rooms.count()));
+		return !['c', 'unread', 'f'].includes(group.identifier);
+		//return !['c','unread', 'f'].includes(group.identifier) || (rooms.length || (rooms.count && rooms.count()));
 	},
 
 	roomType(room) {
+		//console.log(room);
+		//Finneg
+		if (room.identifier != "c") {
+			//console.log(room)
+			return `type-${room.header || room.identifier}`;
+		}
+		/*
 		if (room.header || room.identifier) {
 			return `type-${ room.header || room.identifier }`;
 		}
+		*/
 	},
 
 	noSubscriptionText() {
@@ -121,6 +133,15 @@ Template.roomList.helpers({
 	showRoomCounter() {
 		return getUserPreference(Meteor.userId(), 'roomCounterSidebar');
 	},
+
+	isNotChannel(room) {
+		if (room.identifier != "c") {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
 });
 
 const getLowerCaseNames = (room, nameDefault = '', fnameDefault = '') => {
@@ -149,13 +170,13 @@ const mergeRoomSub = (room) => {
 	Subscriptions.update({
 		rid: room._id,
 	}, {
-		$set: {
-			lastMessage: room.lastMessage,
-			lm: room._updatedAt,
-			streamingOptions: room.streamingOptions,
-			...getLowerCaseNames(room, sub.name, sub.fname),
-		},
-	});
+			$set: {
+				lastMessage: room.lastMessage,
+				lm: room._updatedAt,
+				streamingOptions: room.streamingOptions,
+				...getLowerCaseNames(room, sub.name, sub.fname),
+			},
+		});
 
 	return room;
 };

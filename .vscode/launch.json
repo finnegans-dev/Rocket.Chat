@@ -29,7 +29,12 @@
 				"meteor://💻app/packages/rocketchat:*": "${workspaceFolder}/packages/rocketchat-*",
 				"meteor://💻app/packages/chatpal:*": "${workspaceFolder}/packages/chatpal-*",
 				"meteor://💻app/packages/assistify:*": "${workspaceFolder}/packages/assistify-*"
-			}
+			},
+			"runtimeArgs": [
+                "--disable-web-security",
+                "--user-data-dir",
+                "--remote-debugging-port=9222"
+            ],
 		},
 		{
 			"type": "node",

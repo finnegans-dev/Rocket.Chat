@@ -1,5 +1,10 @@
 <template name="message">
+	<!--Finneg 
+	Quito todos los mensajes que aparecen cuando se crea un-->
+	
 	<li id="{{_id}}" data-context={{actionContext}} class="message background-transparent-dark-hover {{ignoredClass}} {{sequentialClass}} {{system}} {{t}} {{own}} {{isTemp}} {{chatops}} {{customClass}}" data-username="{{u.username}}" data-groupable="{{isGroupable}}" data-date="{{date}}" data-timestamp="{{timestamp}}">
+			{{#if isTema}}
+
 		{{#if avatar}}
 			{{#if avatarFromUsername}}
 				<button class="thumb user-card-message" data-username="{{u.username}}" tabindex="1">{{> avatar username=avatarFromUsername}}</button>
@@ -136,5 +141,8 @@
 				<span class="icon-people-plus"></span>
 			</li>
 		</ul>
+	
+		{{/if}}
 	</li>
+
 </template>

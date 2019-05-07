@@ -5,7 +5,7 @@ Meteor.startup(function() {
 	return TabBar.addButton({
 		groups: ['channel', 'group', 'direct'],
 		id: 'threads',
-		i18nTitle: 'Threads',
+		i18nTitle: 'Temas',
 		icon: 'thread',
 		template: 'threadsTabbar',
 		order: 10,

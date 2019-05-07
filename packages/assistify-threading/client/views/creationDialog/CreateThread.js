@@ -99,9 +99,12 @@ Template.CreateThread.events({
 	async 'submit #create-thread, click .js-save-thread'(event, instance) {
 		event.preventDefault();
 		const parentChannel = instance.parentChannel.get();
-
+		
 		const { pmid } = instance;
-		const t_name = instance.threadName.get();
+		//Finneg
+		//Le agrego el dominio por defecto
+		const t_name = localStorage.getItem('dominio') + "-" + instance.threadName.get();
+		//console.log(t_name)
 		const users = instance.selectedUsers.get().map(({ username }) => username).filter((value, index, self) => self.indexOf(value) === index);
 
 		const prid = instance.parentChannelId.get();

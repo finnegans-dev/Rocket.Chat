@@ -24,7 +24,19 @@ Template.chatRoomItem.helpers({
 		const icon = roomTypes.getIcon(this);
 		const avatar = !icon;
 
-		const name = roomTypes.getRoomName(this.t, this);
+		//const name = roomTypes.getRoomName(this.t, this);
+		let { fname } = this;
+		let nameRoom;
+		if (this.t == 'd') {
+			if (fname.substring(0, fname.indexOf('-')) != "") {
+				nameRoom = fname.substring(0, fname.indexOf('-')) || roomTypes.getRoomName(this.t, this);
+			} else {
+				nameRoom = fname.substring(fname.indexOf('-') + 1, fname.length) || roomTypes.getRoomName(this.t, this);
+			}
+
+		} else {
+			nameRoom = fname.substring(fname.indexOf('-') + 1, fname.length) || roomTypes.getRoomName(this.t, this);
+		}
 
 		const roomData = {
 			...this,
@@ -32,7 +44,7 @@ Template.chatRoomItem.helpers({
 			avatar,
 			username : this.name,
 			route: roomTypes.getRouteLink(this.t, this),
-			name,
+			name: nameRoom,
 			unread,
 			active,
 			archivedClass,
@@ -51,6 +63,28 @@ Template.chatRoomItem.helpers({
 		}
 		return roomData;
 	},
+	//Modificaciones Finneg
+	//Finneg
+	dominio() {
+		let { fname } = this;
+		
+		//const onlineUsers = RoomManager.onlineUsers.get();
+		//console.log(onlineUsers)
+		//console.log(name);
+		let dominioURL = window.localStorage.getItem('dominio');
+		let dominio = fname.substring(0, fname.indexOf('-'));
+
+		if (fname[0] == fname[0].toUpperCase()) {
+			return true;
+		}
+		if (dominio != "") {
+			return dominio == dominioURL.toLowerCase();
+		} else {
+			return true;
+		}
+		//console.log("Dominio " + dominio)
+
+	}
 });
 
 callbacks.add('enter-room', (sub) => {

@@ -17,6 +17,10 @@ const commonHelpers = {
 			return 'active';
 		}
 	},
+	show(){
+		console.log(this)
+		return this.title != 'temas'
+	}
 };
 function canShowAddUsersButton(rid) {
 	const canAddToChannel = hasAllPermission(
@@ -106,7 +110,7 @@ const commonEvents = {
 		popover.close();
 	},
 };
-const action = function(e, t) {
+const action = function (e, t) {
 	$('button', e.currentTarget).blur();
 	e.preventDefault();
 	const $flexTab = $('.flex-tab-container .flex-tab');
@@ -146,7 +150,7 @@ Template.flexTabBar.events({
 	},
 });
 
-Template.flexTabBar.onCreated(function() {
+Template.flexTabBar.onCreated(function () {
 	this.tabBar = Template.currentData().tabBar;
 });
 
@@ -160,7 +164,7 @@ Template.RoomsActionMore.helpers({
 	...commonHelpers,
 });
 
-Template.RoomsActionMore.onCreated(function() {
+Template.RoomsActionMore.onCreated(function () {
 	this.tabBar = Template.currentData().tabBar;
 });
 
@@ -170,11 +174,13 @@ Template.RoomsActionTab.events({
 		$(e.currentTarget).blur();
 		e.preventDefault();
 		const buttons = TabBar.getButtons().filter((button) => filterButtons(button, t.anonymous, t.data.rid));
-		const groups = [{ items:(t.small.get() ? buttons : buttons.slice(TabBar.size)).map((item) => {
-			item.name = TAPi18n.__(item.i18nTitle);
-			item.action = action;
-			return item;
-		}) }];
+		const groups = [{
+			items: (t.small.get() ? buttons : buttons.slice(TabBar.size)).map((item) => {
+				item.name = TAPi18n.__(item.i18nTitle);
+				item.action = action;
+				return item;
+			})
+		}];
 		const columns = [groups];
 		columns[0] = { groups };
 		const config = {
@@ -194,10 +200,10 @@ Template.RoomsActionTab.events({
 	},
 });
 
-Template.RoomsActionTab.onDestroyed(function() {
+Template.RoomsActionTab.onDestroyed(function () {
 	$(window).off('resize', this.refresh);
 });
-Template.RoomsActionTab.onCreated(function() {
+Template.RoomsActionTab.onCreated(function () {
 	this.small = new ReactiveVar(window.matchMedia('(max-width: 500px)').matches);
 	this.refresh = _.throttle(() => {
 		this.small.set(window.matchMedia('(max-width: 500px)').matches);
@@ -224,17 +230,58 @@ Template.RoomsActionTab.helpers({
 		if (Template.instance().small.get()) {
 			return [];
 		}
+
+		//Finneg
 		const buttons = TabBar.getButtons()
 			.filter((button) => filterButtons(button, Template.instance().anonymous, Template.instance().data.rid));
+
+		buttons.forEach((element, i) => {
+			if (element.id == "channel-settings") {
+				buttons.splice(i, 1);
+			}
+			if (element.id == "threads") {
+				buttons.splice(i, 1);
+			}
+		});
+		
 		return buttons.length <= TabBar.size ? buttons : buttons.slice(0, TabBar.size);
+
+
 	},
 
 	moreButtons() {
 		if (Template.instance().small.get()) {
 			return true;
 		}
-		const buttons = TabBar.getButtons()
+
+		//const buttons = TabBar.getButtons()
+		//	.filter((button) => filterButtons(button, Template.instance().anonymous, Template.instance().data.rid));
+
+			let buttons = TabBar.getButtons()
 			.filter((button) => filterButtons(button, Template.instance().anonymous, Template.instance().data.rid));
+			
+			buttons.forEach((element, i) => {
+				if (element.id == "channel-settings") {
+					buttons.splice(i, 1);
+				}
+				if (element.id == "threads") {
+					buttons.splice(i, 1);
+				}
+			});
+			console.log(buttons)
 		return buttons.length > TabBar.size;
+
 	},
+
+	showButton(button) {
+		//console.log("Show")
+		//console.log(button)
+		return true;
+	},
+
+	test(but){
+		console.log("SDSAD")
+		console.log(but)
+		return true;
+	}
 });

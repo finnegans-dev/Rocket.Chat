@@ -26,6 +26,7 @@ Meteor.methods({
 			return username;
 		}
 
+		/* Finneg Validacion de usuarios
 		let nameValidation;
 		try {
 			nameValidation = new RegExp(`^${ settings.get('UTF8_Names_Validation') }$`);
@@ -36,6 +37,7 @@ Meteor.methods({
 		if (!nameValidation.test(username)) {
 			throw new Meteor.Error('username-invalid', `${ _.escape(username) } is not a valid username, use only letters, numbers, dots, hyphens and underscores`);
 		}
+		*/
 
 		if (!checkUsernameAvailability(username)) {
 			throw new Meteor.Error('error-field-unavailable', `<strong>${ _.escape(username) }</strong> is already in use :(`, { method: 'setUsername', field: username });

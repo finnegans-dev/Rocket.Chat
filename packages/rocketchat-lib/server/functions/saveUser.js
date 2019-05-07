@@ -64,6 +64,8 @@ function validateUserData(userId, userData) {
 		});
 	}
 
+
+	/*
 	let nameValidation;
 
 	try {
@@ -71,15 +73,16 @@ function validateUserData(userId, userData) {
 	} catch (e) {
 		nameValidation = new RegExp('^[0-9a-zA-Z-_.]+$');
 	}
-
-	if (userData.username && !nameValidation.test(userData.username)) {
+*/
+/*
+	if (userData.username) {
 		throw new Meteor.Error('error-input-is-not-a-valid-field', `${ _.escape(userData.username) } is not a valid username`, {
 			method: 'insertOrUpdateUser',
 			input: userData.username,
 			field: 'Username',
 		});
 	}
-
+*/
 	if (!userData._id && !userData.password) {
 		throw new Meteor.Error('error-the-field-is-required', 'The field Password is required', {
 			method: 'insertOrUpdateUser',

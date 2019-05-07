@@ -16,6 +16,14 @@ export const getAvatarUrlFromUsername = function(username) {
 	let path = pathPrefix;
 	if (cdnPrefix) {
 		path = cdnPrefix + pathPrefix;
+		
 	}
-	return `${ path }/avatar/${ encodeURIComponent(username) }?_dc=${ random }`;
+
+	path = __meteor_runtime_config__.ROOT_URL;
+	/*Finneg
+	*/
+	//return `${ path }/avatar/${ encodeURIComponent(username) }?_dc=${ random }`;
+	return `${ path }avatar/${ encodeURIComponent(username) }?_dc=${ random }`;
+
+	//return `${ path }/avatar/${ encodeURIComponent(username) }?_dc=${ random }`;
 };

@@ -9,6 +9,12 @@ import { KonchatNotification } from 'meteor/rocketchat:ui';
 import { Layout } from 'meteor/rocketchat:ui-utils';
 import s from 'underscore.string';
 
+
+import './loginGO.html'
+import './loginGO.js'
+import './registrarGO.html'
+import './registrarGO.js'
+
 Blaze.registerHelper('pathFor', function(path, kw) {
 	return FlowRouter.path(path, kw.hash);
 });
@@ -187,4 +193,24 @@ FlowRouter.notFound = {
 		BlazeLayout.render('pageNotFound');
 	},
 };
+
+/*
+Modificaciones Finneg
+*/
+
+FlowRouter.route('/loginGO/:token&email=:email', {
+	name: 'LoginGO',
+	action() {
+		console.log("LOGIn")
+		BlazeLayout.render('loginGO');
+	},
+});
+
+FlowRouter.route('/registrarGO/:token&email=:email', {
+	name: 'RegistrarGO',
+	action() {
+		BlazeLayout.render('registrarGO');
+	},
+
+});
 

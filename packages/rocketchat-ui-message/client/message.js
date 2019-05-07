@@ -126,6 +126,7 @@ Template.message.helpers({
 		return this.groupable !== false && !Template.instance().room.broadcast;
 	},
 	sequentialClass() {
+		
 		if (this.groupable !== false) {
 			return 'sequential';
 		}
@@ -139,13 +140,22 @@ Template.message.helpers({
 		return renderEmoji(emoji);
 	},
 	getName() {
+		//Finnegg
 		if (this.alias) {
 			return this.alias;
 		}
 		if (!this.u) {
 			return '';
 		}
-		return (settings.get('UI_Use_Real_Name') && this.u.name) || this.u.username;
+
+		let usernameFinneg = this.u.username.substring(0, this.u.username.indexOf('-'))
+		
+		if(usernameFinneg == ""){
+			usernameFinneg = this.u.username;
+		}
+		return usernameFinneg;
+
+		//return (settings.get('UI_Use_Real_Name') && this.u.name) || this.u.username;
 	},
 	showUsername() {
 		return this.alias || (settings.get('UI_Use_Real_Name') && this.u && this.u.name);
@@ -381,12 +391,25 @@ Template.message.helpers({
 	isSnippet() {
 		return this.actionContext === 'snippeted';
 	},
+	//Finneg 
+	//Saco los mensajes que se creo tema
+	isTema(){
+		//console.log(this)
+		if(this.t == 'thread-created'){
+			//console.log("Tema")
+			return false;
+		}else{
+			return true;
+		}
+		return true;
+	}
+
 });
 
 
 Template.message.onCreated(function() {
 	let msg = Template.currentData();
-
+	//console.log(msj)
 	this.wasEdited = (msg.editedAt != null) && !MessageTypes.isSystemMessage(msg);
 
 	this.room = Rooms.findOne({

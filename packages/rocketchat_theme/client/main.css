@@ -60,3 +60,109 @@
 
 /* RTL */
 @import 'imports/general/rtl.css';
+
+
+*:not(i):not(.fa) {
+	font-family: 'Montserrat' !important;
+}
+
+.sidebar{
+    background-color: #6A67CE !important;
+}
+
+.sidebar__toolbar-button.rc-tooltip.rc-tooltip--down.js-button {
+    color: #FFFF;
+}
+
+.rooms-list {
+    background-color: #273347;
+}
+
+.rooms-list__type-text {
+    color: #ffffff;
+    margin-top: 10px;
+}
+
+.sidebar-item__ellipsis {
+    color: #FFF;
+}
+
+.sidebar-light.sidebar--medium {
+    background-color: #273347;
+}
+
+.sidebar-item__room-type {
+    color: #FFFF;
+}
+
+.sidebar-item.sidebar-item--active {
+    background-color: #6A67CE;
+}
+
+.loading-animation{
+    background-color: #FFFF;
+}
+
+.bounce{
+    background-color: #6A67CE;
+}
+
+.sidebar-flex__title {
+    color: #FFF;
+}
+
+:root {
+--status-online: #3BE8B0 !important;
+--status-away: #FD9A00 !important;
+--status-busy: #E63B3B !important;
+--status-invisible: #8897A3 !important;
+--status-invisible-sidebar: #1B2432 !important;
+}
+
+section.rc-old.full-page.color-tertiary-font-color {
+    background: linear-gradient(to bottom,#f7b424 0,#f46569 100%);
+    background-image: linear-gradient(rgb(247, 180, 36) 0px, rgb(244, 101, 105) 100%);
+    background-position-x: initial;
+    background-position-y: initial;
+    background-size: initial;
+    background-repeat-x: initial;
+    background-repeat-y: initial;
+    background-attachment: initial;
+    background-origin: initial;
+    background-clip: initial;
+    background-color: initial;
+}
+
+form#login-card {
+    background-color: #3be8b0;
+}
+
+button.rc-button.rc-button--primary.login {
+    background-color: #ffd200;
+}
+
+.message .mention-link.mention-link-me {
+    background: #4F4DA7 !important;
+    color: #fff;
+    border-radius: 0px;
+}
+
+.rc-button.rc-button--nude.js-close {
+    margin-left: 200px;
+}
+
+.rc-button.rc-button--primary.js-confirm {
+    background-color: #4F4DA7;
+}
+
+.lista-usuarios.room-list {
+    padding-bottom: 0px;
+}
+
+.rooms-list {
+    padding-top: 20px;
+}
+
+h3.rooms-list__type {
+    color: white;
+}

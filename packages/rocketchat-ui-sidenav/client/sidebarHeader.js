@@ -74,7 +74,7 @@ const toolbarButtons = (user) => [{
 	action: () => {
 		toolbarSearch.show(false);
 	},
-},
+},/* Finneg
 {
 	name: t('Directory'),
 	icon: 'discover',
@@ -82,7 +82,7 @@ const toolbarButtons = (user) => [{
 		menu.close();
 		FlowRouter.go('directory');
 	},
-},
+},*/
 {
 	name: t('View_mode'),
 	icon: () => viewModeIcon[getUserPreference(user, 'sidebarViewMode') || 'condensed'],
@@ -173,6 +173,7 @@ const toolbarButtons = (user) => [{
 					groups: [
 						{
 							items: [
+								/* Finneg Solo permito que creen temas
 								{
 									icon: 'hashtag',
 									name: t('Channel'),
@@ -192,9 +193,11 @@ const toolbarButtons = (user) => [{
 										});
 									},
 								},
+								*/
 								{
 									icon: 'thread',
-									name: t('Thread'),
+									//name: t('Thread'),
+									name: t('Tema'),
 									action: (e) => {
 										e.preventDefault();
 										modal.open({
@@ -354,6 +357,8 @@ Template.sidebarHeader.events({
 									},
 								],
 							},
+							/* Finneg 
+							Cerrar sesion y mi cuenta
 							{
 								items: [
 									{
@@ -383,7 +388,7 @@ Template.sidebarHeader.events({
 										},
 									},
 								],
-							},
+							},*/
 						],
 					},
 				],

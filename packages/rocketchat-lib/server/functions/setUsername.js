@@ -13,6 +13,7 @@ export const _setUsername = function(userId, u) {
 	if (!userId || !username) {
 		return false;
 	}
+	/* Finneg Validacion usuario
 	let nameValidation;
 	try {
 		nameValidation = new RegExp(`^${ settings.get('UTF8_Names_Validation') }$`);
@@ -21,7 +22,7 @@ export const _setUsername = function(userId, u) {
 	}
 	if (!nameValidation.test(username)) {
 		return false;
-	}
+	}*/
 	const user = Users.findOneById(userId);
 	// User already has desired username, return
 	if (user.username === username) {
