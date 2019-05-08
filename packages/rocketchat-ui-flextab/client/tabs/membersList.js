@@ -113,9 +113,12 @@ Template.membersList.helpers({
 	},
 
 	canAddUser() {
+		/* Finneg boton de agregar en la lista
 		const roomData = Session.get(`roomData${ this._id }`);
 		if (!roomData) { return ''; }
 		return (() => roomTypes.roomTypes[roomData.t].canAddUser(roomData))();
+		*/
+		return false;
 	},
 
 	autocompleteSettingsAddUser() {

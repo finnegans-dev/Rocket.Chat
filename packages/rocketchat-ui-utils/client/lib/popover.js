@@ -41,6 +41,15 @@ Template.popover.helpers({
 	hasAction() {
 		return !!this.action;
 	},
+
+	//Finneg ocultar elementos de popuo
+	test(item){
+		if(item.id == 'threads' || item.id == 'favorite' || item.id == 'hide'){
+			return false;
+		}else{
+			return true;
+		}
+	}
 });
 
 Template.popover.onRendered(function() {

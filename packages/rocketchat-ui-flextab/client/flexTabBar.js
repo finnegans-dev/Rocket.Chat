@@ -8,6 +8,8 @@ import { popover, TabBar, Layout } from 'meteor/rocketchat:ui-utils';
 import { t } from 'meteor/rocketchat:utils';
 import _ from 'underscore';
 
+import { Rooms } from 'meteor/rocketchat:models';
+
 const commonHelpers = {
 	title() {
 		return t(this.i18nTitle) || this.title;
@@ -17,8 +19,7 @@ const commonHelpers = {
 			return 'active';
 		}
 	},
-	show(){
-		console.log(this)
+	show() {
 		return this.title != 'temas'
 	}
 };
@@ -232,6 +233,9 @@ Template.RoomsActionTab.helpers({
 		}
 
 		//Finneg
+		//Quito info de la sala y solo permito invitaciones a temas
+		let id = this.data.rid;
+		let room = Rooms.find({_id: id }).fetch();
 		const buttons = TabBar.getButtons()
 			.filter((button) => filterButtons(button, Template.instance().anonymous, Template.instance().data.rid));
 
@@ -239,11 +243,16 @@ Template.RoomsActionTab.helpers({
 			if (element.id == "channel-settings") {
 				buttons.splice(i, 1);
 			}
+			if(element.id == "addUsers"){
+				if(!room[0].prid){
+					buttons.splice(i,1);
+				}
+			}
 			if (element.id == "threads") {
 				buttons.splice(i, 1);
 			}
 		});
-		
+
 		return buttons.length <= TabBar.size ? buttons : buttons.slice(0, TabBar.size);
 
 
@@ -257,18 +266,18 @@ Template.RoomsActionTab.helpers({
 		//const buttons = TabBar.getButtons()
 		//	.filter((button) => filterButtons(button, Template.instance().anonymous, Template.instance().data.rid));
 
-			let buttons = TabBar.getButtons()
+		let buttons = TabBar.getButtons()
 			.filter((button) => filterButtons(button, Template.instance().anonymous, Template.instance().data.rid));
-			
-			buttons.forEach((element, i) => {
-				if (element.id == "channel-settings") {
-					buttons.splice(i, 1);
-				}
-				if (element.id == "threads") {
-					buttons.splice(i, 1);
-				}
-			});
-			console.log(buttons)
+
+		buttons.forEach((element, i) => {
+			if (element.id == "channel-settings") {
+				buttons.splice(i, 1);
+			}
+			if (element.id == "threads") {
+				buttons.splice(i, 1);
+			}
+		});
+
 		return buttons.length > TabBar.size;
 
 	},
@@ -279,7 +288,7 @@ Template.RoomsActionTab.helpers({
 		return true;
 	},
 
-	test(but){
+	test(but) {
 		console.log("SDSAD")
 		console.log(but)
 		return true;
