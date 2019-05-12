@@ -201,7 +201,7 @@ Modificaciones Finneg
 FlowRouter.route('/loginGO/:token&email=:email', {
 	name: 'LoginGO',
 	action() {
-		console.log("LOGIn")
+		console.log("LOGINGO")
 		BlazeLayout.render('loginGO');
 	},
 });

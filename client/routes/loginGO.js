@@ -21,10 +21,13 @@ Template.loginGO.onCreated(function () {
     window.localStorage.setItem("Meteor.loginToken:/:/chat", "");
 
     //console.log("URL: " + root.substring(0,root.lastIndexOf(`/c`)+1))
-    root = __meteor_runtime_config__.ROOT_URL;
-    
+    //root = __meteor_runtime_config__.ROOT_URL;
+    let rootTest = __meteor_runtime_config__.ROOT_URL;
+    console.log(rootTest);
+    console.log(rootTest.substring(0,rootTest.lastIndexOf(`/c`)+1))
     //url = root.substring(0,root.lastIndexOf(`/c`)+1);
-    root = 'http://localhost:3000/';
+    //console.log("URL " + root.substring(0,root.lastIndexOf(`/c`)+1))
+    //root = 'http://localhost:3000/';
     
     HTTP.call('GET', `${url}auth/token/info?access_token=${token}`, function (err, res) {
         if (err) {
@@ -73,8 +76,8 @@ Template.loginGO.onCreated(function () {
                                 //console.log(data)
                             }
                         })
-                        //window.localStorage.setItem("Meteor.loginToken:/:/chat", token);
-                        window.localStorage.setItem("Meteor.loginToken", token);
+                        window.localStorage.setItem("Meteor.loginToken:/:/chat", token);
+                        //window.localStorage.setItem("Meteor.loginToken", token);
                         window.localStorage.setItem("dominio", dominioLow);
                         window.localStorage.setItem("contexto", dominioLow);
                         FlowRouter.go(`/home`);

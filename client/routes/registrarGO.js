@@ -14,8 +14,8 @@ Template.registrarGO.onCreated(function () {
     //root = __meteor_runtime_config__.ROOT_URL;
     //root = "http://localhost:3000/";
 
-    root = __meteor_runtime_config__.ROOT_URL;
-    //url = root.substring(0,root.lastIndexOf(`/c`));
+    //root = __meteor_runtime_config__.ROOT_URL;
+    //url = root.substring(0, root.lastIndexOf(`/c`));
 
     HTTP.call('GET', `${root}api/v1/permisos`, function (err, res) {
         //console.log(err)
@@ -26,13 +26,13 @@ Template.registrarGO.onCreated(function () {
         if (err) {
             console.log("Error de Autenticacion")
         } else {
-            console.log(res)
+            //console.log(res)
             if (email == res.data.email) {
                 let dominio = res.data.domain;
 
                 HTTP.call('GET', `${url}api/1/users/${dominio}/${email}?access_token=${token}`, function (err, res) {
                     if (err) {
-                        console.log(err.toString())
+                        //console.log(err.toString())
                         console.log("Ha ocurrido un error")
                     } else {
                         let pass = "";
@@ -64,7 +64,7 @@ Template.registrarGO.onCreated(function () {
 
                         HTTP.post(`${root}api/v1/users.register`, { data: user }, function (err, data) {
                             if (err) {
-                                console.log("Error")
+                                //console.log("Error")
                                 console.log(err.toString())
                             } else {
                                 console.log("Usuario registrado correctamente")
