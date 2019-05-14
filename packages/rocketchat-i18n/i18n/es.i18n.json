@@ -2638,7 +2638,7 @@
   "User__username__removed_from__room_name__moderators": "El usuario __username__ fue removido de los moderadores de __room_name__ ",
   "User__username__removed_from__room_name__owners": "El usuario __username__ fue removido de los propietarios de __room_name__",
   "User_added": "Se ha unido al canal.",
-  "User_added_by": "Se ha unido al canal.",
+  "User_added_by": "El usuario <em>__user_added__</em> ha sido añadido",
   "User_added_successfully": "Usuario añadido correctamente",
   "User_and_group_mentions_only": "Usuario y grupo menciona solo",
   "User_default": "Usuario predeterminado",

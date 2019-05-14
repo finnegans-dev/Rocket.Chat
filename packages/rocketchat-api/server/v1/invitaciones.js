@@ -160,6 +160,7 @@ API.v1.addRoute('permisos', {
 
 API.v1.addRoute('ping', {
 	get() {
+		console.log("OK")
 		return API.v1.success({
 			status: 'OK',
 		});

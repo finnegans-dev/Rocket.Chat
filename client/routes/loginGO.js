@@ -21,11 +21,11 @@ Template.loginGO.onCreated(function () {
     window.localStorage.setItem("Meteor.loginToken:/:/chat", "");
 
     //console.log("URL: " + root.substring(0,root.lastIndexOf(`/c`)+1))
-    //root = __meteor_runtime_config__.ROOT_URL;
-    let rootTest = __meteor_runtime_config__.ROOT_URL;
-    console.log(rootTest);
-    console.log(rootTest.substring(0,rootTest.lastIndexOf(`/c`)+1))
-    //url = root.substring(0,root.lastIndexOf(`/c`)+1);
+    root = __meteor_runtime_config__.ROOT_URL;
+    //let rootTest = __meteor_runtime_config__.ROOT_URL;
+    //console.log(rootTest);
+    //console.log(rootTest.substring(0,rootTest.lastIndexOf(`/c`)+1))
+    url = root.substring(0,root.lastIndexOf(`/c`)+1);
     //console.log("URL " + root.substring(0,root.lastIndexOf(`/c`)+1))
     //root = 'http://localhost:3000/';
     
