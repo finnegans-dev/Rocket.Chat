@@ -82,6 +82,7 @@ Template.loginGO.onCreated(function () {
                         window.localStorage.setItem("contexto", dominioLow);
                         FlowRouter.go(`/home`);
                         Meteor.setTimeout(function(){
+                            console.log(__meteor_runtime_config__)
                             FlowRouter.go(`/group/${dominioLow}-${dominioLow}`);
                         },100)
                         
