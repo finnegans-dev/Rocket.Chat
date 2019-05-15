@@ -120,7 +120,7 @@ export class AppMessagesConverter {
 		if (typeof attachments === 'undefined' || !Array.isArray(attachments)) {
 			return undefined;
 		}
-
+		//ACA Puede estar la solucion
 		return attachments.map((attachment) => ({
 			collapsed: attachment.collapsed,
 			color: attachment.color,
