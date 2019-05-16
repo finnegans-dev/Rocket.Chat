@@ -10,12 +10,10 @@ Template.registrarGO.onCreated(function () {
     let url = 'https://go-test.finneg.com/'
     let root = 'https://go-test.finneg.com/chat/'
 
-    //url = __meteor_runtime_config__.ECO_URL;
-    //root = __meteor_runtime_config__.ROOT_URL;
-    root = "http://localhost:3000/";
 
-    //root = __meteor_runtime_config__.ROOT_URL;
-    //url = root.substring(0, root.lastIndexOf(`/c`)+1);
+    //root = "http://localhost:3000/";
+    root = __meteor_runtime_config__.ROOT_URL;
+    url = root.substring(0, root.lastIndexOf(`/c`) + 1);
 
     HTTP.call('GET', `${root}api/v1/permisos`, function (err, res) {
         //console.log(err)
