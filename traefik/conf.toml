@@ -27,6 +27,9 @@ defaultEntryPoints = ["http", "https"]
       passHostHeader = true
 
 [docker]
+##endpoint = "unix:///var/run/docker.sock"
+##domain = "docker.localhost"
+##exposedByDefault = false
 
 # Docker server endpoint. Can be a tcp or a unix socket endpoint.
 #

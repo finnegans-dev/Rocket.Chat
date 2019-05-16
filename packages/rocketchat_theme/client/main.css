@@ -166,3 +166,11 @@ button.rc-button.rc-button--primary.login {
 h3.rooms-list__type {
     color: white;
 }
+
+.avatar .avatar-image {
+    border-radius: 100px;   
+}
+
+label.rc-message-box__container {
+    border-radius: 30px;
+}

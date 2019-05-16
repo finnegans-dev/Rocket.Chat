@@ -12,6 +12,11 @@ const colors = {
 };
 
 Template.messageAttachment.helpers({
+	prefix(){
+		//console.log
+		return 'chat'
+		//return true;
+	},
 	parsedText() {
 		return renderMessageBody({
 			msg: this.text,
@@ -27,7 +32,7 @@ Template.messageAttachment.helpers({
 	},
 	loadImage() {
 		if (this.downloadImages !== true) {
-			const user = Users.findOne({ _id: Meteor.userId() }, { fields: { 'settings.autoImageLoad' : 1 } });
+			const user = Users.findOne({ _id: Meteor.userId() }, { fields: { 'settings.autoImageLoad': 1 } });
 			if (getUserPreference(user, 'autoImageLoad') === false) {
 				return false;
 			}
@@ -65,7 +70,7 @@ Template.messageAttachment.helpers({
 		return DateFormat.formatDateAndTime(this.ts);
 	},
 	injectIndex(data, previousIndex, index) {
-		data.index = `${ previousIndex }.attachments.${ index }`;
+		data.index = `${previousIndex}.attachments.${index}`;
 	},
 
 	isFile() {
