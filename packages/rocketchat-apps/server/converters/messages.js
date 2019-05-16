@@ -119,7 +119,7 @@ export class AppMessagesConverter {
 	_convertAppAttachments(attachments) {
 		if (typeof attachments === 'undefined' || !Array.isArray(attachments)) {
 			return undefined;
-		}
+		}console.log(attachments)
 		//ACA Puede estar la solucion
 		return attachments.map((attachment) => ({
 			collapsed: attachment.collapsed,
