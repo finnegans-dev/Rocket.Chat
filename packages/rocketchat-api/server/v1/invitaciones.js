@@ -163,6 +163,7 @@ API.v1.addRoute('ping', {
 		console.log("OK")
 		return API.v1.success({
 			status: 'OK',
+			v: '17'
 		});
 	}
 });

@@ -1,5 +1,5 @@
 <template name="headerRoom">
-	<header class="rc-header rc-header--room" >
+	<header class="rc-header rc-header--room">
 		<div class="rc-header__wrap">
 
 			<div class="rc-header__block rc-header--burger">
@@ -7,25 +7,31 @@
 			</div>
 
 			{{#if isThread}}
-				<div class="rc-header__block rc-header__block--action js-open-parent-channel">
-					<span class="rc-header__first-icon">{{> icon block="rc-header__icon rc-header__icon" icon="back"}}</span>
-				</div>
+			<div class="rc-header__block rc-header__block--action js-open-parent-channel">
+				<span
+					class="rc-header__first-icon">{{> icon block="rc-header__icon rc-header__icon" icon="back"}}</span>
+			</div>
 			{{/if}}
 
+			<!-- Finneg Favoritos
+			-->
 			{{#if showToggleFavorite}}
-				<div class="rc-header__block rc-header__favorite rc-header__block--action">
-					<a href="#favorite" class="rc-header__toggle-favorite rc-header__first-icon {{state}}">{{> icon block="rc-header__icon" icon="star"}}</a>
-				</div>
+
+			<div class="rc-header__block rc-header__favorite rc-header__block--action">
+				<a href="#favorite"
+					class="rc-header__toggle-favorite rc-header__first-icon {{state}}">{{> icon block="rc-header__icon" icon="star"}}</a>
+			</div>
+
 			{{/if}}
 
 
 			<!-- TODO: fix it style and helper -->
 			{{#if tokenAccessChannel}}
-				<i class="icon-tokenpass" aria-label="{{_ "Tokenpass_Channel_Label"}}"></i>
+			<i class="icon-tokenpass" aria-label="{{_ "Tokenpass_Channel_Label"}}"></i>
 			{{/if}}
 
 			{{#if encryptedChannel}}
-				<i class="icon-key" aria-label="{{_ "Encrypted_Channel_Label"}}"></i>
+			<i class="icon-key" aria-label="{{_ "Encrypted_Channel_Label"}}"></i>
 			{{/if}}
 			<div class="rc-header__content rc-header__block">
 				{{#if isDirect}}
@@ -38,14 +44,19 @@
 
 				<div class="rc-header__data">
 					{{#unless secondaryName}}
+					<!-- Finneg Nombre de contexto
 					<div class="rc-header__name">{{> icon block="rc-header__icon" icon=roomIcon}}{{roomName}}</div>
+					
+					
 					{{else}}
 					<div class="rc-header__name">{{roomName}} <div class="rc-header__username">@{{secondaryName}}</div></div>
+					-->
 					{{/unless}}
 
 					{{#if isDirect}}
 					<span class="rc-header__status">
-						<div class="rc-header__status-bullet rc-header__status-bullet--{{userStatus}}" title="{{_ userStatus}}"></div>
+						<div class="rc-header__status-bullet rc-header__status-bullet--{{userStatus}}"
+							title="{{_ userStatus}}"></div>
 						<div class="rc-header__visual-status">{{_ userStatus}}</div>
 					</span>
 					{{else}}

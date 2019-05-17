@@ -193,7 +193,10 @@
 	--sidebar-item-thumb-size-extended: 36px;
 	--sidebar-item-text-color: var(--color-gray);
 	--sidebar-item-background: inherit;
+	/*Finneg
 	--sidebar-item-hover-background: var(--rc-color-primary-darkest);
+	*/
+	--sidebar-item-hover-background: #80E6FF;
 	--sidebar-item-active-background: var(--rc-color-primary-dark);
 	--sidebar-item-active-color: var(--sidebar-item-text-color);
 	--sidebar-item-unread-color: var(--color-white);

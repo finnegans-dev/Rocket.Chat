@@ -74,17 +74,39 @@
     color: #FFFF;
 }
 
+header.sidebar__header {
+    background-color: #FFFF;
+}
+
+
 .rooms-list {
-    background-color: #273347;
+    background-color: #FFFF;
 }
 
 .rooms-list__type-text {
-    color: #ffffff;
+    color: #273347;
     margin-top: 10px;
 }
 
+.rooms-list__type{
+    background-color: #E8F7FB;
+}
+.rooms-list__list{
+    background-color: #E8F7FB;
+}
+
+.rooms-agrupada{
+    margin-top: 20px;
+    background-color: #E8F7FB;
+}
+
+
+svg.rc-icon.sidebar-item__icon.rc-icon--default-size.rc-icon--default-size--thread {
+    color: #1B2432;
+}
+
 .sidebar-item__ellipsis {
-    color: #FFF;
+    color: #1B2432;
 }
 
 .sidebar-light.sidebar--medium {
@@ -92,11 +114,25 @@
 }
 
 .sidebar-item__room-type {
-    color: #FFFF;
+    color: #273347;
+}
+
+h3.rooms-list__type {
+    padding-top: 10px;
+    background-color: #E8F7FB;
+    color: #273347;
 }
 
 .sidebar-item.sidebar-item--active {
-    background-color: #6A67CE;
+    background-color: #EBFCF7;
+}
+
+button.sidebar__toolbar-button.rc-tooltip.rc-tooltip--down.js-button {
+    color: #273347;
+}
+
+.sidebar-item:hover{
+    background-color: #80E6FF;
 }
 
 .loading-animation{
@@ -163,14 +199,11 @@ button.rc-button.rc-button--primary.login {
     padding-top: 20px;
 }
 
-h3.rooms-list__type {
-    color: white;
-}
 
 .avatar .avatar-image {
     border-radius: 100px;   
 }
 
 label.rc-message-box__container {
-    border-radius: 30px;
+    /*border-radius: 30px;*/
 }

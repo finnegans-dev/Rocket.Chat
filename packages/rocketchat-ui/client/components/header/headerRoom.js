@@ -133,7 +133,9 @@ Template.headerRoom.helpers({
 	},
 
 	showToggleFavorite() {
-		return !isThread(Template.instance().data) && isSubscribed(this._id) && favoritesEnabled();
+		//return !isThread(Template.instance().data) && isSubscribed(this._id) && favoritesEnabled();
+		//Finneg Favoritos
+		return false;
 	},
 
 	fixedHeight() {
