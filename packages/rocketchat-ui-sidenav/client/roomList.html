@@ -1,4 +1,7 @@
 <template name="roomList">
+
+	<button class="test">Contexto</button>
+
 	{{#if isLivechat}}
 	<div class="rooms-agrupada">
 		{{> livechat . }}
@@ -9,7 +12,7 @@
 	{{#if shouldAppear .. .}}
 	<div class="rooms-agrupada">
 
-		<h3 class="rooms-list__type">
+		<h3 class="rooms-list__type test">
 			<span class="rooms-list__type-text">{{_ ../label}}</span>
 			{{#if showRoomCounter}}
 			{{#with count}}
@@ -19,10 +22,13 @@
 			{{/with}}
 			{{/if}}
 		</h3>
-		<ul class="rooms-list__list {{ roomType ..}}">
+		<ul class="rooms-list__list {{ roomType ..}} test">
 			{{#each room in this}}
 
+			{{#if test room}}
 			{{> chatRoomItem room }}
+			{{/if}}
+
 
 			{{else}}
 			<p class="rooms-list__empty-room">{{_ noSubscriptionText }}</p>

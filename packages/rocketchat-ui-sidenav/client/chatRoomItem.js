@@ -25,6 +25,7 @@ Template.chatRoomItem.helpers({
 		const avatar = !icon;
 
 		//const name = roomTypes.getRoomName(this.t, this);
+		//console.log(this)
 		let { fname } = this;
 		let nameRoom;
 		if (this.t == 'd') {
@@ -42,7 +43,7 @@ Template.chatRoomItem.helpers({
 			...this,
 			icon,
 			avatar,
-			username : this.name,
+			username: this.name,
 			route: roomTypes.getRouteLink(this.t, this),
 			name: nameRoom,
 			unread,
@@ -67,7 +68,7 @@ Template.chatRoomItem.helpers({
 	//Finneg
 	dominio() {
 		let { fname } = this;
-		
+
 		//const onlineUsers = RoomManager.onlineUsers.get();
 		//console.log(onlineUsers)
 		//console.log(name);
@@ -87,11 +88,20 @@ Template.chatRoomItem.helpers({
 	}
 });
 
+Template.chatRoomItem.events({
+	'click .test ': function (event) {
+		console.log("ANTES: " + window.localStorage.getItem('dominio'));
+		window.localStorage.setItem('dominio', "test");
+		console.log("Luego: " + window.localStorage.getItem('dominio'));
+		this.dominio
+	}
+});
+
 callbacks.add('enter-room', (sub) => {
 	const items = $('.rooms-list .sidebar-item');
 	items.filter('.sidebar-item--active').removeClass('sidebar-item--active');
 	if (sub) {
-		items.filter(`[data-id=${ sub._id }]`).addClass('sidebar-item--active');
+		items.filter(`[data-id=${sub._id}]`).addClass('sidebar-item--active');
 	}
 	return sub;
 });

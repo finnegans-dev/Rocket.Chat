@@ -10,6 +10,8 @@ import { settings } from 'meteor/rocketchat:settings';
 import { hasAtLeastOnePermission } from 'meteor/rocketchat:authorization';
 import { menu } from 'meteor/rocketchat:ui-utils';
 
+import { Rooms } from 'meteor/rocketchat:models';
+
 Template.sidebarItem.helpers({
 	or(...args) {
 		args.pop();
@@ -36,6 +38,17 @@ Template.sidebarItem.helpers({
 	isLivechatQueue() {
 		return this.pathSection === 'livechat-queue';
 	},
+	//Finneg lista temas
+	temas() {
+		console.log(this)
+		if (this._id) {
+			let temas = Rooms.find({ prid: this.rid }).fetch();
+			console.log(temas)
+			return temas;
+		}else{
+			return;
+		}
+	}
 });
 
 function timeAgo(time) {
@@ -60,11 +73,13 @@ function setLastMessageTs(instance, ts) {
 	}, 60000);
 }
 
-Template.sidebarItem.onCreated(function() {
+Template.sidebarItem.onCreated(function () {
 	this.user = Users.findOne(Meteor.userId(), { fields: { username: 1 } });
 
 	this.lastMessageTs = new ReactiveVar();
 	this.timeAgoInterval;
+
+
 
 	// console.log('sidebarItem.onCreated');
 
@@ -92,7 +107,7 @@ Template.sidebarItem.onCreated(function() {
 		if (currentData.t === 'd' && Meteor.userId() !== currentData.lastMessage.u._id) {
 			this.renderedMessage = currentData.lastMessage.msg === '' ? t('Sent_an_attachment') : renderedMessage;
 		} else {
-			this.renderedMessage = currentData.lastMessage.msg === '' ? t('user_sent_an_attachment', { user: sender }) : `${ sender }: ${ renderedMessage }`;
+			this.renderedMessage = currentData.lastMessage.msg === '' ? t('user_sent_an_attachment', { user: sender }) : `${sender}: ${renderedMessage}`;
 		}
 	});
 });
@@ -105,7 +120,7 @@ Template.sidebarItem.events({
 		e.preventDefault();
 
 		const canLeave = () => {
-			const roomData = Session.get(`roomData${ this.rid }`);
+			const roomData = Session.get(`roomData${this.rid}`);
 
 			if (!roomData) { return false; }
 
@@ -197,7 +212,7 @@ Template.sidebarItemIcon.helpers({
 	},
 	status() {
 		if (this.t === 'd') {
-			return Session.get(`user_${ this.username }_status`) || 'offline';
+			return Session.get(`user_${this.username}_status`) || 'offline';
 		}
 
 		if (this.t === 'l') {

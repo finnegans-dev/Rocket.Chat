@@ -140,8 +140,32 @@ Template.roomList.helpers({
 		} else {
 			return false;
 		}
+	},
+	test(room){
+		let { fname } = room;
+
+		//const onlineUsers = RoomManager.onlineUsers.get();
+		//console.log(onlineUsers)
+		//console.log(name);
+		let dominioURL = window.localStorage.getItem('dominio');
+		let dominio = fname.substring(0, fname.indexOf('-'));
+
+		if (fname[0] == fname[0].toUpperCase()) {
+			return true;
+		}
+		if (dominio != "") {
+			return dominio == dominioURL.toLowerCase();
+		} else {
+			return true;
+		}
 	}
 
+});
+
+Template.roomList.events({
+	'click .test ': function (event) {
+		console.log(event)
+	}
 });
 
 const getLowerCaseNames = (room, nameDefault = '', fnameDefault = '') => {
