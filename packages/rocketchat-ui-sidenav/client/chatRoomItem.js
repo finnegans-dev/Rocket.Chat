@@ -68,10 +68,10 @@ Template.chatRoomItem.helpers({
 	//Finneg
 	dominio() {
 		let { fname } = this;
-
-		//const onlineUsers = RoomManager.onlineUsers.get();
-		//console.log(onlineUsers)
-		//console.log(name);
+		
+		if(this.prid){
+			return false;
+		}
 		let dominioURL = window.localStorage.getItem('dominio');
 		let dominio = fname.substring(0, fname.indexOf('-'));
 
@@ -90,10 +90,10 @@ Template.chatRoomItem.helpers({
 
 Template.chatRoomItem.events({
 	'click .test ': function (event) {
-		console.log("ANTES: " + window.localStorage.getItem('dominio'));
-		window.localStorage.setItem('dominio', "test");
-		console.log("Luego: " + window.localStorage.getItem('dominio'));
-		this.dominio
+		//console.log("ANTES: " + window.localStorage.getItem('dominio'));
+		//window.localStorage.setItem('dominio', "test");
+		//console.log("Luego: " + window.localStorage.getItem('dominio'));
+		//this.dominio
 	}
 });
 

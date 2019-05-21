@@ -118,6 +118,7 @@ Template.roomList.helpers({
 			//console.log(room)
 			return `type-${room.header || room.identifier}`;
 		}
+
 		/*
 		if (room.header || room.identifier) {
 			return `type-${ room.header || room.identifier }`;
@@ -133,38 +134,13 @@ Template.roomList.helpers({
 	showRoomCounter() {
 		return getUserPreference(Meteor.userId(), 'roomCounterSidebar');
 	},
-
-	isNotChannel(room) {
-		if (room.identifier != "c") {
-			return true;
-		} else {
-			return false;
-		}
-	},
-	test(room){
-		let { fname } = room;
-
-		//const onlineUsers = RoomManager.onlineUsers.get();
-		//console.log(onlineUsers)
-		//console.log(name);
-		let dominioURL = window.localStorage.getItem('dominio');
-		let dominio = fname.substring(0, fname.indexOf('-'));
-
-		if (fname[0] == fname[0].toUpperCase()) {
-			return true;
-		}
-		if (dominio != "") {
-			return dominio == dominioURL.toLowerCase();
-		} else {
-			return true;
-		}
-	}
-
 });
 
 Template.roomList.events({
 	'click .test ': function (event) {
 		console.log(event)
+		let temas = $('.context .temas-contexto').toggleClass('expandir')
+		
 	}
 });
 

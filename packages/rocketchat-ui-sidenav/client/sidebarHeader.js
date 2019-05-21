@@ -173,7 +173,7 @@ const toolbarButtons = (user) => [{
 					groups: [
 						{
 							items: [
-								/* Finneg Solo permito que creen temas*/
+								/* Finneg Solo permito que creen temas
 								{
 									icon: 'hashtag',
 									name: t('Channel'),
@@ -193,7 +193,7 @@ const toolbarButtons = (user) => [{
 										});
 									},
 								},
-								//*/
+								*/
 								{
 									icon: 'thread',
 									//name: t('Thread'),

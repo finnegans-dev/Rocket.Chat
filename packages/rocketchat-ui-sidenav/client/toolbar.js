@@ -119,7 +119,6 @@ const getFromServer = (cb, type) => {
 				if (alreadyOnClient) {
 					continue;
 				}
-
 				//Finneg
 				// No muetra los canales
 				if (results.rooms[i].t != 'c') {

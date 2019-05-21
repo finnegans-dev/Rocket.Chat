@@ -40,14 +40,19 @@ Template.sidebarItem.helpers({
 	},
 	//Finneg lista temas
 	temas() {
-		console.log(this)
 		if (this._id) {
 			let temas = Rooms.find({ prid: this.rid }).fetch();
-			console.log(temas)
 			return temas;
-		}else{
+		} else {
 			return;
 		}
+	},
+	nombreTema(tema) {
+		let name = tema.substring(tema.indexOf('-') + 1, tema.length);
+		return name
+	},
+	showTemas(){
+		return true;
 	}
 });
 
@@ -115,6 +120,20 @@ Template.sidebarItem.onCreated(function () {
 Template.sidebarItem.events({
 	'click [data-id], click .sidebar-item__link'() {
 		return menu.close();
+	},
+	'click .context'(e){
+		//console.log(e.currentTarget.innerHTML);
+		let a = e.currentTarget.className;
+		//console.log(a)
+		let test = $('.context li')
+		//console.log(test)
+		for(let i=0; i<test.length; i++){
+			//console.log(test[i])
+			
+		}
+		//console.log(test);
+		//let find = test.find('.temas-contexto');
+		//console.log(find)
 	},
 	'click .sidebar-item__menu'(e) {
 		e.preventDefault();

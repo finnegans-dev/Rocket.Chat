@@ -196,9 +196,12 @@ button.rc-button.rc-button--primary.login {
 }
 
 .rooms-list {
-    padding-top: 20px;
+    padding-top: 0px;
 }
 
+.temas:hover{
+    background-color: #80E6FF;
+}
 
 .avatar .avatar-image {
     border-radius: 100px;   
