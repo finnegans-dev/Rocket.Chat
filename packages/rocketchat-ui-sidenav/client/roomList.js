@@ -139,7 +139,8 @@ Template.roomList.helpers({
 Template.roomList.events({
 	'click .test ': function (event) {
 		console.log(event)
-		let temas = $('.context .temas-contexto').toggleClass('expandir')
+		let temas = $('.context .temas-contexto').removeClass('expandir')
+		
 		
 	}
 });
