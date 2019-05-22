@@ -10,7 +10,7 @@ import { call } from 'meteor/rocketchat:ui-utils';
 
 import { TAPi18n } from 'meteor/tap:i18n';
 import toastr from 'toastr';
-
+import { HTTP } from 'meteor/http'
 
 Template.CreateThread.helpers({
 
@@ -86,11 +86,18 @@ Template.CreateThread.helpers({
 	channelName() {
 		return Template.instance().threadName.get();
 	},
+	threadPrivate(){
+		return Template.instance().threadPrivate.get();
+	}
 });
 
 Template.CreateThread.events({
 	'input #thread_name'(e, t) {
 		t.threadName.set(e.target.value);
+	},
+	'change .js-input-check'(e,t) {
+		//console.log(e.currentTarget.checked)
+		t.threadPrivate.set(e.currentTarget.checked)
 	},
 	'input #thread_message'(e, t) {
 		const { value } = e.target;
@@ -110,6 +117,9 @@ Template.CreateThread.events({
 		const prid = instance.parentChannelId.get();
 		const reply = instance.reply.get();
 
+		//Tema privado
+		console.log( instance.threadPrivate.get())
+
 		if (!prid) {
 			const errorText = TAPi18n.__('Invalid_room_name', `${ parentChannel }...`);
 			return toastr.error(errorText);
@@ -119,10 +129,22 @@ Template.CreateThread.events({
 		callbacks.run('afterCreateThread', Meteor.user(), result);
 
 		if (instance.data.onCreate) {
+			console.log(result)
+			if(!instance.threadPrivate.get()){
+				HTTP.call('POST', `api/v1/invitacionesTemas/${result.prid}/${result.rid}`, function (err, res) {
+					if (err) {
+						console.log(err)
+						console.log("Error de Autenticacion")
+					} else {
+
+					}
+				});
+			}
 			instance.data.onCreate(result);
 		}
 
 		roomTypes.openRouteLink(result.t, result);
+		
 	},
 });
 
@@ -155,6 +177,7 @@ Template.CreateThread.onCreated(function() {
 
 	this.reply = new ReactiveVar('');
 
+	this.threadPrivate = new ReactiveVar(false);
 
 	this.selectedRoom = new ReactiveVar(room ? [room] : []);
 

@@ -134,14 +134,33 @@ Template.roomList.helpers({
 	showRoomCounter() {
 		return getUserPreference(Meteor.userId(), 'roomCounterSidebar');
 	},
+
 });
 
 Template.roomList.events({
-	'click .test ': function (event) {
-		console.log(event)
-		let temas = $('.context .temas-contexto').removeClass('expandir')
+	'click .rooms-list__list.type-p .test ': function (event) {
 		
+		let nombreSala = event.currentTarget.className;
+		let name = nombreSala.substring(nombreSala.indexOf('-') + 1, nombreSala.length);
+		$('.rooms-list__type-text.Contextos')[0].innerHTML = name.toUpperCase();
+		console.log(nombreSala.substring(nombreSala.indexOf(' ')+1, nombreSala.length))
+		//Cambio nombre al contexto y lo pongo como general
+		console.log($("." + nombreSala.substring(nombreSala.indexOf(' ')+1, nombreSala.length)))
+
+		//Temas
+		$('.context .temas-contexto').addClass('cerrar');
+		let clase = '.'+event.currentTarget.classList[0]+'.'+event.currentTarget.classList[1] + ' .context .temas-contexto.cerrar';
+		$(clase).removeClass('cerrar')
 		
+		//Contextos
+		clase = '.rooms-list__list.type-p .' + event.currentTarget.classList[0] + '.'+ event.currentTarget.classList[1];
+		$('.rooms-list__list.type-p .test').addClass('contexto-noactivo')
+		$(clase).removeClass('contexto-noactivo')
+	}, 
+	'click .clickTitulo': function(event){
+		$('.rooms-list__type-text.Contextos')[0].innerHTML = "Contextos"
+		$('.rooms-list__list.type-p .test').removeClass('contexto-noactivo')
+		$('.context .temas-contexto').addClass('cerrar');
 	}
 });
 

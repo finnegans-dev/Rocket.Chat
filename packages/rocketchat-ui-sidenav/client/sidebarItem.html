@@ -24,8 +24,10 @@
 				<div class=" {{#if isRoom}}sidebar-item__picture{{else}}sidebar-item-option-icon{{/if}}">
 					{{#if darken}}
 					{{#if icon}}
-					<div class="{{#if isRoom}}sidebar-item__room-type{{else}}sidebar-item__icon{{/if}}">
+					<div class="{{#if isRoom}}sidebar-item__room-type{{else}}sidebar-item__icon{{/if}}" style="display: none">
+						
 						{{> icon block="sidebar-item__icon rc-icon--default-size" icon=icon}}
+						
 					</div>
 					{{/if}}
 					{{else}}
@@ -34,6 +36,7 @@
 					</div>
 					{{/if}}
 				</div>
+				
 				{{/unless}}
 				<div class="sidebar-item__body">
 					{{# let extended=isExtendedViewMode}}
@@ -83,7 +86,7 @@
 		<!--Finneg Lista de Temas-->
 
 		{{#if showTemas}}
-		<div class="temas-contexto" style="margin-left:60px">
+		<div class="temas-contexto cerrar" style="margin-left:17px">
 			{{#each item in temas}}
 
 			<a class="sidebar-item__link temas" href="/group/{{item.name}}">

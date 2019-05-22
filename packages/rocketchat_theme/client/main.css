@@ -119,8 +119,12 @@ svg.rc-icon.sidebar-item__icon.rc-icon--default-size.rc-icon--default-size--thre
 
 h3.rooms-list__type {
     padding-top: 10px;
-    background-color: #E8F7FB;
+    background-color: rgb(164, 182, 187);
     color: #273347;
+    font-size: 16px;
+}
+h3.rooms-list__type:hover {
+    cursor: pointer;
 }
 
 .sidebar-item.sidebar-item--active {
@@ -209,4 +213,16 @@ button.rc-button.rc-button--primary.login {
 
 label.rc-message-box__container {
     /*border-radius: 30px;*/
+}
+
+.contexto-noactivo{
+    display: none;
+}
+
+.cerrar{
+    display: none;
+}
+
+svg.rc-icon.rc-icon--default-size.sidebar-item__icon.sidebar-item__icon--lock {
+    display: none;
 }

@@ -2808,7 +2808,7 @@
   "thread": "thread",
   "Threading_context_menu_button": "Dedicated button",
   "Threading_context_menu_none": "Invisible",
-  "Threading_description": "Al crear un hilo, se crea un subcanal del que seleccionó y ambos están vinculados.",
+  "Threading_description": "Al crear un tema, se crea un subcanal del que seleccionó y ambos están vinculados.",
   "Threading_first_message_title": "Su mensaje",
   "Threads_in_sidebar": "Show threads category on sidebar",
   "Threads": "Threads",

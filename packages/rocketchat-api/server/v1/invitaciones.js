@@ -4,6 +4,8 @@ import { Rooms } from 'meteor/rocketchat:models';
 import { API } from '../api';
 import { HTTP } from 'meteor/http'
 import _ from 'underscore';
+import { Subscriptions } from 'meteor/rocketchat:models';
+
 //APIS Invitaciones
 /*Finneg
 */
@@ -96,6 +98,32 @@ API.v1.addRoute('invitacionesLogin/:idUser/:dominio/:contexto', {
 	}
 });
 
+
+API.v1.addRoute('invitacionesTemas/:roomId/:temaId', {
+	post() {
+		let roomId = this.urlParams.roomId;
+		let temaId = this.urlParams.temaId;
+		const subscriptions = Subscriptions.findByRoomId(roomId, {
+			fields: { 'u._id': 1 },
+		});
+
+		const members = subscriptions.fetch().map((s) => s.u && s.u._id);
+
+		members.forEach(element => {
+			const { _id: rid, t: type } = Rooms.findOneByIdOrName(temaId);
+			if (!rid || type !== 'p') {
+				throw new Meteor.Error('error-room-not-found', 'The required "roomId" or "roomName" param provided does not match any group');
+			}
+
+			Meteor.runAsUser(element, () => Meteor.call('addUserToRoom', { rid, element }));
+		})
+
+		return API.v1.success({
+			status: 'ok'
+		});
+	}
+})
+
 API.v1.addRoute('administrador/:token/:dominio/:idUsuario/:roomId', {
 	post() {
 		let token = this.urlParams.token;
@@ -128,7 +156,7 @@ API.v1.addRoute('addBot/:idRoom', {
 			throw new Meteor.Error('error-room-not-found', 'The required "roomId" or "roomName" param provided does not match any group');
 		}
 		const { username } = Users.findOneById(idUserBot)
-		
+
 		Meteor.runAsUser(idUserBot, () => Meteor.call('addUserToRoom', { rid, username }));
 
 
@@ -141,7 +169,7 @@ API.v1.addRoute('addBot/:idRoom', {
 
 API.v1.addRoute('permisos', {
 	get() {
-		let permisos = [{ "_id": "add-user-to-any-p-room", "roles": ["admin", "user","bot"] },
+		let permisos = [{ "_id": "add-user-to-any-p-room", "roles": ["admin", "user", "bot"] },
 		{ "_id": "call-management", "roles": ["admin", "user"] },
 		{ "_id": "create-p", "roles": ["admin", "user"] },
 		{ "_id": "create-d", "roles": ["admin", "user"] }]
