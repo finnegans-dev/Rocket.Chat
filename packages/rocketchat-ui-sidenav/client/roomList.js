@@ -137,30 +137,60 @@ Template.roomList.helpers({
 
 });
 
+Template.roomList.onCreated(function() {
+	this.clase = new ReactiveVar('');
+	this.nameSala = new ReactiveVar('');
+});
+
 Template.roomList.events({
-	'click .rooms-list__list.type-p .test ': function (event) {
+	'click .rooms-list__list.type-p .test ': function (event, instance) {
 		
 		let nombreSala = event.currentTarget.className;
 		let name = nombreSala.substring(nombreSala.indexOf('-') + 1, nombreSala.length);
 		$('.rooms-list__type-text.Contextos')[0].innerHTML = name.toUpperCase();
-		console.log(nombreSala.substring(nombreSala.indexOf(' ')+1, nombreSala.length))
 		//Cambio nombre al contexto y lo pongo como general
-		console.log($("." + nombreSala.substring(nombreSala.indexOf(' ')+1, nombreSala.length)))
-
+		
 		//Temas
 		$('.context .temas-contexto').addClass('cerrar');
 		let clase = '.'+event.currentTarget.classList[0]+'.'+event.currentTarget.classList[1] + ' .context .temas-contexto.cerrar';
 		$(clase).removeClass('cerrar')
 		
+		
 		//Contextos
 		clase = '.rooms-list__list.type-p .' + event.currentTarget.classList[0] + '.'+ event.currentTarget.classList[1];
 		$('.rooms-list__list.type-p .test').addClass('contexto-noactivo')
 		$(clase).removeClass('contexto-noactivo')
+		
+		//Avatares
+		clase = '.'+event.currentTarget.classList[0]+'.'+event.currentTarget.classList[1] + ' .context .icon-contexto.cerrar';
+		$(clase).removeClass('cerrar')
+		clase = '.'+event.currentTarget.classList[0]+'.'+event.currentTarget.classList[1] + ' .context .sidebar-item__picture.avatar-contexto';
+		$(clase).addClass('cerrar')
+
+		//Name
+		//sidebar-item__ellipsis
+		
+		clase = '.'+event.currentTarget.classList[0]+'.'+event.currentTarget.classList[1] + ' .context .sidebar-item__ellipsis';
+			
+		if($(clase)[0].innerHTML!="General"){
+			instance.clase.set(clase);
+			instance.nameSala.set($(clase)[0].innerHTML);
+			$(clase)[0].innerHTML = "General"
+		}
+		
+		
 	}, 
-	'click .clickTitulo': function(event){
+	'click .clickTitulo': function(event, instance){
 		$('.rooms-list__type-text.Contextos')[0].innerHTML = "Contextos"
 		$('.rooms-list__list.type-p .test').removeClass('contexto-noactivo')
 		$('.context .temas-contexto').addClass('cerrar');
+		//Avatares
+		$('.context .icon-contexto').addClass('cerrar')
+		//sidebar-item__picture avatar-contexto cerrar
+		$('.context .sidebar-item__picture.avatar-contexto.cerrar').removeClass('cerrar')
+		
+		//Nombre
+		$(instance.clase.get())[0].innerHTML = instance.nameSala.get();
 	}
 });
 

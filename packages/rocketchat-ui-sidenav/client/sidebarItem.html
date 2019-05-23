@@ -21,13 +21,25 @@
 				aria-label="{{name}}">
 				{{#unless isLivechatQueue}}
 
-				<div class=" {{#if isRoom}}sidebar-item__picture{{else}}sidebar-item-option-icon{{/if}}">
+				<div class="icon-contexto cerrar">
+					<div class="sidebar-item__picture">
+						<div class="sidebar-item__room-type">
+							<svg class="rc-icon sidebar-item__icon rc-icon--default-size rc-icon--default-size--thread"
+								aria-hidden="true">
+								<use xlink:href="#icon-thread"></use>
+							</svg>
+						</div>
+					</div>
+				</div>
+
+				<div class=" {{#if isRoom}}sidebar-item__picture{{else}}sidebar-item-option-icon{{/if}} avatar-contexto">
 					{{#if darken}}
 					{{#if icon}}
-					<div class="{{#if isRoom}}sidebar-item__room-type{{else}}sidebar-item__icon{{/if}}" style="display: none">
-						
+					<div class="{{#if isRoom}}sidebar-item__room-type{{else}}sidebar-item__icon{{/if}}"
+						style="display: none">
+
 						{{> icon block="sidebar-item__icon rc-icon--default-size" icon=icon}}
-						
+
 					</div>
 					{{/if}}
 					{{else}}
@@ -36,7 +48,7 @@
 					</div>
 					{{/if}}
 				</div>
-				
+
 				{{/unless}}
 				<div class="sidebar-item__body">
 					{{# let extended=isExtendedViewMode}}
@@ -86,10 +98,10 @@
 		<!--Finneg Lista de Temas-->
 
 		{{#if showTemas}}
-		<div class="temas-contexto cerrar" style="margin-left:17px">
+		<div class="temas-contexto cerrar" style="margin-left:25px">
 			{{#each item in temas}}
 
-			<a class="sidebar-item__link temas" href="/group/{{item.name}}">
+			<a class="sidebar-item__link temas" href="/chat/group/{{item.name}}">
 				<div class="sidebar-item__picture">
 					<div class="sidebar-item__room-type">
 						<svg class="rc-icon sidebar-item__icon rc-icon--default-size rc-icon--default-size--thread"

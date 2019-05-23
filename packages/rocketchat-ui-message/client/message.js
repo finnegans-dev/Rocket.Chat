@@ -391,19 +391,6 @@ Template.message.helpers({
 	isSnippet() {
 		return this.actionContext === 'snippeted';
 	},
-	//Finneg 
-	//Saco los mensajes que se creo tema
-	isTema(){
-		//console.log(this)
-		if(this.t == 'thread-created'){
-			//console.log("Tema")
-			return false;
-		}else{
-			return true;
-		}
-		return true;
-	}
-
 });
 
 

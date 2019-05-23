@@ -226,3 +226,10 @@ label.rc-message-box__container {
 svg.rc-icon.rc-icon--default-size.sidebar-item__icon.sidebar-item__icon--lock {
     display: none;
 }
+.thread-created{
+    display: none;
+}
+
+.own{
+    margin-left: 475px;
+}

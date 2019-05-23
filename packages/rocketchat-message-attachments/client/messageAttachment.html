@@ -54,7 +54,7 @@
 			</div>
 			{{/if}}
 			{{/if}}
-			{{#if title}}
+			{{#if title}} 
 			<!-- Finneg Titulo adjuntios
 				<div class="attachment-title">
 					{{#if title_link}}
@@ -64,7 +64,7 @@
 						{{/if}}
 					{{else}}
 						{{title}}
-					{{/if}}
+					{{/if}} 
 					{{#if collapsed}}
 						<span class="collapse-switch icon-right-dir" data-index="{{index}}" data-collapsed="{{collapsed}}"></span>
 					{{else}}
@@ -78,7 +78,7 @@
 			<div class="attachment-flex">
 				{{#if thumb_url}}
 				<div class="attachment-thumb">
-					<img src="{{prefix}}{{thumb_url}}">
+					<img src="{{thumb_url}}">
 				</div>
 				{{/if}}
 
@@ -109,7 +109,7 @@
 					{{/if}}
 				</figure>
 				{{else}}
-				<div class="image-to-download" data-url="{{prefix}}{{image_url}}">
+				<div class="image-to-download" data-url="{{image_url}}">
 					<i class="icon-picture"></i>
 					<div>click to load</div>
 				</div>
@@ -122,7 +122,8 @@
 			{{#unless mediaCollapsed}}
 			<div class="attachment-audio">
 				<audio controls>
-					<source src="{{prefix}}{{audio_url}}" type="{{audio_type}}" data-description="{{description}}">
+					<!--Finneg-->
+					<source src="/chat{{audio_url}}" type="{{audio_type}}" data-description="{{description}}">
 					Your browser does not support the audio element.
 				</audio>
 			</div>
@@ -133,7 +134,8 @@
 			{{#unless mediaCollapsed}}
 			<div class="attachment-video">
 				<video controls class="inline-video">
-					<source src="{{prefix}}{{video_url}}" type="{{video_type}}" data-description="{{description}}">
+					<!--Finneg-->
+					<source src="/chat{{video_url}}" type="{{video_type}}" data-description="{{description}}">
 					Your browser does not support the video element.
 				</video>
 			</div>

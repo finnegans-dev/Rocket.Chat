@@ -98,7 +98,7 @@ API.v1.addRoute('invitacionesLogin/:idUser/:dominio/:contexto', {
 	}
 });
 
-
+//Invitacion de temas
 API.v1.addRoute('invitacionesTemas/:roomId/:temaId', {
 	post() {
 		let roomId = this.urlParams.roomId;
@@ -109,13 +109,13 @@ API.v1.addRoute('invitacionesTemas/:roomId/:temaId', {
 
 		const members = subscriptions.fetch().map((s) => s.u && s.u._id);
 
+		const { _id: rid, t: type } = Rooms.findOneByIdOrName(temaId);
+		if (!rid || type !== 'p') {
+			throw new Meteor.Error('error-room-not-found', 'The required "roomId" or "roomName" param provided does not match any group');
+		}
 		members.forEach(element => {
-			const { _id: rid, t: type } = Rooms.findOneByIdOrName(temaId);
-			if (!rid || type !== 'p') {
-				throw new Meteor.Error('error-room-not-found', 'The required "roomId" or "roomName" param provided does not match any group');
-			}
-
-			Meteor.runAsUser(element, () => Meteor.call('addUserToRoom', { rid, element }));
+			const { username } = Users.findOneById(element)
+			Meteor.runAsUser(element, () => Meteor.call('addUserToRoom', { rid, username }));
 		})
 
 		return API.v1.success({

@@ -146,6 +146,7 @@ const toolbarButtons = (user) => [{
 		popover.open(config);
 	},
 },
+/* Vista
 {
 	name: t('Sort'),
 	icon: 'sort',
@@ -161,7 +162,7 @@ const toolbarButtons = (user) => [{
 		};
 		popover.open(config);
 	},
-},
+},*/
 {
 	name: t('Create_A_New_Channel'),
 	icon: 'edit-rounded',
@@ -173,7 +174,7 @@ const toolbarButtons = (user) => [{
 					groups: [
 						{
 							items: [
-								/* Finneg Solo permito que creen temas*/
+								/* Finneg Solo permito que creen temas
 								{
 									icon: 'hashtag',
 									name: t('Channel'),
@@ -192,8 +193,8 @@ const toolbarButtons = (user) => [{
 											// confirmButtonText: t('Close'),
 										});
 									},
-								},
-								/**/
+								},*/
+								
 								{
 									icon: 'thread',
 									//name: t('Thread'),

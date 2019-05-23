@@ -118,7 +118,7 @@ Template.CreateThread.events({
 		const reply = instance.reply.get();
 
 		//Tema privado
-		console.log( instance.threadPrivate.get())
+		
 
 		if (!prid) {
 			const errorText = TAPi18n.__('Invalid_room_name', `${ parentChannel }...`);
@@ -129,14 +129,14 @@ Template.CreateThread.events({
 		callbacks.run('afterCreateThread', Meteor.user(), result);
 
 		if (instance.data.onCreate) {
-			console.log(result)
+			
 			if(!instance.threadPrivate.get()){
 				HTTP.call('POST', `api/v1/invitacionesTemas/${result.prid}/${result.rid}`, function (err, res) {
 					if (err) {
 						console.log(err)
 						console.log("Error de Autenticacion")
 					} else {
-
+						console.log("OK")
 					}
 				});
 			}
