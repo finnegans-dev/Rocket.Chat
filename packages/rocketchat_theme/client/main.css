@@ -230,6 +230,28 @@ svg.rc-icon.rc-icon--default-size.sidebar-item__icon.sidebar-item__icon--lock {
     display: none;
 }
 
-.own{
-    margin-left: 475px;
+@media (min-width: 1281px) {
+    .message{
+        width: 550px;
+    }
+    .own{
+        margin-left: 475px;
+    }
+}
+
+@media (max-width: 767px){
+    .own{
+        margin-left: 70px;
+    }
+    .body.color-primary-font-color {
+        width: 120%;
+    }
+}
+
+@media (min-width: 767px) and (max-width: 1281px){
+    .own{
+        margin-left: 300px;
+        width: 200px;
+        width: 120%;
+    }
 }

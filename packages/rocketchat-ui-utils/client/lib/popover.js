@@ -44,7 +44,7 @@ Template.popover.helpers({
 
 	//Finneg ocultar elementos de popuo
 	test(item){
-		if(item.id == 'threads' || item.id == 'favorite' || item.id == 'hide'){
+		if(item.id == 'threads' || item.id == 'favorite' || item.id == 'hide' || item.id == 'start-thread'){
 			return false;
 		}else{
 			return true;

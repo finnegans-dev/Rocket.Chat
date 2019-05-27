@@ -375,12 +375,15 @@ Template.messageBox.events({
 					groups: Object.keys(groups).map((group) => {
 						const items = [];
 						groups[group].forEach((item) => {
-							items.push({
-								icon: item.icon,
-								name: t(item.label),
-								type: 'messagebox-action',
-								id: item.id,
-							});
+							/** Finneg Saco la parte de crear temas de aca */
+							if(item.id !="start-thread"){
+								items.push({
+									icon: item.icon,
+									name: t(item.label),
+									type: 'messagebox-action',
+									id: item.id,
+								});
+							}	
 						});
 						return {
 							title: t(group),

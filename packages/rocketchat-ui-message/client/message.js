@@ -507,3 +507,9 @@ Template.message.onViewRendered = function(context) {
 		}
 	});
 };
+
+Template.message.events({
+	'click .message'(event) {
+		console.log(event)
+	}
+});

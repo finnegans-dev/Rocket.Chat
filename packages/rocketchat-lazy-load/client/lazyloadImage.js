@@ -13,16 +13,27 @@ Template.lazyloadImage.helpers({
 	},
 
 	srcUrl() {
+		
+		let url = this.src;
+		if(url[0]!= 'h'){
+			return '/chat' + this.src;
+		}
+		
 		return this.src;
 	},
 
 	lazySrcUrl() {
 		const { preview, placeholder, src } = this;
 
+		/* Finneg Fix avatar*/
+
+		if(this.placeholder){
+			return this.src;
+		}
+		/*
 		if (Template.instance().loaded.get() || (!preview && !placeholder)) {
 			return src;
-		}
-
+		}*/
 		return `data:image/png;base64,${ preview || emptyImageEncoded }`;
 	},
 });
