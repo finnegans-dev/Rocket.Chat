@@ -11,10 +11,10 @@ import { Subscriptions } from 'meteor/rocketchat:models';
 */
 import { Random } from 'meteor/random'
 
-API.v1.addRoute('invitaciones/:token/:dominio/:idUser', {
+API.v1.addRoute('invitaciones/:contexto/:dominio/:idUser', {
 	post() {
 
-		let token = this.urlParams.token;
+		let contexto = this.urlParams.contexto;
 		let dominio = this.urlParams.dominio.toLowerCase();
 		let idUsuario = this.urlParams.idUser
 		let rooms = Rooms.find({}).fetch();
@@ -29,13 +29,14 @@ API.v1.addRoute('invitaciones/:token/:dominio/:idUser', {
 			if (element.name != undefined) {
 				let dominioRoom = element.name.substring(0, element.name.indexOf('-'))
 				let contextoRoom = element.name.substring(element.name.indexOf('-') + 1, element.name.lenght)
-				if (dominioRoom == dominio) {
+				if (dominioRoom == dominio && contextoRoom == contexto) {
 					existeSala = true;
 					const { _id: rid, t: type } = Rooms.findOneByIdOrName(element._id);
+					
 					if (!rid || type !== 'p') {
 						throw new Meteor.Error('error-room-not-found', 'The required "roomId" or "roomName" param provided does not match any group');
 					}
-
+					console.log(rid)
 					Meteor.runAsUser(idUsuario, () => Meteor.call('addUserToRoom', { rid, username }));
 					HTTP.get(`api/v1/addBot/${rid}`, {}, function (err, res) {
 						if (err) {
@@ -49,9 +50,9 @@ API.v1.addRoute('invitaciones/:token/:dominio/:idUser', {
 		});
 
 		if (!existeSala) {
-
+			console.log("fsafsda")
 			//let name = dominio + "-contexto" + Random.hexString(2);
-			let name = dominio + "-" + dominio;
+			let name = dominio + "-" + contexto;
 			Meteor.runAsUser(idUsuario, () => {
 				id = Meteor.call('createPrivateGroup', name, [], false);
 			});
@@ -73,6 +74,8 @@ API.v1.addRoute('invitacionesLogin/:idUser/:dominio/:contexto', {
 		let contexto = this.urlParams.contexto;
 		let rooms = Rooms.find({}).fetch();
 		const { username } = Users.findOneById(idUsuario)
+		//URL Contextos
+		//https://go-test.finneg.com/api/1/contexts?access_token=
 
 		rooms.forEach(element => {
 			if (element.name != undefined) {

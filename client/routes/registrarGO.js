@@ -11,9 +11,10 @@ Template.registrarGO.onCreated(function () {
     let root = 'https://go-test.finneg.com/chat/'
 
 
-    //root = "http://localhost:3000/";
+
     root = __meteor_runtime_config__.ROOT_URL;
-    url = root.substring(0, root.lastIndexOf(`/c`) + 1);
+    //url = root.substring(0, root.lastIndexOf(`/c`) + 1);
+    root = "http://localhost:3000/";
 
     HTTP.call('GET', `${root}api/v1/permisos`, function (err, res) {
         //console.log(err)
@@ -68,10 +69,33 @@ Template.registrarGO.onCreated(function () {
                                 console.log("Usuario registrado correctamente")
                                 //console.log(data);
                                 let res = JSON.parse(data.content)
-                                HTTP.post(`${root}api/v1/invitaciones/${token}/${dominio}/${res.user._id}`, {}, function (err, data) {
-                                    FlowRouter.go(`/loginGO/${token}&email=${email}`);
-                                })
+                                let dominioLow = dominio.toLowerCase();
+                                HTTP.get(`${url}api/1/contexts?access_token=${token}`, function (err, data) {
+                                    if (err) {
+                                        console.log(err)
+                                    } else {
 
+
+                                        data.data.forEach(element => {
+
+                                         //   Crea todos los salas con contextos
+                                            HTTP.post(`${root}api/v1/invitaciones/${element.name}/${dominioLow}/${res.user._id}`, {}, function (err, data) {
+                                                if(err){
+                                                    console.log(err)
+                                                }else{
+                                                    console.log(data)
+                                                }
+                                            })
+                                        });
+
+                                    }
+                                });
+                                //Este se va 
+                                /*
+                                HTTP.post(`${root}api/v1/invitaciones/${dominioLow}/${dominio}/${res.user._id}`, {}, function (err, data) {
+                                    FlowRouter.go(`/loginGO/${token}&email=${email}`);
+                                })*/
+                                FlowRouter.go(`/loginGO/${token}&email=${email}`);
 
                             }
                         });

@@ -41,107 +41,114 @@ const getFromServer = (cb, type) => {
 		/*Finneg
 	Busco si pertenece a la sala
 	*/
-		/* ESTO ES LO VIEJO
-	let dominio = window.localStorage.getItem('dominio');
-	let contexto = window.localStorage.getItem('contexto');
-	let nameRoom;
-	if(!contexto){
-		nameRoom = dominio+"-"+dominio;
-	}else{
-		nameRoom = dominio+"-"+contexto;
-	}
-	let roomsSearch = Rooms.find({ name: nameRoom}).fetch();
-	let idRoom = roomsSearch[0]._id;
 
-	Meteor.call('getUsersOfRoom', idRoom, true, (error, users) => {
-		if (error) {
-			console.log(error)
-		} else {
-			let usuariosRoom = users.records;
-			if (usersLength) {
-				for (let i = 0; i < usersLength; i++) {
-					usuariosRoom.forEach(element => {
-						if (element._id == results.users[i]._id) {
-							resultsFromServer.push({
-								_id: results.users[i]._id,
-								t: 'd',
-								name: results.users[i].username,
-								fname: results.users[i].name,
+		let dominio = window.localStorage.getItem('dominio');
+		let contextos = JSON.parse(window.localStorage.getItem('contextos'));
+
+		let nameRoom;
+		contextos.contextos.forEach(element => {
+
+			/*
+			if (!element) {
+				nameRoom = dominio + "-" + dominio;
+			} else {
+				nameRoom = dominio + "-" + element;
+			}*/
+			nameRoom = dominio + "-" + element;
+			let roomsSearch = Rooms.find({ name: nameRoom }).fetch();
+			let idRoom = roomsSearch[0]._id;
+
+			Meteor.call('getUsersOfRoom', idRoom, true, (error, users) => {
+				if (error) {
+					console.log(error)
+				} else {
+					let usuariosRoom = users.records;
+					if (usersLength) {
+						for (let i = 0; i < usersLength; i++) {
+							usuariosRoom.forEach(element => {
+								if (element._id == results.users[i]._id) {
+									resultsFromServer.push({
+										_id: results.users[i]._id,
+										t: 'd',
+										name: results.users[i].username,
+										fname: results.users[i].name,
+									});
+								}
 							});
+
 						}
-					});
-
-				}
-			}
-
-			if (roomsLength) {
-				for (let i = 0; i < roomsLength; i++) {
-					const alreadyOnClient = resultsFromClient.find((item) => item._id === results.rooms[i]._id);
-					if (alreadyOnClient) {
-						continue;
-					}
-					//Finneg
-					// No muetra los canales
-					if (results.rooms[i].t != 'c') {
-						resultsFromServer.push({
-							_id: results.rooms[i]._id,
-							t: results.rooms[i].t,
-							name: results.rooms[i].name,
-							lastMessage: results.rooms[i].lastMessage,
-						});
 					}
 
+					if (roomsLength) {
+						for (let i = 0; i < roomsLength; i++) {
+							const alreadyOnClient = resultsFromClient.find((item) => item._id === results.rooms[i]._id);
+							if (alreadyOnClient) {
+								continue;
+							}
+							//Finneg
+							// No muetra los canales
+							if (results.rooms[i].t != 'c') {
+								resultsFromServer.push({
+									_id: results.rooms[i]._id,
+									t: results.rooms[i].t,
+									name: results.rooms[i].name,
+									lastMessage: results.rooms[i].lastMessage,
+								});
+							}
 
 
+
+						}
+					}
+
+					if (resultsFromServer.length) {
+						cb(resultsFromClient.concat(resultsFromServer));
+					}
 				}
-			}
 
-			if (resultsFromServer.length) {
-				cb(resultsFromClient.concat(resultsFromServer));
-			}
-		}
-		*/
+			});
+		})
 
-		if (usersLength) {
-			for (let i = 0; i < usersLength; i++) {
-				resultsFromServer.push({
-					_id: results.users[i]._id,
-					t: 'd',
-					name: results.users[i].username,
-					fname: results.users[i].name,
-				});
-			}
-		}
+		// if (usersLength) {
+		// 	for (let i = 0; i < usersLength; i++) {
+		// 		resultsFromServer.push({
+		// 			_id: results.users[i]._id,
+		// 			t: 'd',
+		// 			name: results.users[i].username,
+		// 			fname: results.users[i].name,
+		// 		});
+		// 	}
+		// }
 
-		if (roomsLength) {
-			for (let i = 0; i < roomsLength; i++) {
-				const alreadyOnClient = resultsFromClient.find((item) => item._id === results.rooms[i]._id);
-				if (alreadyOnClient) {
-					continue;
-				}
-				//Finneg
-				// No muetra los canales
-				if (results.rooms[i].t != 'c') {
-					resultsFromServer.push({
-						_id: results.rooms[i]._id,
-						t: results.rooms[i].t,
-						name: results.rooms[i].name,
-						lastMessage: results.rooms[i].lastMessage,
-					});
-				}
-				/*
-				resultsFromServer.push({
-					_id: results.rooms[i]._id,
-					t: results.rooms[i].t,
-					name: results.rooms[i].name,
-					lastMessage: results.rooms[i].lastMessage,
-				});*/
-			}
-		}
+		// if (roomsLength) {
+		// 	for (let i = 0; i < roomsLength; i++) {
+		// 		const alreadyOnClient = resultsFromClient.find((item) => item._id === results.rooms[i]._id);
+		// 		if (alreadyOnClient) {
+		// 			continue;
+		// 		}
+		// 		//Finneg
+		// 		// No muetra los canales
+		// 		if (results.rooms[i].t != 'c') {
+		// 			resultsFromServer.push({
+		// 				_id: results.rooms[i]._id,
+		// 				t: results.rooms[i].t,
+		// 				name: results.rooms[i].name,
+		// 				lastMessage: results.rooms[i].lastMessage,
+		// 			});
+		// 		}
+		// 		/*
+		// 		resultsFromServer.push({
+		// 			_id: results.rooms[i]._id,
+		// 			t: results.rooms[i].t,
+		// 			name: results.rooms[i].name,
+		// 			lastMessage: results.rooms[i].lastMessage,
+		// 		});*/
+		// 	}
+		// }
 
-		if (resultsFromServer.length) {
-			cb(resultsFromClient.concat(resultsFromServer));
-		}
+		// if (resultsFromServer.length) {
+		// 	cb(resultsFromClient.concat(resultsFromServer));
+		// }
 	});
 };
 
@@ -285,6 +292,5 @@ Template.toolbar.onRendered(function () {
 
 Template.toolbar.onCreated(function () {
 	this.open = new ReactiveVar(true);
-
 	Tracker.autorun(() => !this.open.get() && toolbarSearch.close());
 });

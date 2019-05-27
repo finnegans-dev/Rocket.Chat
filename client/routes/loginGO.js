@@ -20,11 +20,11 @@ Template.loginGO.onCreated(function () {
     //window.localStorage.setItem("Meteor.loginToken", "");
     window.localStorage.setItem("Meteor.loginToken:/:/chat", "");
 
-    root = __meteor_runtime_config__.ROOT_URL;
+    //root = __meteor_runtime_config__.ROOT_URL;
     console.log(__meteor_runtime_config__);
-    url = root.substring(0,root.lastIndexOf(`/c`)+1);
-    //root = 'http://localhost:3000/';
-    
+    //url = root.substring(0,root.lastIndexOf(`/c`)+1);
+    root = 'http://localhost:3000/';
+
     HTTP.call('GET', `${url}auth/token/info?access_token=${token}`, function (err, res) {
         if (err) {
             console.log(err)
@@ -62,23 +62,50 @@ Template.loginGO.onCreated(function () {
                         let data = JSON.parse(response.content)
                         //console.log(data)
                         let idUser = data.data.userId;
-                        let token = data.data.authToken;
+                        let tokenChat = data.data.authToken;
                         //invitacionesLogin/:idUser/:dominio/:contexto
-                        HTTP.post(`${root}api/v1/invitacionesLogin/${idUser}/${dominio}/${dominio}`, {}, function (err, data) {
+                        let js;
+                        let arrayContextos = [];
+
+                        HTTP.get(`${url}api/1/contexts?access_token=${token}`, function (err, data) {
                             if (err) {
-                                //console.log(err)
+                                console.log(err)
                             } else {
-                                //console.log(data)
+
+                                let contexts = data.data;
+                                contexts.forEach(element => {
+                                    arrayContextos.push(element.name)
+
+                                    HTTP.post(`${root}api/v1/invitaciones/${element.name}/${dominioLow}/${idUser}`, {}, function (err, data) {
+                                          if(err){
+                                              console.log(err)
+                                          }else{
+                                              console.log(data)
+                                          }
+                                          js = JSON.stringify({ "contextos": arrayContextos })
+                                          window.localStorage.setItem('contextos', js)
+                                          window.localStorage.setItem("Meteor.loginToken:/:/chat", tokenChat);
+                                          //window.localStorage.setItem("Meteor.loginToken", token);
+                                          window.localStorage.setItem("dominio", dominioLow);
+                  
+                                          FlowRouter.go(`/home`);
+                                    })
+                                });
+                                //JSON.parse(window.localStorage.getItem('contextos'));
                             }
                         })
-                        window.localStorage.setItem("Meteor.loginToken:/:/chat", token);
-                        //window.localStorage.setItem("Meteor.loginToken", token);
-                        window.localStorage.setItem("dominio", dominioLow);
-                        window.localStorage.setItem("contexto", dominioLow);
-                        FlowRouter.go(`/home`);
-                        Meteor.setTimeout(function(){
-                            FlowRouter.go(`/group/${dominioLow}-${dominioLow}`);
-                        },100)
+
+
+                        //Esto se va cuando se confirme lo de los contextos
+                        
+                        // HTTP.post(`${root}api/v1/invitacionesLogin/${idUser}/${dominio}/${dominio}`, {}, function (err, data) {
+                        //     if (err) {
+                        //         //console.log(err)
+                        //     } else {
+                        //         //console.log(data)
+                        //     }
+                        // })
+
                         
                     }
                 });

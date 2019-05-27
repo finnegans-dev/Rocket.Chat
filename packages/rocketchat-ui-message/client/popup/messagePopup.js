@@ -309,7 +309,11 @@ Template.messagePopup.helpers({
 	},
 	data() {
 		const template = Template.instance();
-		return Object.assign(template.records.get(), { toolbar: true });
+		//Finnegans Saco la parte de los comandos
+		if(template.prefix!="/"){
+			return Object.assign(template.records.get(), { toolbar: true });
+		}
+		
 	},
 	toolbarData() {
 		return { ...Template.currentData(), toolbar: true };

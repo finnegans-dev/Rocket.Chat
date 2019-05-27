@@ -226,9 +226,10 @@ Template.channelSettingsEditing.onCreated(function() {
 				return room.name;
 			},
 			save(value) {
-				let nameValidation;
+				let nameValidation =true;
 
 				if (!settings.get('UI_Allow_room_names_with_special_chars')) {
+					/*
 					try {
 						nameValidation = new RegExp(`^${ settings.get('UTF8_Names_Validation') }$`);
 					} catch (error1) {
@@ -241,7 +242,7 @@ Template.channelSettingsEditing.onCreated(function() {
 								name: value,
 							},
 						})));
-					}
+					}*/	
 				}
 				return call('saveRoomSettings', room._id, RoomSettingsEnum.NAME, value).then(function() {
 					callbacks.run('roomNameChanged', {
