@@ -74,22 +74,34 @@ Template.loginGO.onCreated(function () {
 
                                 let contexts = data.data;
                                 contexts.forEach(element => {
-                                    arrayContextos.push(element.name)
+                                    HTTP.get(`${url}api/1/contexts/${element.id}?access_token=${token}`, function (err, data) {
+                                        if (err) {
+                                            console.log(err)
+                                        } else {
+                                            //console.log(data.data.modules);
+                                            data.data.modules.forEach(modules => {
+                                                if (modules.id == "ecoChat") {
+                                                    arrayContextos.push(element.name)
+                                                    HTTP.post(`${root}api/v1/invitaciones/${element.name}/${dominioLow}/${idUser}`, {}, function (err, data) {
+                                                        if (err) {
+                                                            console.log(err)
+                                                        } else {
+                                                            console.log(data)
+                                                        }
+                                                        js = JSON.stringify({ "contextos": arrayContextos })
+                                                        window.localStorage.setItem('contextos', js)
+                                                        window.localStorage.setItem("Meteor.loginToken:/:/chat", tokenChat);
+                                                        //window.localStorage.setItem("Meteor.loginToken", token);
+                                                        window.localStorage.setItem("dominio", dominioLow);
 
-                                    HTTP.post(`${root}api/v1/invitaciones/${element.name}/${dominioLow}/${idUser}`, {}, function (err, data) {
-                                          if(err){
-                                              console.log(err)
-                                          }else{
-                                              console.log(data)
-                                          }
-                                          js = JSON.stringify({ "contextos": arrayContextos })
-                                          window.localStorage.setItem('contextos', js)
-                                          window.localStorage.setItem("Meteor.loginToken:/:/chat", tokenChat);
-                                          //window.localStorage.setItem("Meteor.loginToken", token);
-                                          window.localStorage.setItem("dominio", dominioLow);
-                  
-                                          FlowRouter.go(`/home`);
-                                    })
+                                                        FlowRouter.go(`/home`);
+                                                    })
+                                                }
+                                            })
+                                        }
+                                    });
+
+
                                 });
                                 //JSON.parse(window.localStorage.getItem('contextos'));
                             }
@@ -97,7 +109,7 @@ Template.loginGO.onCreated(function () {
 
 
                         //Esto se va cuando se confirme lo de los contextos
-                        
+
                         // HTTP.post(`${root}api/v1/invitacionesLogin/${idUser}/${dominio}/${dominio}`, {}, function (err, data) {
                         //     if (err) {
                         //         //console.log(err)
@@ -106,7 +118,7 @@ Template.loginGO.onCreated(function () {
                         //     }
                         // })
 
-                        
+
                     }
                 });
 

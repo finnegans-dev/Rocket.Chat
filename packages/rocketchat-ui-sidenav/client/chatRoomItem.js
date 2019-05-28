@@ -74,16 +74,26 @@ Template.chatRoomItem.helpers({
 		}
 		let dominioURL = window.localStorage.getItem('dominio');
 		let dominio = fname.substring(0, fname.indexOf('-'));
-
+		let contexto = fname.substring(fname.indexOf('-')+1, fname.length);
+		
 		if (fname[0] == fname[0].toUpperCase()) {
 			return true;
 		}
+		console.log(contextos.contextos)
+		let aux = false;
+		contextos.contextos.forEach(element => {
+			if(dominio==dominioURL && contexto == element){
+				aux = true;
+			}
+		});
+		
+		return aux;
+		/*
 		if (dominio != "") {
 			return dominio == dominioURL.toLowerCase();
 		} else {
 			return true;
-		}
-		//console.log("Dominio " + dominio)
+		}*/
 
 	}
 });

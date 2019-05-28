@@ -77,24 +77,30 @@ Template.registrarGO.onCreated(function () {
 
 
                                         data.data.forEach(element => {
-
-                                         //   Crea todos los salas con contextos
-                                            HTTP.post(`${root}api/v1/invitaciones/${element.name}/${dominioLow}/${res.user._id}`, {}, function (err, data) {
-                                                if(err){
+                                            HTTP.get(`${url}api/1/contexts/${element.id}?access_token=${token}`, function (err, data) {
+                                                if (err) {
                                                     console.log(err)
-                                                }else{
-                                                    console.log(data)
+                                                } else {
+                                                    //console.log(data.data.modules);
+                                                    data.data.modules.forEach(modules => {
+                                                        if (modules.id == "ecoChat") { 
+                                                            HTTP.post(`${root}api/v1/invitaciones/${element.name}/${dominioLow}/${res.user._id}`, {}, function (err, data) {
+                                                                if (err) {
+                                                                    console.log(err)
+                                                                } else {
+                                                                    console.log(data)
+                                                                }
+                                                            })
+                                                        }
+                                                    })
                                                 }
-                                            })
+                                            });
+                                           
                                         });
 
                                     }
                                 });
-                                //Este se va 
-                                /*
-                                HTTP.post(`${root}api/v1/invitaciones/${dominioLow}/${dominio}/${res.user._id}`, {}, function (err, data) {
-                                    FlowRouter.go(`/loginGO/${token}&email=${email}`);
-                                })*/
+
                                 FlowRouter.go(`/loginGO/${token}&email=${email}`);
 
                             }

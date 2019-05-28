@@ -8,8 +8,8 @@
 
 			{{#if isThread}}
 			<div class="rc-header__block rc-header__block--action js-open-parent-channel">
-				<span
-					class="rc-header__first-icon">{{> icon block="rc-header__icon rc-header__icon" icon="back"}}</span>
+				<!-- <span
+					class="rc-header__first-icon">{{> icon block="rc-header__icon rc-header__icon" icon="back"}}</span> -->
 			</div>
 			{{/if}}
 
@@ -46,13 +46,14 @@
 
 				<div class="rc-header__data">
 					{{#unless secondaryName}}
-					<!-- Finneg Nombre de contexto
-					<div class="rc-header__name">{{> icon block="rc-header__icon" icon=roomIcon}}{{roomName}}</div>
+					<!-- Finneg Nombre de contexto -->
+					<!-- <div class="rc-header__name">{{> icon block="rc-header__icon" icon=roomIcon}}{{roomName}}</div> -->
+					<div class="rc-header__name">{{roomName}}</div>
 					
 					
 					{{else}}
 					<div class="rc-header__name">{{roomName}} <div class="rc-header__username">@{{secondaryName}}</div></div>
-					-->
+					
 					{{/unless}}
 
 					{{#if isDirect}}
@@ -63,7 +64,7 @@
 						<div class="rc-header__visual-status">{{_ userStatus}}</div>
 					</span>
 					{{else}}
-					{{#if roomTopic}}<span class="rc-header__topic">{{{roomTopic}}}</span>{{/if}}
+					<!-- {{#if roomTopic}}<span class="rc-header__topic">{{{roomTopic}}}</span>{{/if}} -->
 					{{/if}}
 				</div>
 
