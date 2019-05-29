@@ -79,13 +79,16 @@ Template.chatRoomItem.helpers({
 		if (fname[0] == fname[0].toUpperCase()) {
 			return true;
 		}
-		console.log(contextos.contextos)
+		//console.log(contextos.contextos)
 		let aux = false;
-		contextos.contextos.forEach(element => {
-			if(dominio==dominioURL && contexto == element){
-				aux = true;
-			}
-		});
+		if(contextos.contextos){
+			contextos.contextos.forEach(element => {
+				if(dominio==dominioURL && contexto == element){
+					aux = true;
+				}
+			});
+		}
+		
 		
 		return aux;
 		/*
