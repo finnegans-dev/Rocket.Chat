@@ -68,6 +68,7 @@ Template.chatRoomItem.helpers({
 	//Finneg
 	dominio() {
 		let { fname } = this;
+		console.log(fname)
 		let contextos = JSON.parse(window.localStorage.getItem('contextos'));
 		if(this.prid){
 			return false;
