@@ -187,10 +187,6 @@ button.rc-button.rc-button--primary.login {
     border-radius: 0px;
 }
 
-.rc-button.rc-button--nude.js-close {
-    margin-left: 200px;
-}
-
 .rc-button.rc-button--primary.js-confirm {
     background-color: #4F4DA7;
 }
@@ -238,6 +234,9 @@ svg.rc-icon.rc-icon--default-size.sidebar-item__icon.sidebar-item__icon--lock {
     .own{
         margin-left: 745px;
     }
+    .rc-button.rc-button--nude.js-close {
+        margin-left: 200px;
+    }
 }
 
 @media (max-width: 1366px) {
@@ -246,6 +245,9 @@ svg.rc-icon.rc-icon--default-size.sidebar-item__icon.sidebar-item__icon--lock {
     }
     .own{
         margin-left: 475px;
+    }
+    .rc-button.rc-button--nude.js-close {
+        margin-left: 130px;
     }
 } 
 
@@ -256,6 +258,9 @@ svg.rc-icon.rc-icon--default-size.sidebar-item__icon.sidebar-item__icon--lock {
     .body.color-primary-font-color {
         width: 120%;
     }
+    .rc-button.rc-button--nude.js-close {
+        margin-left: 130px;
+    }
 }
 
 @media (min-width: 767px) and (max-width: 1281px){
@@ -264,7 +269,12 @@ svg.rc-icon.rc-icon--default-size.sidebar-item__icon.sidebar-item__icon--lock {
         width: 200px;
         width: 120%;
     }
+    .rc-button.rc-button--nude.js-close {
+        margin-left: 130px;
+    }
 }
+
+
 
 dialog.rc-modal.rc-modal-- {
     height: 682px;

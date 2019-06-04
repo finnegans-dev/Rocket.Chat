@@ -25,7 +25,7 @@ Template.chatRoomItem.helpers({
 		const avatar = !icon;
 
 		//const name = roomTypes.getRoomName(this.t, this);
-		//console.log(this)
+		console.log(this)
 		let { fname } = this;
 		let nameRoom;
 		if (this.t == 'd') {
@@ -36,7 +36,12 @@ Template.chatRoomItem.helpers({
 			}
 
 		} else {
-			nameRoom = fname.substring(fname.indexOf('-') + 1, fname.length) || roomTypes.getRoomName(this.t, this);
+			if(this.t!='l'){
+				nameRoom = fname.substring(fname.indexOf('-') + 1, fname.length) || roomTypes.getRoomName(this.t, this);
+			}else{
+				nameRoom = this.name;
+			}
+			
 		}
 
 		const roomData = {
@@ -68,7 +73,11 @@ Template.chatRoomItem.helpers({
 	//Finneg
 	dominio() {
 		let { fname } = this;
-		console.log(fname)
+		console.log(this)
+
+		if(this.t == "l"){
+			return true;
+		}
 		let contextos = JSON.parse(window.localStorage.getItem('contextos'));
 		if(this.prid){
 			return false;
