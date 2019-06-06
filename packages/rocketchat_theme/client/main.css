@@ -226,6 +226,14 @@ svg.rc-icon.rc-icon--default-size.sidebar-item__icon.sidebar-item__icon--lock {
     display: none;
 }
 
+.powered-by {
+    display: none !important;
+  }
+  
+  p.powered-by {
+    display: none !important;
+  }
+
 /* 1920 */
 @media (min-width: 1367px) and (max-width: 2000px){
     .message{
