@@ -21,9 +21,9 @@ Template.loginGO.onCreated(function () {
     window.localStorage.setItem("Meteor.loginToken:/:/chat", "");
 
     root = __meteor_runtime_config__.ROOT_URL;
-    console.log(__meteor_runtime_config__);
-    //url = root.substring(0,root.lastIndexOf(`/c`)+1);
-    root = 'http://localhost:3000/';
+    //console.log(__meteor_runtime_config__);
+    url = root.substring(0,root.lastIndexOf(`/c`)+1);
+    //root = 'http://localhost:3000/';
 
     HTTP.call('GET', `${url}auth/token/info?access_token=${token}`, function (err, res) {
         if (err) {

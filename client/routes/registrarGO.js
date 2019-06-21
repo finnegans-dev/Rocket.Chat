@@ -13,8 +13,8 @@ Template.registrarGO.onCreated(function () {
 
 
     root = __meteor_runtime_config__.ROOT_URL;
-    //url = root.substring(0, root.lastIndexOf(`/c`) + 1);
-    root = "http://localhost:3000/";
+    url = root.substring(0, root.lastIndexOf(`/c`) + 1);
+    //root = "http://localhost:3000/";
 
     HTTP.call('GET', `${root}api/v1/permisos`, function (err, res) {
         //console.log(err)
