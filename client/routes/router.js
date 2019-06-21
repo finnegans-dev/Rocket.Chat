@@ -198,7 +198,7 @@ FlowRouter.notFound = {
 Modificaciones Finneg
 */
 
-FlowRouter.route('/loginGO/:token&email=:email', {
+FlowRouter.route('/loginGO/:token', {
 	name: 'LoginGO',
 	action() {
 		console.log("LOGINGO")
@@ -206,7 +206,7 @@ FlowRouter.route('/loginGO/:token&email=:email', {
 	},
 });
 
-FlowRouter.route('/registrarGO/:token&email=:email', {
+FlowRouter.route('/registrarGO/:token', {
 	name: 'RegistrarGO',
 	action() {
 		BlazeLayout.render('registrarGO');

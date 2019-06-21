@@ -11,7 +11,7 @@ Finneg
 
 Template.loginGO.onCreated(function () {
     let token = FlowRouter.getParam("token");
-    let email = FlowRouter.getParam("email");
+    let email = FlowRouter.current().queryParams.email;
     let url = 'https://go-test.finneg.com/'
     let root = 'https://go-test.finneg.com/chat/'
 
@@ -22,8 +22,8 @@ Template.loginGO.onCreated(function () {
 
     root = __meteor_runtime_config__.ROOT_URL;
     console.log(__meteor_runtime_config__);
-    url = root.substring(0,root.lastIndexOf(`/c`)+1);
-    //root = 'http://localhost:3000/';
+    //url = root.substring(0,root.lastIndexOf(`/c`)+1);
+    root = 'http://localhost:3000/';
 
     HTTP.call('GET', `${url}auth/token/info?access_token=${token}`, function (err, res) {
         if (err) {
@@ -34,7 +34,8 @@ Template.loginGO.onCreated(function () {
             let dominio = res.data.domain;
             let dominioLow = dominio.toLowerCase();
             let emailRes = res.data.email;
-            console.log(root)
+            let contextoToken = res.data.lastContext.id;
+
             if (email == emailRes) {
 
                 let pass = "";
@@ -54,7 +55,7 @@ Template.loginGO.onCreated(function () {
                     if (error) {
                         //Redirigo a registrar
                         console.log(error);
-                        FlowRouter.go(`/registrarGO/${token}&email=${email}`);
+                        FlowRouter.go(`/registrarGO/${token}?email=${email}`);
                         //  FlowRouter.go
                     } else {
 
@@ -67,56 +68,87 @@ Template.loginGO.onCreated(function () {
                         let js;
                         let arrayContextos = [];
 
-                        HTTP.get(`${url}api/1/contexts?access_token=${token}`, function (err, data) {
-                            if (err) {
-                                console.log(err)
-                            } else {
+                        let idContexto = "{eco." + dominio + ".default.context}";
+                        if (contextoToken != idContexto) {
 
-                                let contexts = data.data;
-                                contexts.forEach(element => {
-                                    HTTP.get(`${url}api/1/contexts/${element.id}?access_token=${token}`, function (err, data) {
-                                        if (err) {
-                                            console.log(err)
-                                        } else {
-                                            //console.log(data.data.modules);
-                                            data.data.modules.forEach(modules => {
-                                                if (modules.id == "ecoChat") {
-                                                    arrayContextos.push(element.name)
-                                                    HTTP.post(`${root}api/v1/invitaciones/${element.name}/${dominioLow}/${idUser}`, {}, function (err, data) {
-                                                        if (err) {
-                                                            console.log(err)
-                                                        } else {
-                                                            console.log(data)
-                                                        }
+                            HTTP.get(`${url}api/1/contexts?access_token=${token}`, function (err, data) {
+                                if (err) {
+                                    console.log(err)
+                                } else {
+
+                                    let contexts = data.data;
+                                    contexts.forEach(element => {
+                                        HTTP.get(`${url}api/1/contexts/${element.id}?access_token=${token}`, function (err, data) {
+                                            if (err) {
+                                                console.log(err)
+                                            } else {
+                                                //console.log(data.data.modules);
+                                                data.data.modules.forEach(modules => {
+                                                    if (modules.id == "ecoChat") {
+                                                        arrayContextos.push(element.name)
+                                                        HTTP.post(`${root}api/v1/invitaciones/${element.name}/${dominioLow}/${idUser}`, {}, function (err, data) {
+                                                            if (err) {
+                                                                console.log(err)
+                                                            } else {
+                                                                console.log(data)
+                                                            }
+                                                            js = JSON.stringify({ "contextos": arrayContextos })
+                                                            window.localStorage.setItem('contextos', js)
+                                                            window.localStorage.setItem("Meteor.loginToken:/:/chat", tokenChat);
+                                                            //window.localStorage.setItem("Meteor.loginToken", token);
+                                                            window.localStorage.setItem("dominio", dominioLow);
+
+                                                            FlowRouter.go(`/home`);
+                                                        })
+                                                    }
+                                                })
+                                            }
+                                        });
+
+
+                                    });
+                                    //JSON.parse(window.localStorage.getItem('contextos'));
+                                }
+                            })
+
+                        } else {
+
+                            HTTP.get(`${url}api/1/contexts?access_token=${token}`, function (err, data) {
+                                if (err) {
+                                    console.log(err)
+                                } else {
+
+                                    let contexts = data.data;
+                                    contexts.forEach(element => {
+                                        HTTP.get(`${url}api/1/contexts/${element.id}?access_token=${token}`, function (err, data) {
+                                            if (err) {
+                                                console.log(err)
+                                            } else {
+                                                //console.log(data.data.modules);
+                                                data.data.modules.forEach(modules => {
+                                                    if (modules.id == "ecoChat") {
+                                                        arrayContextos.push(element.name)
                                                         js = JSON.stringify({ "contextos": arrayContextos })
                                                         window.localStorage.setItem('contextos', js)
-                                                        window.localStorage.setItem("Meteor.loginToken:/:/chat", tokenChat);
-                                                        //window.localStorage.setItem("Meteor.loginToken", token);
-                                                        window.localStorage.setItem("dominio", dominioLow);
+                                                    }
+                                                })
+                                            }
+                                        });
 
-                                                        FlowRouter.go(`/home`);
-                                                    })
-                                                }
-                                            })
-                                        }
+
                                     });
+                                    //JSON.parse(window.localStorage.getItem('contextos'));
+                                }
+                            })
+
+                            window.localStorage.setItem("Meteor.loginToken:/:/chat", tokenChat);
+                            //window.localStorage.setItem("Meteor.loginToken", token);
+                            window.localStorage.setItem("dominio", dominioLow);
+                            FlowRouter.go(`/home`);
+
+                        }
 
 
-                                });
-                                //JSON.parse(window.localStorage.getItem('contextos'));
-                            }
-                        })
-
-
-                        //Esto se va cuando se confirme lo de los contextos
-
-                        // HTTP.post(`${root}api/v1/invitacionesLogin/${idUser}/${dominio}/${dominio}`, {}, function (err, data) {
-                        //     if (err) {
-                        //         //console.log(err)
-                        //     } else {
-                        //         //console.log(data)
-                        //     }
-                        // })
 
 
                     }
@@ -128,3 +160,7 @@ Template.loginGO.onCreated(function () {
     });
 
 });
+
+function contextos() {
+
+}
