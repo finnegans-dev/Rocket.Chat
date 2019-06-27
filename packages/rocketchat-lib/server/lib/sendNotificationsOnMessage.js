@@ -12,7 +12,7 @@ import { sendSinglePush, shouldNotifyMobile } from '../functions/notifications/m
 import { notifyDesktopUser, shouldNotifyDesktop } from '../functions/notifications/desktop';
 import { notifyAudioUser, shouldNotifyAudio } from '../functions/notifications/audio';
 
-const sendNotification = async({
+const sendNotification = async ({
 	subscription,
 	sender,
 	hasMentionToAll,
@@ -23,7 +23,7 @@ const sendNotification = async({
 	mentionIds,
 	disableAllMessageNotifications,
 }) => {
-
+	//console.log(Meteor._sessionStorage)
 	// don't notify the sender
 	if (subscription.u._id === sender._id) {
 		return;
@@ -137,7 +137,7 @@ const sendNotification = async({
 	}
 
 	if (notificationSent) {
-		Sandstorm.notify(message, [subscription.u._id], `@${ sender.username }: ${ message.msg }`, room.t === 'p' ? 'privateMessage' : 'message');
+		Sandstorm.notify(message, [subscription.u._id], `@${sender.username}: ${message.msg}`, room.t === 'p' ? 'privateMessage' : 'message');
 	}
 };
 
@@ -221,12 +221,12 @@ async function sendAllNotifications(message, room) {
 	};
 
 	['audio', 'desktop', 'mobile', 'email'].forEach((kind) => {
-		const notificationField = `${ kind === 'mobile' ? 'mobilePush' : kind }Notifications`;
+		const notificationField = `${kind === 'mobile' ? 'mobilePush' : kind}Notifications`;
 
 		const filter = { [notificationField]: 'all' };
 
 		if (disableAllMessageNotifications) {
-			filter[`${ kind }PrefOrigin`] = { $ne: 'user' };
+			filter[`${kind}PrefOrigin`] = { $ne: 'user' };
 		}
 
 		query.$or.push(filter);
@@ -242,8 +242,8 @@ async function sendAllNotifications(message, room) {
 			});
 		}
 
-		const serverField = kind === 'email' ? 'emailNotificationMode' : `${ kind }Notifications`;
-		const serverPreference = settings.get(`Accounts_Default_User_Preferences_${ serverField }`);
+		const serverField = kind === 'email' ? 'emailNotificationMode' : `${kind}Notifications`;
+		const serverPreference = settings.get(`Accounts_Default_User_Preferences_${serverField}`);
 		if ((room.t === 'd' && serverPreference !== 'nothing') || (!disableAllMessageNotifications && (serverPreference === 'all' || hasMentionToAll || hasMentionToHere))) {
 			query.$or.push({
 				[notificationField]: { $exists: false },
@@ -290,7 +290,7 @@ async function sendAllNotifications(message, room) {
 		});
 
 		Promise.all(mentions
-			.map(async(userId) => {
+			.map(async (userId) => {
 				await callJoinRoom(userId, room._id);
 
 				return userId;

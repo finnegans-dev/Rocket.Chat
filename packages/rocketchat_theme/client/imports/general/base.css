@@ -240,9 +240,9 @@ button {
 	margin: 2px;
 
 	animation: loading-bouncedelay 1.4s infinite ease-in-out both;
-
+	background-color: #4F4DA7 !important;
 	border-radius: 100%;
-	background-color: rgba(255, 255, 255, 0.6);
+
 }
 
 .loading-animation .bounce1 {

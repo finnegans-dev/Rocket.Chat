@@ -389,7 +389,8 @@ Template.sidebarHeader.events({
 										},
 									},
 								],
-							},*/
+							},
+							*/
 						],
 					},
 				],

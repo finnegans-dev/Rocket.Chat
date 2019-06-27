@@ -309,30 +309,30 @@ Template.messagePopupConfig.helpers({
 				if (items.length < 5 && filterText !== '') {
 					fetchUsersFromServerDelayed(filterText, items, cb, RoomManager.openedRoom);
 				}
+				// Finneg @ todos
+				// const all = {
+				// 	_id: 'all',
+				// 	username: 'all',
+				// 	system: true,
+				// 	name: t('Notify_all_in_this_room'),
+				// 	sort: 4,
+				// };
 
-				const all = {
-					_id: 'all',
-					username: 'all',
-					system: true,
-					name: t('Notify_all_in_this_room'),
-					sort: 4,
-				};
+				// const here = {
+				// 	_id: 'here',
+				// 	username: 'here',
+				// 	system: true,
+				// 	name: t('Notify_active_in_this_room'),
+				// 	sort: 4,
+				// };
 
-				const here = {
-					_id: 'here',
-					username: 'here',
-					system: true,
-					name: t('Notify_active_in_this_room'),
-					sort: 4,
-				};
+				// if (filterRegex.test(all.username)) {
+				// 	items.push(all);
+				// }
 
-				if (filterRegex.test(all.username)) {
-					items.push(all);
-				}
-
-				if (filterRegex.test(here.username)) {
-					items.push(here);
-				}
+				// if (filterRegex.test(here.username)) {
+				// 	items.push(here);
+				// }
 
 				return items;
 			},

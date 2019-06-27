@@ -3,6 +3,7 @@ import { Tracker } from 'meteor/tracker';
 
 class Notifications {
 	constructor(...args) {
+		console.log("eventName")
 		this.logged = Meteor.userId() !== null;
 		this.loginCb = [];
 		Tracker.autorun(() => {
@@ -41,6 +42,7 @@ class Notifications {
 		return this.streamRoom.emit.apply(this.streamRoom, args);
 	}
 	notifyUser(userId, eventName, ...args) {
+		
 		if (this.debug === true) {
 			console.log('RocketChat.Notifications: notifyUser', [userId, eventName, ...args]);
 		}
@@ -61,6 +63,7 @@ class Notifications {
 		return this.onLogin(() => this.streamLogged.on(eventName, callback));
 	}
 	onRoom(room, eventName, callback) {
+		console.log("noti")
 		if (this.debug === true) {
 			this.streamRoom.on(room, function() {
 				return console.log(`RocketChat.Notifications: onRoom ${ room }`, [room, eventName, callback]);

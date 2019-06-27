@@ -15,8 +15,6 @@ Template.loginGO.onCreated(function () {
     let url = 'https://go-test.finneg.com/'
     let root = 'https://go-test.finneg.com/chat/'
 
-
-
     //window.localStorage.setItem("Meteor.loginToken", "");
     window.localStorage.setItem("Meteor.loginToken:/:/chat", "");
 
@@ -161,6 +159,3 @@ Template.loginGO.onCreated(function () {
 
 });
 
-function contextos() {
-
-}

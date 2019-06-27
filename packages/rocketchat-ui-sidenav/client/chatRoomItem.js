@@ -25,7 +25,7 @@ Template.chatRoomItem.helpers({
 		const avatar = !icon;
 
 		//const name = roomTypes.getRoomName(this.t, this);
-		console.log(this)
+		//console.log(this)
 		let { fname } = this;
 		let nameRoom;
 		if (this.t == 'd') {
@@ -73,7 +73,7 @@ Template.chatRoomItem.helpers({
 	//Finneg
 	dominio() {
 		let { fname } = this;
-		console.log(this)
+		//console.log(this)
 
 		if(this.t == "l"){
 			return true;

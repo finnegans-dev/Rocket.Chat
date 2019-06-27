@@ -144,7 +144,7 @@ button.sidebar__toolbar-button.rc-tooltip.rc-tooltip--down.js-button {
 }
 
 .bounce{
-    background-color: #6A67CE;
+    background-color: #6A67CE !important;
 }
 
 .sidebar-flex__title {

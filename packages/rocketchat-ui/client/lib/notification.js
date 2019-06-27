@@ -16,7 +16,7 @@ import { promises } from 'meteor/rocketchat:promises';
 
 export const KonchatNotification = {
 	notificationStatus: new ReactiveVar,
-
+	
 	// notificacoes HTML5
 	getDesktopPermission() {
 		if (window.Notification && (Notification.permission !== 'granted') && !Meteor.settings.public.sandstorm) {
@@ -75,6 +75,7 @@ export const KonchatNotification = {
 	},
 
 	async showDesktop(notification) {
+		console.log(notification)
 		if ((notification.payload.rid === Session.get('openedRoom')) && (typeof window.document.hasFocus === 'function' ? window.document.hasFocus() : undefined)) {
 			return;
 		}
@@ -97,6 +98,7 @@ export const KonchatNotification = {
 	},
 
 	newMessage(rid) {
+
 		if (!Session.equals(`user_${ Meteor.user().username }_status`, 'busy')) {
 			const userId = Meteor.userId();
 			const newMessageNotification = getUserPreference(userId, 'newMessageNotification');
@@ -156,7 +158,7 @@ Meteor.startup(() => {
 		});
 		const newRoomNotification = getUserPreference(user, 'newRoomNotification');
 		const audioVolume = getUserPreference(user, 'notificationsSoundVolume');
-
+		
 		if ((Session.get('newRoomSound') || []).length > 0) {
 			Meteor.defer(function() {
 				if (newRoomNotification !== 'none') {
