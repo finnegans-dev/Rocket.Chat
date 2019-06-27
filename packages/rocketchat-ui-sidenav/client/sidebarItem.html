@@ -32,7 +32,8 @@
 					</div>
 				</div>
 
-				<div class=" {{#if isRoom}}sidebar-item__picture{{else}}sidebar-item-option-icon{{/if}} avatar-contexto">
+				<div
+					class=" {{#if isRoom}}sidebar-item__picture{{else}}sidebar-item-option-icon{{/if}} avatar-contexto">
 					{{#if darken}}
 					{{#if icon}}
 					<div class="{{#if isRoom}}sidebar-item__room-type{{else}}sidebar-item__icon{{/if}}"
@@ -44,7 +45,8 @@
 					{{/if}}
 					{{else}}
 					<div class="sidebar-item__user-thumb">
-						{{> avatar username=username roomIcon=icon lazy=true}}
+						<!-- {{> avatar username=username roomIcon=icon lazy=true}} -->
+						{{> avatar username=username}}
 					</div>
 					{{/if}}
 				</div>

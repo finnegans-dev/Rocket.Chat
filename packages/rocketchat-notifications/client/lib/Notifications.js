@@ -3,7 +3,7 @@ import { Tracker } from 'meteor/tracker';
 
 class Notifications {
 	constructor(...args) {
-		console.log("eventName")
+		//console.log("eventName")
 		this.logged = Meteor.userId() !== null;
 		this.loginCb = [];
 		Tracker.autorun(() => {
