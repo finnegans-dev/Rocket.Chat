@@ -21,6 +21,7 @@ Template.sidebarItem.helpers({
 		return this.streamingOptions && Object.keys(this.streamingOptions).length;
 	},
 	isRoom() {
+
 		return this.rid || this._id;
 	},
 	isExtendedViewMode() {
@@ -51,8 +52,11 @@ Template.sidebarItem.helpers({
 		let name = tema.substring(tema.indexOf('-') + 1, tema.length);
 		return name
 	},
-	showTemas(){
+	showTemas() {
 		return true;
+	},
+	isLive() {
+		return !this.username;
 	}
 });
 
@@ -121,15 +125,15 @@ Template.sidebarItem.events({
 	'click [data-id], click .sidebar-item__link'() {
 		return menu.close();
 	},
-	'click .context'(e){
+	'click .context'(e) {
 		//console.log(e.currentTarget.innerHTML);
 		let a = e.currentTarget.className;
 		//console.log(a)
 		let test = $('.context li')
 		//console.log(test)
-		for(let i=0; i<test.length; i++){
+		for (let i = 0; i < test.length; i++) {
 			//console.log(test[i])
-			
+
 		}
 		//console.log(test);
 		//let find = test.find('.temas-contexto');
@@ -240,4 +244,5 @@ Template.sidebarItemIcon.helpers({
 
 		return false;
 	},
+
 });
