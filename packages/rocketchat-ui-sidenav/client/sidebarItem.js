@@ -21,7 +21,7 @@ Template.sidebarItem.helpers({
 		return this.streamingOptions && Object.keys(this.streamingOptions).length;
 	},
 	isRoom() {
-
+		console.log(this)
 		return this.rid || this._id;
 	},
 	isExtendedViewMode() {
@@ -56,6 +56,7 @@ Template.sidebarItem.helpers({
 		return true;
 	},
 	isLive() {
+		//this.t != "l" && 
 		return !this.username;
 	}
 });

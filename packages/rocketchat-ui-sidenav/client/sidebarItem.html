@@ -98,9 +98,15 @@
 								{{/unless}}
 
 								<div class="sidebar-item__ellipsis">
-									{{fname}}
 									<!-- Finneg en el livechat no muestra el name porque viene undefined 
-										{{name}} -->
+										{{name}} 
+									If porque sino se rompen los lives y salas-->
+									{{#if isLive}}
+									{{fname}}
+									{{else}}
+									{{name}}
+									{{/if}}
+
 									{{#if mySelf}}
 									<span class="sidebar-item__me">({{_ "You"}})</span>
 									{{/if}}
