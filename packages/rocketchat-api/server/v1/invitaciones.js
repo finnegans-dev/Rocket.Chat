@@ -1,5 +1,5 @@
 import { Meteor } from 'meteor/meteor';
-import { Users, Permissions } from 'meteor/rocketchat:models';
+import { Users, Permissions, Token } from 'meteor/rocketchat:models';
 import { Rooms } from 'meteor/rocketchat:models';
 import { API } from '../api';
 import { HTTP } from 'meteor/http'
@@ -10,6 +10,7 @@ import { Subscriptions } from 'meteor/rocketchat:models';
 /*Finneg
 */
 import { Random } from 'meteor/random'
+import { Date } from 'core-js';
 
 API.v1.addRoute('invitaciones/:contexto/:dominio/:idUser', {
 	post() {
@@ -208,6 +209,12 @@ API.v1.addRoute('direct/:username', {
 		console.log(this.user)
 		return API.v1.success({
 			room: findResult.room,
+		});
+	},
+	get(){
+		let test = Token.find().fetch() 
+		return API.v1.success({
+			test: test,
 		});
 	}
 });

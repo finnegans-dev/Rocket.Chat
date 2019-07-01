@@ -44,7 +44,7 @@ Template.registrarGO.onCreated(function () {
                             i++;
                         }
 
-                        let username = res.data.firstName + " " + res.data.lastName + "-" + email;
+                        let username = res.data.firstName + res.data.lastName + "-" + email;
                         let name = res.data.firstName + " " + res.data.lastName
 
                         /*
