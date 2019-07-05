@@ -5,6 +5,7 @@ import { API } from '../api';
 import { HTTP } from 'meteor/http'
 import _ from 'underscore';
 import { Subscriptions } from 'meteor/rocketchat:models';
+import { GoTokens } from 'meteor/rocketchat:models';
 
 //APIS Invitaciones
 /*Finneg
@@ -106,19 +107,55 @@ API.v1.addRoute('invitacionesTemas/:roomId/:temaId', {
 	post() {
 		let roomId = this.urlParams.roomId;
 		let temaId = this.urlParams.temaId;
+
+		root = __meteor_runtime_config__.ROOT_URL;
+
+		let prefix = root.substring(0,root.lastIndexOf(`/c`)+1);
+		// let prefix = 'http://localhost:4000/';
+
+		let notificationData = {
+			product:"ecoChat",
+			event:"invite",
+			subject: "",
+			message: "",
+			destination: ""
+		};
+
 		const subscriptions = Subscriptions.findByRoomId(roomId, {
 			fields: { 'u._id': 1 },
 		});
 
 		const members = subscriptions.fetch().map((s) => s.u && s.u._id);
 
-		const { _id: rid, t: type } = Rooms.findOneByIdOrName(temaId);
+		const { _id: rid, t: type, fname: tname, u: owner } = Rooms.findOneByIdOrName(temaId);
+
 		if (!rid || type !== 'p') {
 			throw new Meteor.Error('error-room-not-found', 'The required "roomId" or "roomName" param provided does not match any group');
 		}
+
+		let token = GoTokens.find({userId: owner._id}).fetch();
+
+		let splitOwner = owner.username.split('-');
+
+		let url = `${prefix}api/1/notifications/notify?access_token=${token[0].goToken}`;
+
 		members.forEach(element => {
 			const { username } = Users.findOneById(element)
 			Meteor.runAsUser(element, () => Meteor.call('addUserToRoom', { rid, username }));
+			
+			let splitUser = username.split('-');
+			let splitTName = tname.split('-');
+
+			if(splitOwner[1] != splitUser[1]){
+				notificationData.message = `${splitOwner[0]} te invitó al tema ${splitTName[1]}`;
+				notificationData.destination = splitUser[1];
+
+				HTTP.post(url, {data: notificationData}, function (err, data) {
+					if(err){
+						console.log(err);
+					}       
+				});
+			}
 		})
 
 		return API.v1.success({

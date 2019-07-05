@@ -69,6 +69,13 @@ Template.loginGO.onCreated(function () {
                         let arrayContextos = [];
 
                         let idContexto = "{eco." + dominio + ".default.context}";
+
+                        HTTP.post(`api/v1/gotoken/${idUser}/${token}`, {}, function (err, data) {
+                            if(err){
+                                console.log(err);
+                            }   
+                        });
+
                         if (contextoToken != idContexto) {
 
                             HTTP.get(`${url}api/1/contexts?access_token=${token}`, function (err, data) {
