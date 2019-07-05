@@ -11,6 +11,8 @@ import { sendEmail, shouldNotifyEmail } from '../functions/notifications/email';
 import { sendSinglePush, shouldNotifyMobile } from '../functions/notifications/mobile';
 import { notifyDesktopUser, shouldNotifyDesktop } from '../functions/notifications/desktop';
 import { notifyAudioUser, shouldNotifyAudio } from '../functions/notifications/audio';
+import { HTTP } from 'meteor/http';
+import { GoTokens } from 'meteor/rocketchat:models';
 
 const sendNotification = async ({
 	subscription,
@@ -56,6 +58,62 @@ const sendNotification = async ({
 	} = subscription;
 
 	let notificationSent = false;
+
+	let token = GoTokens.find({userId: message.u._id}).fetch();
+
+	root = __meteor_runtime_config__.ROOT_URL;
+
+    let prefix = root.substring(0,root.lastIndexOf(`/c`)+1);
+    // let prefix = 'http://localhost:4000/'
+
+	if(!token[0]){
+		throw new Meteor.Error('No se encuentra token de GO');
+	}
+
+	let url = `${prefix}api/1/notifications/notify?access_token=${token[0].goToken}`;
+
+	let splitSender = message.u.username.split('-');
+	
+	let notificationData = {
+		product:"ecoChat",
+		event:"message",
+		subject: "",
+		message: "",
+		destination: ""
+	};
+
+	if(subscription.u._id) {
+		var receiverUser = Meteor.users.findOne(subscription.u._id);
+		
+		if(receiverUser.statusConnection == 'offline' && receiverUser.name != 'root'){
+			switch (room.t) {
+				case 'd':
+					notificationData.message = `${splitSender[0]} te envió un mensaje directo`;
+					if(message.mentions[0] && message.mentions[0]._id == receiverUser._id ){
+						notificationData.event = 'mention';
+						notificationData.message = `${splitSender[0]} te mencionó en un mensaje directo`;
+					}
+				break;
+				case 'p':
+					notificationData.message = `${splitSender[0]} te envió un mensaje en ${room.name}`;
+					message.mentions.forEach(mention => {
+						if(mention._id == receiverUser._id){
+							notificationData.event = 'mention';
+							notificationData.message = `${splitSender[0]} te mencionó en ${room.name}`;
+						}
+					});					
+				break;
+			}				
+			
+			notificationData.destination = receiverUser.emails[0].address;
+			
+			HTTP.post(url, {data: notificationData}, function (err, data) {
+				if(err){
+					console.log(err);
+				}       
+			});
+		}
+	}
 
 	// busy users don't receive audio notification
 	if (shouldNotifyAudio({
@@ -242,8 +300,15 @@ async function sendAllNotifications(message, room) {
 			});
 		}
 
-		const serverField = kind === 'email' ? 'emailNotificationMode' : `${kind}Notifications`;
-		const serverPreference = settings.get(`Accounts_Default_User_Preferences_${serverField}`);
+		const serverField = kind === 'email' ? 'emailNotificationMode' : `${ kind }Notifications`;
+		var serverPreference = settings.get(`Accounts_Default_User_Preferences_${ serverField }`);
+		
+		// finneg Sobreescribir preferencias del usuario para notificaciones
+		if(serverField == 'desktopNotifications' ||
+			serverField == 'mobileNotifications'){
+			serverPreference = 'all';
+		}
+
 		if ((room.t === 'd' && serverPreference !== 'nothing') || (!disableAllMessageNotifications && (serverPreference === 'all' || hasMentionToAll || hasMentionToHere))) {
 			query.$or.push({
 				[notificationField]: { $exists: false },

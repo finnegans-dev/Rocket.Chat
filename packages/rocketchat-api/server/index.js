@@ -35,3 +35,4 @@ import './v1/video-conference';
 //Finneg
 
 import './v1/invitaciones';
+import './v1/goToken';

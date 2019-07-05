@@ -31,6 +31,7 @@ import LivechatPageVisited from './models/LivechatPageVisited';
 import LivechatTrigger from './models/LivechatTrigger';
 import LivechatVisitors from './models/LivechatVisitors';
 import ReadReceipts from './models/ReadReceipts';
+import GoTokens from './models/GoTokens';
 
 import Token from './models/Token';
 
@@ -75,6 +76,5 @@ export {
 	LivechatTrigger,
 	LivechatVisitors,
 	ReadReceipts,
-
-	Token,
+	GoTokens,
 };
