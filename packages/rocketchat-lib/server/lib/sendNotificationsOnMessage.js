@@ -85,7 +85,7 @@ const sendNotification = async ({
 	if(subscription.u._id) {
 		var receiverUser = Meteor.users.findOne(subscription.u._id);
 		
-		if(receiverUser.statusConnection == 'offline' && receiverUser.name != 'root'){
+		if(receiverUser.status != 'online' && receiverUser.name != 'root'){
 			switch (room.t) {
 				case 'd':
 					notificationData.message = `${splitSender[0]} te envió un mensaje directo`;
