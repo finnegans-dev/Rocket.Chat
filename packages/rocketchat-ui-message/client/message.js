@@ -501,7 +501,7 @@ Template.message.onViewRendered = function(context) {
 			}
 
 			if (currentNode.classList.contains('own') === true) {
-				templateInstance.atBottom = true;
+				templateInstance.atBottom = true;				
 			}
 			templateInstance.sendToBottomIfNecessary();
 		}

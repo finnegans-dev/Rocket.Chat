@@ -2,12 +2,15 @@ import { Template } from 'meteor/templating';
 
 Template.contextualBar.events({
 	'click .js-close'(e, t) {
-		t.tabBar.close();
+		if(window.screen.width < 1366){
+			t.tabBar.close();
+		}
 	},
 });
 
 Template.contextualBar.onCreated(function() {
 	this.tabBar = Template.currentData().tabBar;
+	
 });
 
 Template.contextualBar.helpers({
@@ -26,3 +29,4 @@ Template.contextualBar.helpers({
 		});
 	},
 });
+

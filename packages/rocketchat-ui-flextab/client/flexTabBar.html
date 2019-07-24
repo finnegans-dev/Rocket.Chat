@@ -12,7 +12,7 @@
 					{{/with}}
 					<button class="contextual-bar__header-close js-close close-flex-tab">
 						{{> icon block="contextual-bar__header-close-icon" icon="plus"}}
-					</button>
+					</button> 
 				</header>
 				{{> Template.dynamic template=template data=flexData}}
 			</div>
@@ -52,7 +52,7 @@
 
 		{{/if}}
 
-		<div class="rc-room-actions__action tab-button {{active}} {{visible}} {{class}} js-action" data-id="{{id}}">
+		<div class="rc-room-actions__action tab-button {{active}} {{visible}} {{class}} js-action" id="testt" data-id="{{id}}">
 			<button class="rc-tooltip rc-tooltip--down rc-tooltip--end rc-room-actions__button" aria-label="{{title}}">
 				{{> icon block="tab-button-icon" icon=icon }}
 			</button>
@@ -84,7 +84,8 @@
 		
 		{{#if test ..}}
 			<div class="rc-room-actions__more-action tab-button {{active}} {{visible}} {{class}} js-action"
-				title="{{title}}">
+				title="{{title}}"
+				id="testt">
 				<button class="rc-tooltip rc-room-actions__button">
 					{{> icon block="tab-button-icon" icon=icon }}
 				</button>

@@ -61,6 +61,10 @@
 /* RTL */
 @import 'imports/general/rtl.css';
 
+/* FINNEG */
+
+@import './finnegans.css';
+
 
 *:not(i):not(.fa) {
 	font-family: 'Montserrat' !important;
@@ -236,32 +240,88 @@ svg.rc-icon.rc-icon--default-size.sidebar-item__icon.sidebar-item__icon--lock {
 
 /* 1920 */
 @media (min-width: 1367px) and (max-width: 2000px){
+    
+    .rocket-default-search-results .list .message{
+        right: 5rem;
+        width: 380px;
+        margin-left: 1rem
+    }
+
+    .message.new-day::before {
+        background-color: #E8F7FB !important;
+        border-radius: 5px;
+    }
+
     .message{
         width: 660px;
+        padding: 0px 0 4px 30px;
+        margin-left: 0;
+        border-width: .8rem 0 0 .8rem;
+        border-color: transparent transparent transparent white;
+        background-color: #EFF0F1;
+        border-radius: 10px;
+
+        & .thumb{
+            top: -10px;
+            &:not(.thumb-small) .avatar {
+                width: 26px;
+                height: 26px;
+                border-radius: 50%;
+            }
+        }
+
+        & .user{
+            padding-left: 2rem;
+        }
     }
     .own{
-        margin-left: 745px;
+        margin-left: 27rem;
+        margin-top: .5rem;
+        border-width: .8rem .8rem 0 0;
+        border-color: transparent white transparent transparent;
+        background-color: #FEEFF0;
+        border-radius: 10px;
+
+        & .thumb.user-card-message{
+            visibility: hidden !important;
+        }
+
+        & .user.user-card-message.color-primary-font-color{
+            position: absolute;
+            visibility: hidden;
+        }
+
+        & .info.border-component-color.color-info-font-color{
+            float: right;
+            padding-right: 2rem;
+        }
+
+        & .body.color-primary-font-color {
+            width: 535px;
+        }
     }
     .rc-button.rc-button--nude.js-close {
         margin-left: 200px;
     }
+    
 }
 
-@media (max-width: 1366px) {
-    .message{
-        width: 550px;
-    }
-    .own{
-        margin-left: 475px;
-    }
-    .rc-button.rc-button--nude.js-close {
-        margin-left: 130px;
-    }
-} 
+
 
 @media (max-width: 767px){
+
+    .message{
+        width: 380px;
+        margin-left: 2rem;
+    }
+
     .own{
-        margin-left: 70px;
+        margin-left: 2.5rem;
+        margin-right: 1rem;
+
+        & .own.body.color-primary-font-color{
+            width: 300px;
+        }
     }
     .body.color-primary-font-color {
         width: 120%;
@@ -276,6 +336,13 @@ svg.rc-icon.rc-icon--default-size.sidebar-item__icon.sidebar-item__icon--lock {
         margin-left: 300px;
         width: 200px;
         width: 120%;
+    }
+
+    .rc-old .messages-container {
+        & .wrapper {
+        justify-content: flex-end;
+        display: flex;
+        }
     }
     .rc-button.rc-button--nude.js-close {
         margin-left: 130px;

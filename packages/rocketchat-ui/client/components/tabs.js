@@ -3,6 +3,7 @@ import { Template } from 'meteor/templating';
 
 Template.tabs.onCreated(function() {
 	this.activeTab = new ReactiveVar(this.data.tabs.tabs.find((tab) => tab.active).value);
+	console.log(this)
 });
 
 Template.tabs.events({

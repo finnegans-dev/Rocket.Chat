@@ -1931,6 +1931,7 @@ rc-old select,
 
 	display: flex;
 	flex-direction: column;
+	justify-content: flex-end;
 	flex: 1;
 
 	width: 100%;
@@ -1973,7 +1974,8 @@ rc-old select,
 
 		overflow-x: hidden;
 		overflow-y: auto;
-
+		display: flex;
+		justify-content: flex-end;
 		width: 100%;
 		height: 100%;
 
@@ -2509,7 +2511,10 @@ rc-old select,
 
 	& .start {
 		margin-top: 12px;
-
+		width: 5rem;
+		border-radius: 8px;
+		
+		background-color: #E8F7FB;
 		text-align: center;
 
 		& .start__purge-warning {
@@ -2619,7 +2624,7 @@ rc-old select,
 	z-index: 1;
 
 	min-height: 40px;
-	padding: 8px 50px 4px 70px;
+	padding: 8px 0 4px 70px;
 
 	line-height: 20px;
 
@@ -2636,8 +2641,7 @@ rc-old select,
 
 		&::before {
 			position: absolute;
-			top: -30px;
-			left: calc(50% - 70px);
+			top: -40px;
 
 			display: block;
 
@@ -2651,23 +2655,6 @@ rc-old select,
 
 			font-size: 12px;
 			font-weight: 600;
-		}
-
-		&::after {
-			position: absolute;
-			z-index: -1;
-			top: -20px;
-			left: 0;
-
-			display: block;
-
-			width: 100%;
-
-			content: " ";
-
-			pointer-events: none;
-
-			border-width: 1px 0 0;
 		}
 	}
 
@@ -2806,7 +2793,7 @@ rc-old select,
 
 	&.sequential {
 		min-height: 20px;
-		margin-top: 0;
+		margin-top: 1rem;
 		padding-top: 4px;
 		padding-bottom: 4px;
 

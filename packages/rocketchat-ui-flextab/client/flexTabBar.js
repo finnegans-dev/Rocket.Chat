@@ -96,9 +96,11 @@ const commonEvents = {
 		e.preventDefault();
 		const $flexTab = $('.flex-tab-container .flex-tab');
 
-		if (t.tabBar.getState() === 'opened' && t.tabBar.getTemplate() === this.template) {
-			$flexTab.attr('template', '');
-			return t.tabBar.close();
+		if( window.screen.width < 1365){
+			if (t.tabBar.getState() === 'opened' && t.tabBar.getTemplate() === this.template) {
+				$flexTab.attr('template', '');
+				return t.tabBar.close();
+			}
 		}
 
 		$flexTab.attr('template', this.template);
@@ -106,6 +108,7 @@ const commonEvents = {
 			label: this.i18nTitle,
 			icon: this.icon,
 		});
+		
 		t.tabBar.open(this);
 
 		popover.close();
@@ -204,7 +207,12 @@ Template.RoomsActionTab.events({
 Template.RoomsActionTab.onDestroyed(function () {
 	$(window).off('resize', this.refresh);
 });
-Template.RoomsActionTab.onCreated(function () {
+
+Template.RoomsActionTab.onRendered(function () {
+	if ( window.screen.width > 1365) document.querySelector('.js-action').click();	
+});
+
+Template.RoomsActionTab.onCreated(function () {	
 	this.small = new ReactiveVar(window.matchMedia('(max-width: 500px)').matches);
 	this.refresh = _.throttle(() => {
 		this.small.set(window.matchMedia('(max-width: 500px)').matches);
@@ -289,8 +297,6 @@ Template.RoomsActionTab.helpers({
 	},
 
 	test(but) {
-		console.log("SDSAD")
-		console.log(but)
 		return true;
 	}
 });
