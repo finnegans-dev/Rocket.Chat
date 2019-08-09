@@ -72,10 +72,10 @@
 	.sidebar {
 		position: absolute;
 	}
-
+	/* finneg translate 3d var(--sidebar-width) x 100% */
 	.sidebar:not(.sidebar-light) {
 		user-select: none;
-		transform: translate3d(calc(var(--sidebar-width) * -1), 0, 0);
+		transform: translate3d(calc(100% * -1), 0, 0);
 		-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 		touch-action: pan-y;
 		-webkit-user-drag: none;
@@ -95,7 +95,7 @@
 		max-width: var(--sidebar-small-width);
 
 		&__footer {
-			display: none;
+		/*	display: none; */
 		}
 
 		&:not(&--light) {

@@ -123,6 +123,24 @@ Template.sidebarItem.onCreated(function () {
 });
 
 Template.sidebarItem.events({
+	'click .temas' : function (event, instance) {
+		let temas = $('.active-temas'); 
+
+		for (let i = 0; i < temas.length; i++) {
+			temas.children().removeClass('active');
+		}
+
+		$(event.currentTarget).addClass('active');
+
+	},
+	'click li.sidebar-item' : function (e, i) {
+		let temas = $('.active-temas'); 
+
+		for (let i = 0; i < temas.length; i++) {
+			temas.children().removeClass('active');
+		}
+		
+	},
 	'click [data-id], click .sidebar-item__link'() {
 		return menu.close();
 	},

@@ -8,6 +8,9 @@ import { settings } from 'meteor/rocketchat:settings';
 import { roomTypes, getUserPreference } from 'meteor/rocketchat:utils';
 import { Users } from 'meteor/rocketchat:models';
 
+
+
+
 Template.sideNav.helpers({
 	flexTemplate() {
 		return SideNav.getFlex().template;
@@ -48,6 +51,40 @@ Template.sideNav.helpers({
 });
 
 Template.sideNav.events({
+	'click .contextTab' (){
+		let directMessageOnTab = $('.directMessageTab.tab-type-d')[0];
+		let livechatOnTab = $('.livechatTab')[0];
+		let contextOnTab = $('.directMessageTab.tab-type-p')[0];
+		contextOnTab.hidden = false;
+		$('.tabs .contextTab').addClass('active-tab');
+		$('.tabs .directTab').removeClass('active-tab');
+		$('.tabs .livechatTab').removeClass('active-tab');
+		!directMessageOnTab.hidden ? directMessageOnTab.hidden = true : 
+		!livechatOnTab.hidden ? livechatOnTab.hidden = true : '';
+		
+	},
+	'click .directTab' (){
+		let directMessageOnTab = $('.directMessageTab.tab-type-d')[0];
+		let livechatOnTab = $('.livechatTab')[0];
+		let contextOnTab = $('.directMessageTab.tab-type-p')[0];
+		directMessageOnTab.hidden = false;
+		$('.tabs .directTab').addClass('active-tab');
+		$('.tabs .contextTab').removeClass('active-tab');
+		$('.tabs .livechatTab').removeClass('active-tab');
+		!contextOnTab.hidden ? contextOnTab.hidden = true : 
+		!livechatOnTab.hidden ? livechatOnTab.hidden = true : '';
+	},
+	'click .livechatTab' (){
+		let directMessageOnTab = $('.directMessageTab.tab-type-d')[0];
+		let livechatOnTab = $('.livechatTab');
+		let contextOnTab = $('.directMessageTab.tab-type-p')[0];
+		livechatOnTab[0].hidden = false;
+		$('.tabs .livechatTab').addClass('active-tab');
+		$('.tabs .contextTab').removeClass('active-tab');
+		$('.tabs .directTab').removeClass('active-tab');
+		!contextOnTab.hidden ? contextOnTab.hidden = true : 
+		!directMessageOnTab.hidden ? directMessageOnTab.hidden = true : '';
+	},
 	'click .close-flex'() {
 		return SideNav.closeFlex();
 	},
@@ -84,6 +121,11 @@ Template.sideNav.events({
 });
 
 Template.sideNav.onRendered(function () {
+	let directMessageOnTab = $('.directMessageTab.tab-type-d');
+	let livechatOnTab = $('.livechatTab')[0];
+	directMessageOnTab[0].hidden = true;
+	$('.tabs .contextTab').addClass('active-tab');
+	livechatOnTab ? livechatOnTab.hidden = true : $('.livechatTab')[1].hidden = true;
 	SideNav.init();
 	menu.init();
 	lazyloadtick();
@@ -97,6 +139,7 @@ Template.sideNav.onRendered(function () {
 });
 
 Template.sideNav.onCreated(function () {
+
 	this.groupedByType = new ReactiveVar(false);
 
 	this.autorun(() => {

@@ -29,7 +29,7 @@ html.rtl .attachment {
 		margin: 5px 0;
 		padding-left: 15px;
 		background-color: white;
-		border-left: 5px solid #FF6D92;
+		border-left: 5px solid #FFB6C8;
 		border-radius: 10px;
 
 		& .attachment-block-border {
@@ -78,7 +78,7 @@ html.rtl .attachment {
 
 	& .attachment-text {
 		padding: 3px 0;
-
+		word-break: break-word;
 		line-height: 1rem;
 	}
 

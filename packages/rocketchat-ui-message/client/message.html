@@ -2,7 +2,7 @@
 	<!--Finneg 
 	Quito todos los mensajes que aparecen cuando se crea un-->
 	
-	<li id="{{_id}}" data-context={{actionContext}} class="message background-transparent-dark-hover {{ignoredClass}} {{sequentialClass}} {{system}} {{t}} {{own}} {{isTemp}} {{chatops}} {{customClass}}" data-username="{{u.username}}" data-groupable="{{isGroupable}}" data-date="{{date}}" data-timestamp="{{timestamp}}">
+	<li id="{{_id}}" data-context={{actionContext}} class="message background-transparent-dark-hover {{ignoredClass}} {{sequentialClass}} {{system}} {{t}} {{own}} {{yours}} {{isTemp}} {{chatops}} {{customClass}}" data-username="{{u.username}}" data-groupable="{{isGroupable}}" data-date="{{date}}" data-timestamp="{{timestamp}}">
 		{{#if avatar}}
 			{{#if avatarFromUsername}}
 				<button class="thumb user-card-message" data-username="{{u.username}}" tabindex="1">{{> avatar username=avatarFromUsername}}</button>
@@ -24,6 +24,8 @@
 				<button class="thumb user-card-message" data-username="{{u.username}}" tabindex="1">{{> avatar username=u.username}}</button>
 			{{/if}}
 		{{/if}}
+		<div class="relleno {{own}}"></div>
+		<div class="relleno {{yours}}"></div>
 		<button type="button" class="user user-card-message color-primary-font-color" data-username="{{u.username}}" tabindex="1">{{getName}}{{#if showUsername}} <span class="message-alias border-component-color color-info-font-color">@{{u.username}}</span>{{/if}}</button>
 		<span class="info border-component-color color-info-font-color">
 			{{#each roleTags}}

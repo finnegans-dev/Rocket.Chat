@@ -177,6 +177,9 @@ Template.roomList.events({
 			instance.nameSala.set($(clase)[0].innerHTML);
 			$(clase)[0].innerHTML = "General"
 		}
+
+		//flecha de back
+		$('.back-context').addClass('back-context-room');
 		
 		
 	}, 
@@ -191,6 +194,16 @@ Template.roomList.events({
 		
 		//Nombre
 		$(instance.clase.get())[0].innerHTML = instance.nameSala.get();
+
+		$('.back-context').removeClass('back-context-room');
+		
+	},
+	'click .back-context-room': function(event, instance){
+		$('.back-context').removeClass('back-context-room');
+	},
+	'click .sidebar ': function (event, instance) {
+		let asd = $('.livechatTab');
+		asd.hide() ? asd.show() : asd.hide();
 	}
 });
 

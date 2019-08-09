@@ -4,14 +4,282 @@
     margin-left: 1rem
 }
 
-@media (max-width: 1366px) {
+.start.color-info-font-color{
+    font-size: 12px;
+}
 
-    .messages-box .start {
-        margin-left: 50%;
+.attachment .attachment-block {
+    padding-right: 1rem;
+}
+
+.message.background-transparent-dark-hover.own{
+    background: none;
+}
+
+.message.background-transparent-dark-hover.yours{
+    background: none;
+}
+
+.wrapper > ul {
+    width: 100%
+}
+
+.relleno.own{
+    position: absolute;
+    background-color: #FEEFF0;
+    margin: 0;
+    z-index: -1;
+    visibility: visible;
+    width: 67%;
+    height: 100%;
+    margin-left: 25%;
+    box-shadow: 0px 1px 1px lightgrey;
+    border-radius: 5px;
+}
+
+.relleno.yours{
+    position: absolute;
+    z-index: -1;
+    margin-left: -.5rem;
+    width: 66%;
+    height: 100%;
+    background-color: #F8F8F9;
+    border-radius: 5px;
+    box-shadow: 0px 1px 1px lightgrey;
+}
+
+.yours.sequential{
+
+    & .user{
+        display: none;
+    }
+
+    & .info{
+        position: absolute;
+        left: 0;
+        top: 5px;
+        width: 100%;
+        text-align: right;
+        display: flex;
+
+        & .time{
+            display: inline-block;
+            position: absolute;
+            width: 68%;
+        }
+    }
+}
+
+.system{
+    & .body.color-primary-font-color.color-info-font-color{
+        flex-flow: column wrap;
+    }
+}
+
+@media (min-width: 1282px) and (max-width: 1366px) {
+
+    .rooms-agrupada{
+    
+        & .rooms-list__list {
+            & .context{
+                margin-left: 0;
+
+            }
+        }
+    }
+
+    .contextual-bar__header{
+        padding-top: 3.5rem;
+    }
+
+    .contextual-bar__header-close.js-close{
+        display: none;
+    }
+
+    .rc-message-box.rc-new:after{
+        right: -25px;
+    }
+
+    .rocket-default-search-results{
+        & .flex-tab__result.js-list{
+            & .list.clearfix{
+
+                & .message.new-day::before{
+                    margin-top: 1rem;
+                    margin-left: 25%
+                }
+
+                & .yours{
+
+                    .relleno.yours{
+                        margin-left: 1rem;
+                        width: 95%;
+                    }
+
+                    & .body.color-primary-font-color {
+                        width: 100%;
+                        margin-left: 2rem;
+                    }
+
+                    & .message-actions{
+                        margin-top: .5rem;
+                        margin-right: 0;
+                        left: 100%;
+                        top: 8px;
+                    }
+
+                    & .reactions{
+                        margin-left: 2rem;
+                        width: 100%;
+                    }
+
+                    & .user.color-info-font-color{
+                        display: none;
+                    }
+                }
+
+                & .yours.sequential{
+                    & .info{
+                        & .time{
+                            right: -20px;
+                            top: 5px;
+                        }
+                    }
+                }
+
+                & .own{
+                    & .relleno.own{
+                        width: 95%;
+                        margin-left: -3rem;
+                    }
+
+                    & .body.color-primary-font-color {
+                        padding-left: 0;
+                        width: 100%;
+                    }
+
+                    & .user.color-info-font-color{
+                        display: block;
+                        padding-left: 0;
+                    }
+
+                    & .reactions{
+                        margin-left: 0;
+                        width: 100%;
+                    }
+
+                    & .message.user{                        
+                        margin-left: -1rem;
+                        margin-top: -1rem;
+
+                    }
+
+                    & .message-actions{
+                        top: 10px;
+                        right: -1rem;
+                    }
+                }
+            }
+        }
+    }
+
+    .contextual-bar__content.flex-tab.starred-messages {
+        & .flex-tab__result.js-list{
+            & .list.clearfix{
+
+                & .own.starred .info .time{
+                    position: relative;
+                }
+
+                & .message.new-day::before{
+                    margin-left: 25%
+                }
+
+                & .yours{
+                    & .attachment{
+                        width: 100%;
+                    }
+
+                    & .relleno.yours{
+                        width: 90%;
+                        margin-left: -.5rem;
+                    }
+
+                    & .reactions{
+                        width: 100%;
+                    }
+
+                    .message-actions {
+                        width: 1rem;
+                    }
+
+                    & .body.color-primary-font-color {
+                        width: 100%
+                    }
+                }
+
+                & .yours.sequential{
+                    & .info{
+                        & .time{
+                            width: 85%;
+                        }
+                    }
+                }
+
+
+                & .own{
+                    & .relleno.own{
+                        width: 95%;
+                        margin-left: -2rem;
+                    }
+
+                    & .body.color-primary-font-color {
+                        margin-left: -1rem;
+                        padding-left: 0;
+                        width: 95%;
+                    }
+
+                    & .reactions{
+                        margin-left: -1rem;
+                        width: 95%;
+                    }
+                }
+            }
+        }
+      }
+
+    .yours {
+
+        & .body.color-primary-font-color {
+            display: flex;
+            flex-flow: column-reverse wrap;
+            word-break: break-word;        
+            width: 67%;
+            
+            & .mention-link.mention-link-me{
+                width: 67%;
+            }
+        }      
+
+        & .attachment{
+            width: 100%;
+        }
+    } 
+
+    .own.sequential{
+        & .info{
+            left: 0;
+            width: 95%;
+            position: relative;
+
+            & .time{
+                display: block;
+            }
+        }
     }
 
     .message.sequential{
-        margin-top: .5rem;
+        margin-top: .3rem;
     }
 
     .own{
@@ -21,17 +289,33 @@
         }
 
         & .user.user-card-message.color-primary-font-color{
-            position: absolute;
-            visibility: hidden;
+          display: none;
         }
 
         & .info.border-component-color.color-info-font-color{
-            float: right;
-            padding-right: 2rem;
+            position: absolute;
+            right: 2rem;
+            padding-top: .5em;
+
+            & .role-tag.color-secondary-color.border-component-color{
+                display: none;
+            }
         }
 
         & .body.color-primary-font-color {
-            width: 390px;
+            width: 93%;
+            padding-left: 12rem;
+            padding-top: .5em;
+            padding-right: 0;
+            display: flex;
+            flex-flow: column-reverse wrap;
+            word-break: break-word;            
+        }
+
+        & .reactions {
+            width: 67%;
+            margin-left: 12rem;
+            padding-top: .5em;
         }
 
       
@@ -41,44 +325,53 @@
 
             background-color: #E8F7FB !important;
             border-radius: 5px;
-            margin-left: 50% !important;
+            margin-left: 35% ;
+            margin-top: .5rem;
 
     }
 
     .message{
-        width: 500px;
-        padding: 0px 0 4px 30px;
-        margin-left: 3rem;
-        border-width: .8rem 0 0 .8rem;
-        border-color: transparent transparent transparent white;
-        background-color: #EFF0F1;
-        border-radius: 10px;
+        width: 100%;
+        padding: 0px 2rem 4px 30px;
+        margin-top: 1rem;
 
         & .thumb{
-            top: -10px;
+            top: 2px;
+            left: 30px;
             &:not(.thumb-small) .avatar {
-                width: 26px;
-                height: 26px;
+                width: 22px;
+                height: 22px;
                 border-radius: 50%;
             }
         }
 
         & .user{
             padding-left: 2rem;
+            padding-top: .8em;
+            padding-bottom: .5em;
         }
 
     }
-    .own{
-        margin-left: 14rem;
-        margin-top: .5rem;
-        border-width: .8rem .8rem 0 0;
-        border-color: transparent white transparent transparent;
-        background-color: #FEEFF0;
-        border-radius: 10px;
-    }
+     
     .rc-button.rc-button--nude.js-close {
         margin-left: 130px;
     }
+
+    .yours .message-actions{
+        width: 35%;
+    }
+
+    .message .reactions {
+        padding-bottom: .5em !important;
+        padding-top: .5em !important;
+        width: 400px;
+    }
+
+    .message-actions {
+        margin-right: 1rem;
+    }
 }
+
+
 
 

@@ -96,7 +96,7 @@ const commonEvents = {
 		e.preventDefault();
 		const $flexTab = $('.flex-tab-container .flex-tab');
 
-		if( window.screen.width < 1365){
+		if( window.screen.width < 1286){
 			if (t.tabBar.getState() === 'opened' && t.tabBar.getTemplate() === this.template) {
 				$flexTab.attr('template', '');
 				return t.tabBar.close();
@@ -209,7 +209,7 @@ Template.RoomsActionTab.onDestroyed(function () {
 });
 
 Template.RoomsActionTab.onRendered(function () {
-	if ( window.screen.width > 1365) document.querySelector('.js-action').click();	
+	if ( window.screen.width > 1286) document.querySelector('.js-action').click();	
 });
 
 Template.RoomsActionTab.onCreated(function () {	

@@ -160,12 +160,17 @@ Template.message.helpers({
 	showUsername() {
 		return this.alias || (settings.get('UI_Use_Real_Name') && this.u && this.u.name);
 	},
+	yours() {
+		if (this.u && this.u._id != Meteor.userId()) {
+			return 'yours';
+		}
+	},
 	own() {
 		if (this.u && this.u._id === Meteor.userId()) {
 			return 'own';
 		}
 	},
-	timestamp() {
+timestamp() {
 		return +this.ts;
 	},
 	chatops() {
@@ -507,9 +512,3 @@ Template.message.onViewRendered = function(context) {
 		}
 	});
 };
-
-Template.message.events({
-	'click .message'(event) {
-		console.log(event)
-	}
-});

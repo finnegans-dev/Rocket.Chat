@@ -2,7 +2,7 @@ import { Template } from 'meteor/templating';
 
 Template.contextualBar.events({
 	'click .js-close'(e, t) {
-		if(window.screen.width < 1366){
+		if(window.screen.width < 1286){
 			t.tabBar.close();
 		}
 	},

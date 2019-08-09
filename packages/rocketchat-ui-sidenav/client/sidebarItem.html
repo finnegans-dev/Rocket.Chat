@@ -146,20 +146,21 @@
 		{{#if showTemas}}
 		<div class="temas-contexto cerrar" style="margin-left:25px">
 			{{#each item in temas}}
-
-			<a class="sidebar-item__link temas" href="/chat/group/{{item.name}}">
-				<div class="sidebar-item__picture">
-					<div class="sidebar-item__room-type">
-						<svg class="rc-icon sidebar-item__icon rc-icon--default-size rc-icon--default-size--thread"
-							aria-hidden="true">
-							<use xlink:href="#icon-thread"></use>
-						</svg>
+			<div class="active-temas">
+				<a class="sidebar-item__link temas tema-{{item.name}} " href="/chat/group/{{item.name}}">
+					<div class="sidebar-item__picture">
+						<div class="sidebar-item__room-type">
+							<svg class="rc-icon sidebar-item__icon rc-icon--default-size rc-icon--default-size--thread"
+								aria-hidden="true">
+								<use xlink:href="#icon-thread"></use>
+							</svg>
+						</div>
 					</div>
-				</div>
-				<p>
-					{{nombreTema item.fname}}
-				</p>
-			</a>
+					<p>
+						{{nombreTema item.fname}}
+					</p>
+				</a>
+			</div>
 			{{/each}}
 		</div>
 		{{/if}}
