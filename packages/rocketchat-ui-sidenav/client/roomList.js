@@ -96,8 +96,11 @@ Template.roomList.helpers({
 		return ChatSubscription.find(query, { sort });
 	},
 
-	isLivechat() {
+	isLivechat() {		
 		return this.identifier === 'l';
+	},
+	showLiveTab(){
+		$('.sidebar__footer .tabs .livechatTab.padding-top-tabs').css("display", "block");
 	},
 
 	shouldAppear(group, rooms) {
@@ -141,6 +144,7 @@ Template.roomList.onCreated(function() {
 	this.clase = new ReactiveVar('');
 	this.nameSala = new ReactiveVar('');
 });
+
 
 Template.roomList.events({
 	'click .rooms-list__list.type-p .test ': function (event, instance) {
@@ -201,9 +205,10 @@ Template.roomList.events({
 	'click .back-context-room': function(event, instance){
 		$('.back-context').removeClass('back-context-room');
 	},
-	'click .sidebar ': function (event, instance) {
-		let asd = $('.livechatTab');
-		asd.hide() ? asd.show() : asd.hide();
+	'click .test': function(e, i){
+		let classList = e.currentTarget.className;
+		const roomName = classList.replace('test','');
+		roomName ? localStorage.setItem("contextDomain", roomName) : '';
 	}
 });
 

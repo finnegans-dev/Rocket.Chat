@@ -209,7 +209,10 @@ Template.RoomsActionTab.onDestroyed(function () {
 });
 
 Template.RoomsActionTab.onRendered(function () {
-	if ( window.screen.width > 1286) document.querySelector('.js-action').click();	
+	if ( window.screen.width > 1286){
+		document.querySelector('.js-action').click();	
+		$('button', '.rc-room-actions__action.tab-button.js-action')[1].click();
+	} 
 });
 
 Template.RoomsActionTab.onCreated(function () {	

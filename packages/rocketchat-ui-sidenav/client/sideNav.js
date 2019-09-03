@@ -52,22 +52,25 @@ Template.sideNav.helpers({
 
 Template.sideNav.events({
 	'click .contextTab' (){
-		let directMessageOnTab = $('.directMessageTab.tab-type-d')[0];
-		let livechatOnTab = $('.livechatTab')[0];
-		let contextOnTab = $('.directMessageTab.tab-type-p')[0];
-		contextOnTab.hidden = false;
+		let directMessageOnTab = $('.directMessageTab.tab-type-d');
+		let livechatOnTab = $('.livechatTabRoom');
+		let contextOnTab = $('.directMessageTab.tab-type-p');
+		contextOnTab.css("display", "block");
+		directMessageOnTab.css("display", "none");
+		livechatOnTab.css("display", "none");
 		$('.tabs .contextTab').addClass('active-tab');
 		$('.tabs .directTab').removeClass('active-tab');
 		$('.tabs .livechatTab').removeClass('active-tab');
-		!directMessageOnTab.hidden ? directMessageOnTab.hidden = true : 
 		!livechatOnTab.hidden ? livechatOnTab.hidden = true : '';
 		
 	},
 	'click .directTab' (){
-		let directMessageOnTab = $('.directMessageTab.tab-type-d')[0];
-		let livechatOnTab = $('.livechatTab')[0];
-		let contextOnTab = $('.directMessageTab.tab-type-p')[0];
-		directMessageOnTab.hidden = false;
+		let directMessageOnTab = $('.directMessageTab.tab-type-d');
+		let livechatOnTab = $('.livechatTabRoom');
+		let contextOnTab = $('.directMessageTab.tab-type-p');
+		directMessageOnTab.css("display", "block");
+		contextOnTab.css("display", "none");
+		livechatOnTab.css("display", "none");
 		$('.tabs .directTab').addClass('active-tab');
 		$('.tabs .contextTab').removeClass('active-tab');
 		$('.tabs .livechatTab').removeClass('active-tab');
@@ -75,15 +78,15 @@ Template.sideNav.events({
 		!livechatOnTab.hidden ? livechatOnTab.hidden = true : '';
 	},
 	'click .livechatTab' (){
-		let directMessageOnTab = $('.directMessageTab.tab-type-d')[0];
-		let livechatOnTab = $('.livechatTab');
-		let contextOnTab = $('.directMessageTab.tab-type-p')[0];
-		livechatOnTab[0].hidden = false;
+		let directMessageOnTab = $('.directMessageTab.tab-type-d');
+		let livechatOnTab = $('.livechatTabRoom');
+		let contextOnTab = $('.directMessageTab.tab-type-p');
+		livechatOnTab.css("display", "block");
+		directMessageOnTab.css("display", "none");
+		contextOnTab.css("display", "none");
 		$('.tabs .livechatTab').addClass('active-tab');
 		$('.tabs .contextTab').removeClass('active-tab');
 		$('.tabs .directTab').removeClass('active-tab');
-		!contextOnTab.hidden ? contextOnTab.hidden = true : 
-		!directMessageOnTab.hidden ? directMessageOnTab.hidden = true : '';
 	},
 	'click .close-flex'() {
 		return SideNav.closeFlex();
@@ -122,10 +125,10 @@ Template.sideNav.events({
 
 Template.sideNav.onRendered(function () {
 	let directMessageOnTab = $('.directMessageTab.tab-type-d');
-	let livechatOnTab = $('.livechatTab')[0];
-	directMessageOnTab[0].hidden = true;
+	let livechatTabRoom = $('.livechatTabRoom');
+	directMessageOnTab.css("display", "none");
+	livechatTabRoom.css("display", "none");
 	$('.tabs .contextTab').addClass('active-tab');
-	livechatOnTab ? livechatOnTab.hidden = true : $('.livechatTab')[1].hidden = true;
 	SideNav.init();
 	menu.init();
 	lazyloadtick();
@@ -134,8 +137,8 @@ Template.sideNav.onRendered(function () {
 	if (room !== undefined && room._id !== '') {
 		FlowRouter.go(`/channel/${first_channel_login}`);
 	}
-
 	return Meteor.defer(() => menu.updateUnreadBars());
+	
 });
 
 Template.sideNav.onCreated(function () {

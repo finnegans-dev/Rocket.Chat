@@ -111,9 +111,13 @@
 
                 & .yours{
 
-                    .relleno.yours{
+                    & .relleno.yours{
                         margin-left: 1rem;
-                        width: 95%;
+                        width: 85%;
+                    }
+
+                    & .message-alias.border-component-color.color-info-font-color{
+                        display: none;
                     }
 
                     & .body.color-primary-font-color {
@@ -149,8 +153,8 @@
 
                 & .own{
                     & .relleno.own{
-                        width: 95%;
-                        margin-left: -3rem;
+                        width: 85%;
+                        margin-left: 0;
                     }
 
                     & .body.color-primary-font-color {
@@ -229,13 +233,13 @@
 
                 & .own{
                     & .relleno.own{
-                        width: 95%;
-                        margin-left: -2rem;
+                        width: 90%;
+                        margin-left: -1.5rem;
                     }
 
                     & .body.color-primary-font-color {
                         margin-left: -1rem;
-                        padding-left: 0;
+                        padding-left: .5em;
                         width: 95%;
                     }
 
@@ -262,7 +266,7 @@
         }      
 
         & .attachment{
-            width: 100%;
+            width: 95%;
         }
     } 
 
@@ -304,7 +308,7 @@
 
         & .body.color-primary-font-color {
             width: 93%;
-            padding-left: 12rem;
+            padding-left: 11rem;
             padding-top: .5em;
             padding-right: 0;
             display: flex;

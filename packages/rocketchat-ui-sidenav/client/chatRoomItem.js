@@ -85,7 +85,6 @@ Template.chatRoomItem.helpers({
 		let dominioURL = window.localStorage.getItem('dominio');
 		let dominio = fname.substring(0, fname.indexOf('-'));
 		let contexto = fname.substring(fname.indexOf('-')+1, fname.length);
-		
 		if (fname[0] == fname[0].toUpperCase()) {
 			return true;
 		}

@@ -12,7 +12,8 @@
 					<input type="text" class="rc-input__element js-filter" name="user-search" id="user-search" placeholder={{_ "Search_by_username"}} autocomplete="off" />
 
 				</div>
-				<label class="rc-select">
+				<!-- finneg ocultar selector online/all-->
+				<label class="rc-select" style="display: none">
 					<select id="status-type" class="rc-select__element js-type" name="status-type">
 						<option value="">{{_ 'online'}}</option>
 						<option value="">{{_ 'All_users'}}</option>
@@ -20,12 +21,13 @@
 					{{> icon block="rc-select__arrow" icon="arrow-down" }}
 				</label>
 			</form>
-
+			<!-- finneg ocultar numero de usuarios online a mostrar-->
 			{{#unless loading}}
-			<div class="rc-user-info__row rc-user-info__row--separator">
-				<div class="rc-member-list__counter">{{{_ "Showing_online_users" total_showing=totalShowing online=totalOnline total=total}}}</div>
+			<div class="rc-user-info__row rc-user-info__row--separator" style="display: none">
+				<div class="rc-member-list__counter" >{{{_ "Showing_online_users" total_showing=totalShowing online=totalOnline total=total}}}</div>
 			</div>
 			{{/unless}}
+			
 		</div>
 		<div class="flex-tab__result list-view">
 				{{#if loading}}

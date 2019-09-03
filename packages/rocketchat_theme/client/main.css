@@ -113,6 +113,7 @@ header.sidebar__header {
 }
 
 .rooms-agrupada.tab-type-d{
+    display: none;
     & .back-context{
         display: none;
     }
@@ -121,6 +122,12 @@ header.sidebar__header {
         display: none;
     }
 }
+
+.rooms-agrupada.livechatTabRoom{
+    display: none;
+}
+
+
 
 .rooms-agrupada.tab-type-p{
     & .rooms-list__type{
@@ -1045,26 +1052,7 @@ svg.rc-icon.rc-icon--default-size.sidebar-item__icon.sidebar-item__icon--lock {
 
 
 
-@media (min-width: 767px) and (max-width: 1281px){
-    .contextual-bar__header-close.js-close{
-        display: block;
-    }
-   
-    .own{
-        margin-left: 300px;
-        width: 200px;
-    }
 
-    .rc-old .messages-container {
-        & .wrapper {
-        justify-content: flex-end;
-        display: flex;
-        }
-    }
-    .rc-button.rc-button--nude.js-close {
-        margin-left: 130px;
-    }
-}
 
 .relleno.own:after{
     width: 0;
@@ -1140,9 +1128,32 @@ dialog.rc-modal.rc-modal-- {
     background-color: #F8F8F9;
     box-shadow: 0 0 0 0;
     -webkit-box-shadow: 0 0 0 0;
+
+    & .contextual-bar__header-data{
+       /* color: #02ceff;
+        background-color: #e8f7f8; */
+    }
+
+    & .contextual-bar__content.flex-tab.addUsers{
+
+        & .rc-input__label{
+            & .rc-input__title{
+                display: none;
+            }
+        }
+
+
+        & .rc-user-info__flex.rc-user-info__row{
+            & .rc-button.rc-button--outline.js-close{
+                display: none;
+            }
+        }
+    }
+
     & .contextual-bar__content.flex-tab.starred-messages{
         & .flex-tab__result.js-list{
             background-color: #E8F7FB;
+            overflow-x: hidden;
         }
     }
 
@@ -1151,6 +1162,29 @@ dialog.rc-modal.rc-modal-- {
             background-color: #E8F7FB;
         }
     }
+
+    & .contextual-bar__content.flex-tab.members-list{
+        padding-top: 0;
+        justify-content: flex-start;
+
+        & .rc-member-list__user:hover{
+            background-color: #E8F7FB;
+        }
+
+        & .flex-tab__header{
+            background-color: #E8F7FB;
+            padding-left: 1rem;
+            padding-top: 1rem;
+        }
+
+        & .flex-tab__result.list-view{
+            background-color: #E8F7FB;
+            padding-left: 1.5rem;
+            flex: 0 0 auto;
+        }
+    }
+
+  
 
     & .loading-animation{
         background-color: #f8f8f9;
@@ -1183,6 +1217,7 @@ dialog.rc-modal.rc-modal-- {
 
 .contextual-bar__header{
     padding-top: 3.5rem;
+    padding-bottom: 0;
 }
 
 /* Tabs */
@@ -1204,12 +1239,16 @@ dialog.rc-modal.rc-modal-- {
         border-bottom: none;
         padding-bottom: 0;
         border-top: 2px solid lightgray;
-        font-size: 16px;
+        font-size: 14px;
         color: #A1A4AA;
         background-color: #F8F8F9;
 
         & .directTab.padding-top-tabs.active-tab{
             padding-right: 0;
+        }
+
+        & .livechatTab.padding-top-tabs{
+            display: none;
         }
 
         & .contextTab.padding-top-tabs{
@@ -1225,10 +1264,182 @@ dialog.rc-modal.rc-modal-- {
         & .padding-top-tabs{
             padding-top: 1rem;
             padding-right: .8rem;
-        }
+        }        
     }
 
     
+}
+
+@media (min-width: 767px) and (max-width: 1281px){
+
+    .message{
+
+        padding: 10px 0 0 40px;
+        margin-top: 1rem;
+
+        & .thumb{
+            width: 22px;
+            height: 22px;
+            left: 40px;
+            top: 15px;
+            &:not(.thumb-small) .avatar {
+                width: 22px;
+                height: 22px;
+                border-radius: 50%;
+            }
+        }
+
+        & span.user.color-info-font-color{
+            display: none;
+        }
+
+        & .reactions {
+            width: 85%;
+        }
+
+        & .body.color-primary-font-color {
+            width: 85%;
+            padding-top: .5rem;
+        }
+
+        & .attachment {
+            width: 100%;
+        }  
+
+        & .user.user-card-message.color-primary-font-color{
+            margin-left: 1.7rem;
+            margin-top: .5rem;
+        }
+
+    }
+
+    .own{
+
+        & .body.color-primary-font-color {
+            width: 90%;
+            word-break: break-word;
+            padding-left: 1rem;
+        }   
+
+        & .info.border-component-color.color-info-font-color{
+            padding-right: 0;
+            margin-right: -1rem;
+            width: 87%;
+            padding-top: .5rem;
+
+            & .time{
+                display: inline-block;
+            }
+        }
+
+        & .user.user-card-message.color-primary-font-color{
+            margin-left: 2.3rem !important;
+            margin-top: .5rem;
+        }
+
+        & .thumb {
+            left: 50px;
+        }
+
+        & .reactions {
+            padding-left: 1rem !important;
+        }
+
+      
+    }
+    
+   
+
+    .relleno.own{
+        width: 85%;
+        margin-left: 0;
+    }
+
+    .relleno.yours{
+        width: 90%;
+        margin-left: -1rem;
+    }
+
+    
+
+    .message.sequential{
+        margin-top: .7rem;
+    }
+
+    .own.sequential{
+        & .body.color-primary-font-color {
+            width: 80%;
+        }
+    }
+
+    .yours.sequential
+    {
+
+        & .info{
+            & .time{
+                width: 90%;
+            }
+        }
+      
+    }
+
+
+    .message.new-day::before {
+        margin-left:  35%;
+        top:-20px;
+        background-color: #e8f7fb !important;
+    }
+
+    .contextual-bar__header{
+        padding-top: 0;
+
+        & .contextual-bar__header-close.js-close{
+            display: block;        
+        }
+    }
+
+    .sidebar {
+        background-color: #F8F8F9;
+        flex: 0 0 35%;
+        max-width: 35%;
+        width: 35%;
+    }
+
+    .sidebar__toolbar{
+        justify-content: space-around;
+    }
+
+    .rc-header.rc-header--room{
+        display: block;
+        position: relative;
+        width: 100%;
+        background-color: #F8F8F9;
+    }
+   
+   
+
+    .rc-old .messages-container {
+        & .wrapper {
+        justify-content: flex-end;
+        display: flex;
+        }
+    }
+    .rc-button.rc-button--nude.js-close {
+        margin-left: 130px;
+    }
+
+    .rocket-default-search-results{
+        & .flex-tab__result.js-list{
+            & .list.clearfix{
+
+                .own{
+                    & .thumb{
+                        left: 80px;
+                    }
+                }
+            }
+        }
+    }
 }
 
 @media (max-width: 767px) {

@@ -483,7 +483,7 @@ export class Users extends Base {
 				},
 			}],
 		};
-
+		
 		return this.find(query, options);
 	}
 

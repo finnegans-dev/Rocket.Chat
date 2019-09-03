@@ -21,7 +21,6 @@ Template.sidebarItem.helpers({
 		return this.streamingOptions && Object.keys(this.streamingOptions).length;
 	},
 	isRoom() {
-		console.log(this)
 		return this.rid || this._id;
 	},
 	isExtendedViewMode() {
@@ -83,12 +82,20 @@ function setLastMessageTs(instance, ts) {
 	}, 60000);
 }
 
+Template.sidebarItem.onRendered( () =>{
+	setTimeout( () => {
+		$('li.sidebar-item.sidebar-item--active')[0].id = 'click';
+		$('#click').filter('li.sidebar-item.sidebar-item--active').trigger( "click" );
+	}, 1000)
+	
+	
+});
+
 Template.sidebarItem.onCreated(function () {
 	this.user = Users.findOne(Meteor.userId(), { fields: { username: 1 } });
 
 	this.lastMessageTs = new ReactiveVar();
 	this.timeAgoInterval;
-
 
 
 	// console.log('sidebarItem.onCreated');

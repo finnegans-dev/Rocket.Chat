@@ -31,11 +31,11 @@ Template.membersList.helpers({
 	},
 
 	seeAll() {
-		if (Template.instance().showAllUsers.get()) {
-			return t('Show_only_online');
-		} else {
+	//	if (Template.instance().showAllUsers.get()) {
+	//		return t('Show_only_online');
+	//	} else {
 			return t('Show_all');
-		}
+	//	}
 	},
 
 	roomUsers() {
@@ -283,7 +283,6 @@ Template.membersList.onCreated(function() {
 	this.showDetail = new ReactiveVar(false);
 	this.filter = new ReactiveVar('');
 
-
 	this.users = new ReactiveVar([]);
 	this.total = new ReactiveVar;
 	this.loading = new ReactiveVar(true);
@@ -293,6 +292,7 @@ Template.membersList.onCreated(function() {
 	Tracker.autorun(() => {
 		if (this.data.rid == null) { return; }
 		this.loading.set(true);
+		this.showAllUsers.set(true); //seteo por default el selector de todos los users
 		return Meteor.call('getUsersOfRoom', this.data.rid, this.showAllUsers.get(), (error, users) => {
 			this.users.set(users.records);
 			this.total.set(users.total);

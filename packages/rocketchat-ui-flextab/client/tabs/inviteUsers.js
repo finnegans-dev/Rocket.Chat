@@ -55,7 +55,7 @@ Template.inviteUsers.helpers({
 		const param = instance.ac[key];
 		return typeof param === 'function' ? param.apply(instance.ac) : param;
 	},
-	items() {
+	items() {		
 		return Template.instance().ac.filteredList();
 	},
 	config() {
@@ -118,7 +118,9 @@ Template.inviteUsers.onRendered(function() {
 
 	this.firstNode.querySelector('[name="users"]').focus();
 	this.ac.element = this.firstNode.querySelector('[name="users"]');
+
 	this.ac.$element = $(this.ac.element);
+
 	this.ac.$element.on('autocompleteselect', function(e, { item }) {
 		const usersArr = users.get();
 		usersArr.push(item);
@@ -129,11 +131,11 @@ Template.inviteUsers.onRendered(function() {
 Template.inviteUsers.onCreated(function() {
 	this.selectedUsers = new ReactiveVar([]);
 	const filter = { exceptions :[Meteor.user().username].concat(this.selectedUsers.get().map((u) => u.username)) };
+
 	Deps.autorun(() => {
 		filter.exceptions = [Meteor.user().username].concat(this.selectedUsers.get().map((u) => u.username));
 	});
 	this.userFilter = new ReactiveVar('');
-
 	this.ac = new AutoComplete({
 		selector:{
 			item: '.rc-popup-list__item',

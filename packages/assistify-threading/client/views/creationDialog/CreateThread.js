@@ -12,6 +12,8 @@ import { TAPi18n } from 'meteor/tap:i18n';
 import toastr from 'toastr';
 import { HTTP } from 'meteor/http'
 
+import { Rooms } from 'meteor/rocketchat:models';
+
 Template.CreateThread.helpers({
 
 	onSelectUser() {
@@ -25,11 +27,11 @@ Template.CreateThread.helpers({
 	targetChannelText() {
 		const instance = Template.instance();
 		const parentChannel = instance.parentChannel.get();
-		return parentChannel && `${ TAPi18n.__('Thread_target_channel_prefix') } "${ parentChannel }"`;
+		return parentChannel && `${TAPi18n.__('Thread_target_channel_prefix')} "${parentChannel}"`;
 	},
 	createIsDisabled() {
 		const instance = Template.instance();
-		if (instance.reply.get() && instance.parentChannel.get()) {
+		if (instance.threadName.get()) {
 			return '';
 		}
 		return 'disabled';
@@ -69,24 +71,24 @@ Template.CreateThread.helpers({
 		return ChatRoom;
 	},
 	roomSelector() {
-		return (expression) => ({ name: { $regex: `.*${ expression }.*` } });
+		return (expression) => ({ name: { $regex: `.*${expression}.*` } });
 	},
 	roomModifier() {
 		return (filter, text = '') => {
 			const f = filter.get();
-			return `#${ f.length === 0 ? text : text.replace(new RegExp(filter.get()), (part) => `<strong>${ part }</strong>`) }`;
+			return `#${f.length === 0 ? text : text.replace(new RegExp(filter.get()), (part) => `<strong>${part}</strong>`)}`;
 		};
 	},
 	userModifier() {
 		return (filter, text = '') => {
 			const f = filter.get();
-			return `@${ f.length === 0 ? text : text.replace(new RegExp(filter.get()), (part) => `<strong>${ part }</strong>`) }`;
+			return `@${f.length === 0 ? text : text.replace(new RegExp(filter.get()), (part) => `<strong>${part}</strong>`)}`;
 		};
 	},
 	channelName() {
 		return Template.instance().threadName.get();
 	},
-	threadPrivate(){
+	threadPrivate() {
 		return Template.instance().threadPrivate.get();
 	}
 });
@@ -95,7 +97,7 @@ Template.CreateThread.events({
 	'input #thread_name'(e, t) {
 		t.threadName.set(e.target.value);
 	},
-	'change .js-input-check'(e,t) {
+	'change .js-input-check'(e, t) {
 		//console.log(e.currentTarget.checked)
 		t.threadPrivate.set(e.currentTarget.checked)
 	},
@@ -106,7 +108,7 @@ Template.CreateThread.events({
 	async 'submit #create-thread, click .js-save-thread'(event, instance) {
 		event.preventDefault();
 		const parentChannel = instance.parentChannel.get();
-		
+
 		const { pmid } = instance;
 		//Finneg
 		//Le agrego el dominio por defecto
@@ -114,14 +116,18 @@ Template.CreateThread.events({
 		//console.log(t_name)
 		const users = instance.selectedUsers.get().map(({ username }) => username).filter((value, index, self) => self.indexOf(value) === index);
 
-		const prid = instance.parentChannelId.get();
+		const nameContextAndDomain = localStorage.getItem('contextDomain').trim();
+		const roomContext = Rooms.find({name: nameContextAndDomain }).fetch();
+		
+		//const prid = instance.parentChannelId.get();
+		const prid = roomContext[0]._id;
 		const reply = instance.reply.get();
 
 		//Tema privado
-		
+
 
 		if (!prid) {
-			const errorText = TAPi18n.__('Invalid_room_name', `${ parentChannel }...`);
+			const errorText = TAPi18n.__('Invalid_room_name', `${parentChannel}...`);
 			return toastr.error(errorText);
 		}
 		const result = await call('createThread', { prid, pmid, t_name, reply, users });
@@ -129,8 +135,8 @@ Template.CreateThread.events({
 		callbacks.run('afterCreateThread', Meteor.user(), result);
 
 		if (instance.data.onCreate) {
-			
-			if(!instance.threadPrivate.get()){
+
+			if (!instance.threadPrivate.get()) {
 				HTTP.call('POST', `api/v1/invitacionesTemas/${result.prid}/${result.rid}`, function (err, res) {
 					if (err) {
 						console.log(err)
@@ -144,15 +150,15 @@ Template.CreateThread.events({
 		}
 
 		roomTypes.openRouteLink(result.t, result);
-		
+
 	},
 });
 
-Template.CreateThread.onRendered(function() {
+Template.CreateThread.onRendered(function () {
 	this.find(this.data.rid ? '#thread_name' : '#parentChannel').focus();
 });
 
-Template.CreateThread.onCreated(function() {
+Template.CreateThread.onCreated(function () {
 	const { rid, message: msg } = this.data;
 
 	const parentRoom = rid && ChatRoom.findOne(rid);
@@ -162,7 +168,7 @@ Template.CreateThread.onCreated(function() {
 
 	if (room) {
 		room.text = room.name;
-		this.threadName = new ReactiveVar(`${ room.name } - ${ msg && msg.msg }`);
+		this.threadName = new ReactiveVar(`${room.name} - ${msg && msg.msg}`);
 	} else {
 		this.threadName = new ReactiveVar('');
 	}
@@ -288,15 +294,15 @@ Template.SearchCreateThread.events({
 		return onClickTag & onClickTag(Blaze.getData(target));
 	},
 });
-Template.SearchCreateThread.onRendered(function() {
+Template.SearchCreateThread.onRendered(function () {
 
 	const { name } = this.data;
 
-	this.ac.element = this.firstNode.querySelector(`[name=${ name }]`);
+	this.ac.element = this.firstNode.querySelector(`[name=${name}]`);
 	this.ac.$element = $(this.ac.element);
 });
 
-Template.SearchCreateThread.onCreated(function() {
+Template.SearchCreateThread.onCreated(function () {
 	this.filter = new ReactiveVar('');
 	this.selected = new ReactiveVar([]);
 	this.onClickTag = this.data.onClickTag;

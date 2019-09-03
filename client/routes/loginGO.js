@@ -20,7 +20,7 @@ Template.loginGO.onCreated(function () {
 
     root = __meteor_runtime_config__.ROOT_URL;
     //console.log(__meteor_runtime_config__);
-    url = root.substring(0,root.lastIndexOf(`/c`)+1);
+    url = root.substring(0, root.lastIndexOf(`/c`) + 1);
     //root = 'http://localhost:3000/';
 
     HTTP.call('GET', `${url}auth/token/info?access_token=${token}`, function (err, res) {
@@ -33,6 +33,7 @@ Template.loginGO.onCreated(function () {
             let dominioLow = dominio.toLowerCase();
             let emailRes = res.data.email;
             let contextoToken = res.data.lastContext.id;
+            let contextoName = res.data.lastContext.name;
 
             if (email == emailRes) {
 
@@ -69,9 +70,9 @@ Template.loginGO.onCreated(function () {
                         let idContexto = "{eco." + dominio + ".default.context}";
 
                         HTTP.post(`api/v1/gotoken/${idUser}/${token}`, {}, function (err, data) {
-                            if(err){
+                            if (err) {
                                 console.log(err);
-                            }   
+                            }
                         });
 
                         if (contextoToken != idContexto) {
@@ -102,8 +103,9 @@ Template.loginGO.onCreated(function () {
                                                             window.localStorage.setItem("Meteor.loginToken:/:/chat", tokenChat);
                                                             //window.localStorage.setItem("Meteor.loginToken", token);
                                                             window.localStorage.setItem("dominio", dominioLow);
-
-                                                            FlowRouter.go(`/home`);
+                                                            let name = dominioLow + "-" + contextoName;
+                                                            window.localStorage.setItem("contextDomain", name);
+                                                            FlowRouter.go(`/group/${name}`);
                                                         })
                                                     }
                                                 })
@@ -150,6 +152,10 @@ Template.loginGO.onCreated(function () {
                             //window.localStorage.setItem("Meteor.loginToken", token);
                             window.localStorage.setItem("dominio", dominioLow);
                             FlowRouter.go(`/home`);
+
+                            //let name = dominioLow + "-" + contextoName;
+                            //FlowRouter.go(`/group/${name}`);
+
 
                         }
 
