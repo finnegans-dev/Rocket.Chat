@@ -2,34 +2,37 @@
 	{{> videoCall}}
 	{{#if isGroupChat}}
 	{{#with roomUsers}}
-		<div class="flex-tab__header">
-			<form class="search-form rc-member-list__search" role="form">
-				<div class="rc-input">
+		{{#if disableMemberList }}
+			<div class="flex-tab__header">
+				<form class="search-form rc-member-list__search" role="form">
+					<div class="rc-input">
 
-					<div class="rc-input__icon">
-						{{> icon block="rc-input__icon-svg" icon="magnifier"}}
+						<div class="rc-input__icon">
+							{{> icon block="rc-input__icon-svg" icon="magnifier"}}
+						</div>
+						<input type="text" class="rc-input__element js-filter" name="user-search" id="user-search" placeholder={{_ "Search_by_username"}} autocomplete="off" />
+
 					</div>
-					<input type="text" class="rc-input__element js-filter" name="user-search" id="user-search" placeholder={{_ "Search_by_username"}} autocomplete="off" />
-
+					<!-- finneg ocultar selector online/all-->
+					<label class="rc-select" style="display: none">
+						<select id="status-type" class="rc-select__element js-type" name="status-type">
+							<option value="">{{_ 'online'}}</option>
+							<option value="">{{_ 'All_users'}}</option>
+						</select>
+						{{> icon block="rc-select__arrow" icon="arrow-down" }}
+					</label>
+				</form>
+				<!-- finneg ocultar numero de usuarios online a mostrar-->
+				{{#unless loading}}
+				<div class="rc-user-info__row rc-user-info__row--separator" style="display: none">
+						<div class="rc-member-list__counter" >{{{_ "Showing_online_users" total_showing=totalShowing online=totalOnline total=total}}}</div>
+					</div>
+					{{/unless}}
+					
 				</div>
-				<!-- finneg ocultar selector online/all-->
-				<label class="rc-select" style="display: none">
-					<select id="status-type" class="rc-select__element js-type" name="status-type">
-						<option value="">{{_ 'online'}}</option>
-						<option value="">{{_ 'All_users'}}</option>
-					</select>
-					{{> icon block="rc-select__arrow" icon="arrow-down" }}
-				</label>
-			</form>
-			<!-- finneg ocultar numero de usuarios online a mostrar-->
-			{{#unless loading}}
-			<div class="rc-user-info__row rc-user-info__row--separator" style="display: none">
-				<div class="rc-member-list__counter" >{{{_ "Showing_online_users" total_showing=totalShowing online=totalOnline total=total}}}</div>
-			</div>
-			{{/unless}}
-			
-		</div>
-		<div class="flex-tab__result list-view">
+		{{/if}}
+	{{#if disableMemberList }}
+		<div class="flex-tab__result list-view" >
 				{{#if loading}}
 					{{> loading}}
 				{{else}}
@@ -50,6 +53,11 @@
 				<button class="rc-button rc-button--secondary show-more-users">{{_ "Show_more"}}</button>
 			{{/if}}
 		</div>
+		{{else}}
+		<span style="margin-top: 2rem;"> 
+			Funcionalidad disponible sólo para administradores. 
+		</span>
+	{{/if}}
 
 		<!--Finneg Agregar usuarios en la lista-->
 		{{#if canAddUser}}

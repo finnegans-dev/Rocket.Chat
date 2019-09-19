@@ -9,6 +9,9 @@ import { t } from 'meteor/rocketchat:utils';
 import { Deps } from 'meteor/deps';
 import toastr from 'toastr';
 
+import { HTTP } from 'meteor/http';
+import _ from 'underscore';
+
 const acEvents = {
 	'click .rc-popup-list__item'(e, t) {
 		t.ac.onItemClick(this, e);
@@ -74,6 +77,9 @@ Template.inviteUsers.helpers({
 	selectedUsers() {
 		return Template.instance().selectedUsers.get();
 	},
+	  disabledIviteUser(){
+		return Template.instance().disableIviteUser.get();
+	},
 });
 
 Template.inviteUsers.events({
@@ -131,6 +137,21 @@ Template.inviteUsers.onRendered(function() {
 Template.inviteUsers.onCreated(function() {
 	this.selectedUsers = new ReactiveVar([]);
 	const filter = { exceptions :[Meteor.user().username].concat(this.selectedUsers.get().map((u) => u.username)) };
+	this.disableIviteUser= new ReactiveVar(false);
+
+	const isVertical = localStorage.getItem('isVertical');
+	const cu = window.localStorage.getItem('currentuser');
+	const { domain, token, email } = JSON.parse(cu);
+	const isDisabled = Template.instance().disableIviteUser;
+		HTTP.call('GET' ,`https://go-test.finneg.com/api/1/users/profile/${domain}/${email}?access_token=${token}`, function (err, res) {
+		const isContextCreate = res.data.contextCreation;
+		if ( isVertical.toLocaleUpperCase() == 'SI' && !isContextCreate){
+			/* deshabilita la invitacion de usuarios.*/
+			isDisabled.set(true)
+		}else{
+			isDisabled.set(false)
+		}
+	});
 
 	Deps.autorun(() => {
 		filter.exceptions = [Meteor.user().username].concat(this.selectedUsers.get().map((u) => u.username));

@@ -143,9 +143,9 @@
 		</li>
 		<!--Finneg Lista de Temas-->
 
-		{{#if showTemas}}
+		<!-- {{#if isShowSubject}} -->
 		<div class="temas-contexto cerrar" style="margin-left:25px">
-			{{#each item in temas}}
+			{{#each item in subjectList}}
 			<div class="active-temas">
 				<a class="sidebar-item__link temas tema-{{item.name}} " href="/chat/group/{{item.name}}">
 					<div class="sidebar-item__picture">
@@ -163,7 +163,7 @@
 			</div>
 			{{/each}}
 		</div>
-		{{/if}}
+		<!-- {{/if}} -->
 
 	</div>
 </template>

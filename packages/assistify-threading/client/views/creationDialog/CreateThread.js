@@ -90,8 +90,13 @@ Template.CreateThread.helpers({
 	},
 	threadPrivate() {
 		return Template.instance().threadPrivate.get();
-	}
+	},
+	// isVerticalChat(){
+	// 	return Template.instance().isVerticalChat.get();
+	// }
+
 });
+
 
 Template.CreateThread.events({
 	'input #thread_name'(e, t) {
@@ -108,7 +113,6 @@ Template.CreateThread.events({
 	async 'submit #create-thread, click .js-save-thread'(event, instance) {
 		event.preventDefault();
 		const parentChannel = instance.parentChannel.get();
-
 		const { pmid } = instance;
 		//Finneg
 		//Le agrego el dominio por defecto
@@ -125,17 +129,18 @@ Template.CreateThread.events({
 
 		//Tema privado
 
-
 		if (!prid) {
 			const errorText = TAPi18n.__('Invalid_room_name', `${parentChannel}...`);
 			return toastr.error(errorText);
 		}
 		const result = await call('createThread', { prid, pmid, t_name, reply, users });
+		// console.log( { prid, pmid, t_name, reply, users })
+
+		
 		// callback to enable tracking
 		callbacks.run('afterCreateThread', Meteor.user(), result);
 
 		if (instance.data.onCreate) {
-
 			if (!instance.threadPrivate.get()) {
 				HTTP.call('POST', `api/v1/invitacionesTemas/${result.prid}/${result.rid}`, function (err, res) {
 					if (err) {
@@ -160,34 +165,39 @@ Template.CreateThread.onRendered(function () {
 
 Template.CreateThread.onCreated(function () {
 	const { rid, message: msg } = this.data;
-
 	const parentRoom = rid && ChatRoom.findOne(rid);
-
+	// let isContextAdm = false;
 	// if creating a thread from inside a thread, uses the same channel as parent channel
 	const room = parentRoom && parentRoom.prid ? ChatRoom.findOne(parentRoom.prid) : parentRoom;
-
+	
 	if (room) {
 		room.text = room.name;
 		this.threadName = new ReactiveVar(`${room.name} - ${msg && msg.msg}`);
 	} else {
 		this.threadName = new ReactiveVar('');
 	}
-
-
+	// this.isVerticalChat = new ReactiveVar(false);
+	
 	this.pmid = msg && msg._id;
 
 	this.parentChannel = new ReactiveVar(roomTypes.getRoomName(room));
 	this.parentChannelId = new ReactiveVar(rid);
-
+	
 	this.selectParent = new ReactiveVar(!!rid);
-
+	
 	this.reply = new ReactiveVar('');
-
+	
 	this.threadPrivate = new ReactiveVar(false);
-
+	
 	this.selectedRoom = new ReactiveVar(room ? [room] : []);
+	
+	// console.log(Template.instance())
 
-
+	// if ( !isContextAdm ){
+	// 	this.isVerticalChat.set(true);
+	// 	Template.instance().threadPrivate.set(true);
+	// }
+	
 	this.onClickTagRoom = () => {
 		this.selectedRoom.set([]);
 	};

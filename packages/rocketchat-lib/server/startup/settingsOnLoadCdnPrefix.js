@@ -21,14 +21,17 @@ settings.onload('CDN_JSCSS_PREFIX', function(key, value) {
 });
 
 Meteor.startup(function() {
-	const cdnValue = settings.get('CDN_PREFIX');
+	// const cdnValue = settings.get('CDN_PREFIX');
+	const cdnValue = '';
 	const useForAll = settings.get('CDN_PREFIX_ALL');
 	const cdnJsCss = settings.get('CDN_JSCSS_PREFIX');
+	console.log('ACA PREFIX	')
 	if (_.isString(cdnValue) && cdnValue.trim()) {
-		if (useForAll) {
-			return testWebAppInternals((WebAppInternals) => WebAppInternals.setBundledJsCssPrefix(cdnValue));
-		} else if (_.isString(cdnJsCss) && cdnJsCss.trim()) {
-			return testWebAppInternals((WebAppInternals) => WebAppInternals.setBundledJsCssPrefix(cdnJsCss));
-		}
+		console.log('CDN PREFIX')
+		// if (useForAll) {
+		// 	return testWebAppInternals((WebAppInternals) => WebAppInternals.setBundledJsCssPrefix(cdnValue));
+		// } else if (_.isString(cdnJsCss) && cdnJsCss.trim()) {
+		// 	return testWebAppInternals((WebAppInternals) => WebAppInternals.setBundledJsCssPrefix(cdnJsCss));
+		// }
 	}
 });

@@ -8,6 +8,11 @@ import { settings } from 'meteor/rocketchat:settings';
 import { roomTypes, getUserPreference } from 'meteor/rocketchat:utils';
 import { Users } from 'meteor/rocketchat:models';
 
+import { HTTP } from 'meteor/http';
+import { Rooms } from 'meteor/rocketchat:models';
+import { call } from 'meteor/rocketchat:ui-utils';
+import { callbacks } from 'meteor/rocketchat:callbacks';
+import _ from 'underscore';
 
 
 
@@ -141,8 +146,57 @@ Template.sideNav.onRendered(function () {
 	
 });
 
-Template.sideNav.onCreated(function () {
+async function inviteAdmsToPrivateRoom (){
+	const nameContextAndDomain = localStorage.getItem('contextDomain').trim();
+	const roomContext = Rooms.find({name: nameContextAndDomain }).fetch();
+	const prid = roomContext[0]._id;
+	let temas = Rooms.find({ prid: prid }).fetch();
 
+	if ( temas.length < 1){
+	
+	const t_name = `Sala_${Meteor.user().name}`;
+	let pmid;
+	const reply = '';
+	const users = [];
+
+	const result = await call('createThread', { prid, pmid, t_name, reply, users });
+
+	callbacks.run('afterCreateThread', Meteor.user(), result);
+
+	const cu = window.localStorage.getItem('currentuser');
+	const { domain, token } = JSON.parse(cu);
+
+		HTTP.call('POST', `api/v1/customInvitations/${result.prid}/${result.rid}/${domain}/${token}`, function (err, res) {
+				if (err) {
+					console.log(err)
+					console.log("Error de Autenticacion")
+				} else {
+					FlowRouter.go(`/group/${result.rid}`);
+				}
+			});
+	}
+}
+
+Template.sideNav.onCreated(function () {
+	const isVertical = window.localStorage.getItem('isVertical');
+	 root = __meteor_runtime_config__.ROOT_URL;
+    //console.log(__meteor_runtime_config__);
+	url = root.substring(0, root.lastIndexOf(`/c`) + 1);
+	if ( isVertical.toLocaleUpperCase() == 'SI' ){
+
+		const cu = window.localStorage.getItem('currentuser');
+		const { domain, token, email } = JSON.parse(cu);
+
+		HTTP.call('GET' ,`https://go-test.finneg.com/api/1/users/profile/${domain}/${email}?access_token=${token}`, function (err, res) {
+			const isContextCreate = res.data.contextCreation;
+			
+			if ( !isContextCreate ){
+				inviteAdmsToPrivateRoom();
+			}
+
+		});
+
+	}
 	this.groupedByType = new ReactiveVar(false);
 
 	this.autorun(() => {

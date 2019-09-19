@@ -39,26 +39,51 @@ Template.sidebarItem.helpers({
 		return this.pathSection === 'livechat-queue';
 	},
 	//Finneg lista temas
-	temas() {
-		if (this._id) {
-			let temas = Rooms.find({ prid: this.rid }).fetch();
-			return temas;
-		} else {
-			return;
-		}
-	},
+	// temas() {
+	// 	console.log('ENTRÓ')
+	// 	if (this._id) {
+	// 		console.log('_id', this._id);
+	// 		console.log('rid', this.rid);
+			// const nameContextAndDomain = localStorage.getItem('contextDomain').trim();
+			// const roomContext = Rooms.find({name: nameContextAndDomain }).fetch();
+			// console.log('room',roomContext)
+			// console.log(this.roomID.get())
+			// console.log(this.roomID)
+			// console.log(Template.instance().roomID.get())
+			// if ( Template.instance().roomID.get() == this.rid){
+				// let temas = Rooms.find({ prid: this.rid }).fetch(); 
+				// console.log('ACAAAAAAAAAAAAAAAAAAAA')
+				// return temas;
+
+			// }
+			/* Al cargar la lista de contextos, se cargan la lista de temas, entonces habria que hacer que se carguen al hacer 
+			click en un contexto. */
+		// } else {
+			// return;
+		// }
+	// },
 	nombreTema(tema) {
 		let name = tema.substring(tema.indexOf('-') + 1, tema.length);
 		return name
 	},
-	showTemas() {
-		return true;
+	isShowSubject() {
+		/* Siempre va a ser true, entonces siempre se van a mostrar,
+		habria que hacer una reactiveVar para que reaccione a los cambios en el click del contexto, y en ese caso se muestren*/
+		return Template.instance().isShowSubject.get();
 	},
 	isLive() {
 		//this.t != "l" && 
 		return !this.username;
+	},
+	roomID(){
+		return Template.instance().roomID.get();
+	},
+	subjectList(){
+		return Template.instance().privatesSubjects.get();
 	}
+	
 });
+
 
 function timeAgo(time) {
 	const now = new Date();
@@ -82,12 +107,14 @@ function setLastMessageTs(instance, ts) {
 	}, 60000);
 }
 
+
+
+
 Template.sidebarItem.onRendered( () =>{
-	setTimeout( () => {
-		$('li.sidebar-item.sidebar-item--active')[0].id = 'click';
-		$('#click').filter('li.sidebar-item.sidebar-item--active').trigger( "click" );
-	}, 1000)
-	
+		setTimeout( () => {
+			$('li.sidebar-item.sidebar-item--active')[0].id = 'click';
+			$('#click').filter('li.sidebar-item.sidebar-item--active').trigger( "click" );
+		}, 500)
 	
 });
 
@@ -95,10 +122,11 @@ Template.sidebarItem.onCreated(function () {
 	this.user = Users.findOne(Meteor.userId(), { fields: { username: 1 } });
 
 	this.lastMessageTs = new ReactiveVar();
+	this.roomID = new ReactiveVar();
+	this.privatesSubjects = new ReactiveVar();
+	this.isShowSubject = new ReactiveVar(false);
 	this.timeAgoInterval;
 
-
-	// console.log('sidebarItem.onCreated');
 
 	this.autorun(() => {
 		const currentData = Template.currentData();
@@ -129,10 +157,12 @@ Template.sidebarItem.onCreated(function () {
 	});
 });
 
+
 Template.sidebarItem.events({
 	'click .temas' : function (event, instance) {
 		let temas = $('.active-temas'); 
-
+		// console.log(event)
+		// console.log(instance)
 		for (let i = 0; i < temas.length; i++) {
 			temas.children().removeClass('active');
 		}
@@ -140,8 +170,17 @@ Template.sidebarItem.events({
 		$(event.currentTarget).addClass('active');
 
 	},
-	'click li.sidebar-item' : function (e, i) {
+	'click li.sidebar-item' : async function (e, i) {
+		i.privatesSubjects.set([]);
 		let temas = $('.active-temas'); 
+		i.isShowSubject.set(false);
+		i.roomID.set(i.data.rid);
+
+		if ( this.rid == i.data.rid ){
+			i.isShowSubject.set(true);
+			let subjects = await Rooms.find({ prid: i.data.rid }).fetch(); 
+			i.privatesSubjects.set(subjects);
+		}
 
 		for (let i = 0; i < temas.length; i++) {
 			temas.children().removeClass('active');

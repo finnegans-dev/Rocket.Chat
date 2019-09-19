@@ -12,16 +12,18 @@ Finneg
 Template.loginGO.onCreated(function () {
     let token = FlowRouter.getParam("token");
     let email = FlowRouter.current().queryParams.email;
+    let isVertical = FlowRouter.current().queryParams.vertical;
     let url = 'https://go-test.finneg.com/'
     let root = 'https://go-test.finneg.com/chat/'
-
+    console.log('NEW DEPLOY')
     //window.localStorage.setItem("Meteor.loginToken", "");
     window.localStorage.setItem("Meteor.loginToken:/:/chat", "");
+    window.localStorage.setItem("isVertical", isVertical);
 
     root = __meteor_runtime_config__.ROOT_URL;
     //console.log(__meteor_runtime_config__);
     url = root.substring(0, root.lastIndexOf(`/c`) + 1);
-    //root = 'http://localhost:3000/';
+    // root = 'http://localhost:3000/';
 
     HTTP.call('GET', `${url}auth/token/info?access_token=${token}`, function (err, res) {
         if (err) {
@@ -92,7 +94,7 @@ Template.loginGO.onCreated(function () {
                                                 data.data.modules.forEach(modules => {
                                                     if (modules.id == "ecoChat") {
                                                         arrayContextos.push(element.name)
-                                                        HTTP.post(`${root}api/v1/invitaciones/${element.name}/${dominioLow}/${idUser}`, {}, function (err, data) {
+                                                        HTTP.post(`${root}api/v1/invitaciones/${element.name}/${dominioLow}/${idUser}/${isVertical}`, {}, function (err, data) {
                                                             if (err) {
                                                                 console.log(err)
                                                             } else {
@@ -105,6 +107,10 @@ Template.loginGO.onCreated(function () {
                                                             window.localStorage.setItem("dominio", dominioLow);
                                                             let name = dominioLow + "-" + contextoName;
                                                             window.localStorage.setItem("contextDomain", name);
+                                                            /* Deberia comprobar si por url me llega que es un chat vertical
+                                                            entonces setear en el local storage que lo es, para despues poder hacer preguntar los adm de contextos
+                                                            y meterlos dentro de un tema privado con este usuario. igualmente redirigirlo a la sala, pero que no pueda hacer la accion
+                                                            de volver hacia atras a los demas contextos. */ 
                                                             FlowRouter.go(`/group/${name}`);
                                                         })
                                                     }

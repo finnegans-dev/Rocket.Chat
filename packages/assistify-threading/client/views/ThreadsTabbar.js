@@ -32,7 +32,7 @@ Template.threadsTabbar.helpers({
 
 Template.threadsTabbar.onCreated(function() {
 	this.hasMore = new ReactiveVar(true);
-	this.limit = new ReactiveVar(50);
+	this.limit = new ReactiveVar(50000); //cambio el limite de temas en un hilo por la prueba de stress, lo dejo en 50000 despues chequear.
 	return this.autorun(() => {
 		const data = Template.currentData();
 		return this.subscribe('threadsOfRoom', data.rid, this.limit.get(), () => {

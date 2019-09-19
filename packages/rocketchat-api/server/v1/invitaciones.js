@@ -13,12 +13,13 @@ import { GoTokens } from 'meteor/rocketchat:models';
 import { Random } from 'meteor/random'
 import { Date } from 'core-js';
 
-API.v1.addRoute('invitaciones/:contexto/:dominio/:idUser', {
+API.v1.addRoute('invitaciones/:contexto/:dominio/:idUser/:isVertical', {
 	post() {
 
 		let contexto = this.urlParams.contexto;
 		let dominio = this.urlParams.dominio.toLowerCase();
 		let idUsuario = this.urlParams.idUser
+		let isVertical = this.urlParams.isVertical;
 		let rooms = Rooms.find({}).fetch();
 		const { username } = Users.findOneById(idUsuario)
 
@@ -38,27 +39,72 @@ API.v1.addRoute('invitaciones/:contexto/:dominio/:idUser', {
 					if (!rid || type !== 'p') {
 						throw new Meteor.Error('error-room-not-found', 'The required "roomId" or "roomName" param provided does not match any group');
 					}
-					console.log(rid)
-					Meteor.runAsUser(idUsuario, () => Meteor.call('addUserToRoom', { rid, username }));
-					HTTP.get(`api/v1/addBot/${rid}`, {}, function (err, res) {
-						if (err) {
-							console.log(err);
-						} else {
-							console.log(res);
-						}
-					});
+					// console.log(rid)
+					/* agrega todos los usuarios que se loguean al general de la sala */
+					Meteor.runAsUser(idUsuario, () => Meteor.call('addUserToRoom', { rid, username })); 
+					// HTTP.get(`api/v1/addBot/${rid}`, {}, function (err, res) {
+					// 	if (err) {
+					// 		console.log(err);
+					// 	} else {
+					// 		console.log(res);
+					// 	}
+					// });
 				}
 			}
 		});
+		
+		if (!existeSala ) {
 
-		if (!existeSala) {
-			console.log("fsafsda")
-			//let name = dominio + "-contexto" + Random.hexString(2);
-			let name = dominio + "-" + contexto;
-			Meteor.runAsUser(idUsuario, () => {
-				id = Meteor.call('createPrivateGroup', name, [], false);
+			// if (isVertical.toLocaleUpperCase() != "SI"){
+
+				console.log("fsafsda")
+				// let name = dominio + "-contexto" + Random.hexString(2);
+				let name = dominio + "-" + contexto;
+				Meteor.runAsUser(idUsuario, () => {
+					id = Meteor.call('createPrivateGroup', name, [], true); /* falta validar si es vertical, en ese caso que sea readonly, pero por ahroa es todo vertical. */
+				});
+			}else{
+			const cu = window.localStorage.getItem('currentuser');
+			const { domain, token, email } = JSON.parse(cu);
+			HTTP.call('GET' ,`https://go-test.finneg.com/api/1/users/profile/${domain}/${email}?access_token=${token}`, async function (err, res) {
+				
+				const isContextCreate = res.data.contextCreation;
+				
+				if ( !isContextCreate ){
+					const nameContextAndDomain = localStorage.getItem('contextDomain').trim();
+					const roomContext = Rooms.find({name: nameContextAndDomain }).fetch();
+					
+					const prid = roomContext[0]._id;
+					let temas = Rooms.find({ prid: prid }).fetch();
+					if ( temas.length < 1){
+						
+					
+					const t_name = `Sala_${Meteor.user().name}`;
+					let pmid;
+					const reply = '';
+					const users = [];
+
+					const result = await call('createThread', { prid, pmid, t_name, reply, users });
+					
+					callbacks.run('afterCreateThread', Meteor.user(), result)
+					const cu = window.localStorage.getItem('currentuser');
+					const { domain, token } = JSON.parse(cu);
+						HTTP.call('POST', `api/v1/customInvitations/${result.prid}/${result.rid}/${domain}/${token}`, async function (err, res) {
+								if (err) {
+									console.log(err)
+									console.log("Error de Autenticacion")
+								} else {
+									console.log(res)
+									FlowRouter.go(`/group/${result.rid}`);
+								}
+							});
+					}
+				}
+	
 			});
-		}
+		// }
+
+	}
 
 		return API.v1.success({
 			status: 'ok',
@@ -129,6 +175,7 @@ API.v1.addRoute('invitacionesTemas/:roomId/:temaId', {
 		const members = subscriptions.fetch().map((s) => s.u && s.u._id);
 
 		const { _id: rid, t: type, fname: tname, u: owner } = Rooms.findOneByIdOrName(temaId);
+		
 
 		if (!rid || type !== 'p') {
 			throw new Meteor.Error('error-room-not-found', 'The required "roomId" or "roomName" param provided does not match any group');
@@ -162,6 +209,54 @@ API.v1.addRoute('invitacionesTemas/:roomId/:temaId', {
 		return API.v1.success({
 			status: 'ok'
 		});
+	}
+})
+/* invitacion solo a administradores de contexto + usuario*/
+API.v1.addRoute('customInvitations/:roomId/:temaId/:domain/:token', {
+	post() {
+		let roomId = this.urlParams.roomId;
+		let temaId = this.urlParams.temaId;
+
+		root = __meteor_runtime_config__.ROOT_URL;
+		console.log(`${this.urlParams.domain}---- ${this.urlParams.token}----- `);
+		/* Hay que reemplazar esta api por una que traiga solo los adm de contextos, o bien, por mientras usar esta pero ver el tema que se actualicen
+		los datos, porque por el momento llegan todos falsos en ese campo*/
+		HTTP.call('GET', `https://go-test.finneg.com/api/1/users/${this.urlParams.domain}?access_token=${this.urlParams.token}`, function (err, res) {
+		
+		const filterData = res.data.filter( f => f.email == 'jsantacruz@finnegans.com.ar');
+		const filterData2 = res.data.filter( f => f.email == 'albano.borsotti@gmail.com');
+		// const filterData = res.data.filter( f => f.contextCreation === true);
+			const subscriptions = Subscriptions.findByRoomId(roomId, {
+				fields: { 'u._id': 1 },
+			});
+	
+			const members = subscriptions.fetch().map((s) => s.u && s.u._id);
+			const { _id: rid, t: type, fname: tname, u: owner } = Rooms.findOneByIdOrName(temaId);
+
+			const isVerticalChat = true;
+
+			members.forEach(element => {
+				const { emails, username} = Users.findOneById(element)
+				/* aca deberia iterar el array de adm de contextos, y compararlos con los emails[0].address, si coinciden, agregarlos a la sala.*/
+				if ( filterData[0].email == emails[0].address){
+					console.log('equals');
+					Meteor.runAsUser(element, () => Meteor.call('addUserToRoom', { rid , username, isVerticalChat }));
+				}
+				if ( filterData2[0].email == emails[0].address){
+					console.log('equals2');
+					Meteor.runAsUser(element, () => Meteor.call('addUserToRoom', { rid , username, isVerticalChat }));
+				}
+		
+			});
+
+			return API.v1.success({
+				status: 'ok'
+			});
+
+		});
+
+
+		
 	}
 })
 

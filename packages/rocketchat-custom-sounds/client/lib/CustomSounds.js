@@ -6,12 +6,13 @@ import _ from 'underscore';
 class CustomSoundsClass {
 	constructor() {
 		this.list = new ReactiveVar({});
-		this.add({ _id: 'beep', name: 'Beep', extension: 'mp3', src: 'sounds/beep.mp3' });
-		this.add({ _id: 'chelle', name: 'Chelle', extension: 'mp3', src: 'sounds/chelle.mp3' });
-		this.add({ _id: 'ding', name: 'Ding', extension: 'mp3', src: 'sounds/ding.mp3' });
-		this.add({ _id: 'droplet', name: 'Droplet', extension: 'mp3', src: 'sounds/droplet.mp3' });
-		this.add({ _id: 'highbell', name: 'Highbell', extension: 'mp3', src: 'sounds/highbell.mp3' });
-		this.add({ _id: 'seasons', name: 'Seasons', extension: 'mp3', src: 'sounds/seasons.mp3' });
+		//COMMENT AUDIO
+		// this.add({ _id: 'beep', name: 'Beep', extension: 'mp3', src: 'sounds/beep.mp3' });
+		// this.add({ _id: 'chelle', name: 'Chelle', extension: 'mp3', src: 'sounds/chelle.mp3' });
+		// this.add({ _id: 'ding', name: 'Ding', extension: 'mp3', src: 'sounds/ding.mp3' });
+		// this.add({ _id: 'droplet', name: 'Droplet', extension: 'mp3', src: 'sounds/droplet.mp3' });
+		// this.add({ _id: 'highbell', name: 'Highbell', extension: 'mp3', src: 'sounds/highbell.mp3' });
+		// this.add({ _id: 'seasons', name: 'Seasons', extension: 'mp3', src: 'sounds/seasons.mp3' });
 	}
 
 	add(sound) {
@@ -59,12 +60,13 @@ class CustomSoundsClass {
 }
 export const CustomSounds = new CustomSoundsClass();
 
-Meteor.startup(() =>
-	CachedCollectionManager.onLogin(() => {
-		Meteor.call('listCustomSounds', (error, result) => {
-			for (const sound of result) {
-				CustomSounds.add(sound);
-			}
-		});
-	})
-);
+Meteor.startup(() =>{
+	// CachedCollectionManager.onLogin(() => {
+		// COMMENT AUDIO
+		// Meteor.call('listCustomSounds', (error, result) => {
+		// 	for (const sound of result) {
+		// 		CustomSounds.add(sound);
+		// 	}
+		// });
+	// })
+});

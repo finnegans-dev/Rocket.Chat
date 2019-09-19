@@ -7,6 +7,7 @@ import { HTTP } from 'meteor/http'
 Template.registrarGO.onCreated(function () {
     let token = FlowRouter.getParam("token");
     let email = FlowRouter.current().queryParams.email;
+    let isVertical = FlowRouter.current().queryParams.vertical;
     let url = 'https://go-test.finneg.com/'
     let root = 'https://go-test.finneg.com/chat/'
 
@@ -14,7 +15,7 @@ Template.registrarGO.onCreated(function () {
 
     root = __meteor_runtime_config__.ROOT_URL;
     url = root.substring(0, root.lastIndexOf(`/c`) + 1);
-    //root = "http://localhost:3000/";
+    // root = "http://localhost:3000/";
 
     HTTP.call('GET', `${root}api/v1/permisos`, function (err, res) {
         //console.log(err)
@@ -84,7 +85,7 @@ Template.registrarGO.onCreated(function () {
                                                     //console.log(data.data.modules);
                                                     data.data.modules.forEach(modules => {
                                                         if (modules.id == "ecoChat") { 
-                                                            HTTP.post(`${root}api/v1/invitaciones/${element.name}/${dominioLow}/${res.user._id}`, {}, function (err, data) {
+                                                            HTTP.post(`${root}api/v1/invitaciones/${element.name}/${dominioLow}/${res.user._id}/${isVertical}`, {}, function (err, data) {
                                                                 if (err) {
                                                                     console.log(err)
                                                                 } else {

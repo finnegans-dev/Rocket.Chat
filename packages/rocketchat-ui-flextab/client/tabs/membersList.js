@@ -42,6 +42,11 @@ Template.membersList.helpers({
 		const onlineUsers = RoomManager.onlineUsers.get();
 		const roomUsers = Template.instance().users.get();
 		const room = ChatRoom.findOne(this.rid);
+
+		const roomsid = room.prid ? room.prid : room._id;
+		let ridm = Template.instance().roomIDMembers;
+		ridm.set(roomsid);
+		
 		const roomMuted = (room != null ? room.muted : undefined) || [];
 		const userUtcOffset = Meteor.user() && Meteor.user().utcOffset;
 		let totalOnline = 0;
@@ -109,6 +114,7 @@ Template.membersList.helpers({
 			users,
 			hasMore,
 		};
+		
 		return ret;
 	},
 
@@ -174,7 +180,11 @@ Template.membersList.helpers({
 		}
 
 		return this.user.username;
-	} });
+	},  
+	disableMemberList(){
+		return Template.instance().disableMemberList2.get();
+	},
+});
 
 Template.membersList.events({
 	'click .js-add'() {
@@ -287,7 +297,32 @@ Template.membersList.onCreated(function() {
 	this.total = new ReactiveVar;
 	this.loading = new ReactiveVar(true);
 
+	this.roomIDMembers = new ReactiveVar('');
+	this.disableMemberList2 = new ReactiveVar(false);
+
 	this.tabBar = Template.instance().tabBar;
+
+	const isVertical = localStorage.getItem('isVertical');
+	const cu = window.localStorage.getItem('currentuser');
+	const { domain, token, email } = JSON.parse(cu);
+
+	const isDisabled = Template.instance().disableMemberList2;
+	const currentRoom = Template.instance().data.rid;
+	const parentRoom = Template.instance().roomIDMembers;
+	HTTP.call('GET' ,`https://go-test.finneg.com/api/1/users/profile/${domain}/${email}?access_token=${token}`, function (err, res) {
+			
+		const isContextCreate = res.data.contextCreation;
+		if ( isVertical.toLocaleUpperCase() == 'SI' && !isContextCreate ){
+			/* deshabilita la lista de usuarios para usuarios no admin.*/
+			if ( currentRoom == parentRoom.get()){
+				isDisabled.set(false);
+			}else{
+				isDisabled.set(true);
+			}			
+		}else{			
+			isDisabled.set(true);			
+		}
+	});
 
 	Tracker.autorun(() => {
 		if (this.data.rid == null) { return; }
@@ -319,4 +354,5 @@ Template.membersList.onCreated(function() {
 		return this.showUserDetail(data.userDetail);
 	}
 	);
+
 });

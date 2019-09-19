@@ -54,18 +54,21 @@ export const addUserToRoom = function(rid, user, inviter, silenced) {
 
 	let splitInviter = inviter.username.split('-');
 	let splitTName = room.fname.split('-');
+	console.log(splitTName);
+	console.log(room.fname)
 	let splitUser = user.username.split('-');
 	
 	let url = `${prefix}api/1/notifications/notify?access_token=${token[0].goToken}`;
 
 	notificationData.message = `${splitInviter[0]} te invitó al tema ${splitTName[1]}`;
 	notificationData.destination = splitUser[1];
-
-	HTTP.post(url, {data: notificationData}, function (err, data) {
-		if(err){
-			console.log(err);
-		}       
-	});
+	
+	// 	HTTP.post(url, {data: notificationData}, function (err, data) {
+	// 		if(err){
+	// 			console.log(err);
+	// 		}       
+	// 	});
+	
 
 	if (!silenced) {
 		if (inviter) {

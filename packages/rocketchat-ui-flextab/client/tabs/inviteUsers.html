@@ -1,17 +1,20 @@
 <template name="inviteUsers">
-
 	<div class="rc-input">
 		<label class="rc-input__label">
 			<div class="rc-input__title">{{_ "Invite_Users"}}</div>
+		{{#if disabledIviteUser }}
+			Funcionalidad disponible sólo para administradores. 				
+		{{else}}
 			<div class="rc-input__wrapper">
 				<div class="rc-tags rc-tags--no-icon">
 					{{#each user in selectedUsers}}
-						{{> tag user}}
+					{{> tag user}}
 					{{/each}}
 					<input type="text" class="rc-tags__input" placeholder="{{_ "Username_Placeholder"}}"
-							 name="users" autocomplete="off"/>
-				</div>
-			</div>
+							 name="users" autocomplete="off"/>	
+				</div>	
+			</div>									 
+		{{/if}}	
 			{{#with config}}
 				{{#if autocomplete 'isShowing'}}
 					<div class="fadeInDown">
@@ -23,6 +26,7 @@
 			{{/with}}
 		</label>
 	</div>
+
 	<div class="rc-user-info__flex rc-user-info__row">
 		<button class="rc-button rc-button--outline js-close" title="{{_ 'Cancel'}}">{{_ 'Cancel'}}</button>
 		<button class="rc-button rc-button--primary js-add" disabled={{disabled}}>{{> icon block="rc-input__icon-svg" icon="plus"}}{{tAddUsers}}</button>
