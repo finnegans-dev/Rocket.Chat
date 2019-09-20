@@ -17,13 +17,13 @@ Template.loginGO.onCreated(function () {
     let root = 'https://go-test.finneg.com/chat/'
     console.log('NEW DEPLOY')
     //window.localStorage.setItem("Meteor.loginToken", "");
-    window.localStorage.setItem("Meteor.loginToken:/:/chat", "");
-    window.localStorage.setItem("isVertical", isVertical);
+    localStorage.setItem("Meteor.loginToken:/:/chat", "");
+    localStorage.setItem("isVertical", isVertical);
 
-    root = __meteor_runtime_config__.ROOT_URL;
+    // root = __meteor_runtime_config__.ROOT_URL;
     //console.log(__meteor_runtime_config__);
     url = root.substring(0, root.lastIndexOf(`/c`) + 1);
-    // root = 'http://localhost:3000/';
+    root = 'http://localhost:3000/';
 
     HTTP.call('GET', `${url}auth/token/info?access_token=${token}`, function (err, res) {
         if (err) {
@@ -101,12 +101,12 @@ Template.loginGO.onCreated(function () {
                                                                 console.log(data)
                                                             }
                                                             js = JSON.stringify({ "contextos": arrayContextos })
-                                                            window.localStorage.setItem('contextos', js)
-                                                            window.localStorage.setItem("Meteor.loginToken:/:/chat", tokenChat);
+                                                            localStorage.setItem('contextos', js)
+                                                            localStorage.setItem("Meteor.loginToken:/:/chat", tokenChat);
                                                             //window.localStorage.setItem("Meteor.loginToken", token);
-                                                            window.localStorage.setItem("dominio", dominioLow);
+                                                            localStorage.setItem("dominio", dominioLow);
                                                             let name = dominioLow + "-" + contextoName;
-                                                            window.localStorage.setItem("contextDomain", name);
+                                                            localStorage.setItem("contextDomain", name);
                                                             /* Deberia comprobar si por url me llega que es un chat vertical
                                                             entonces setear en el local storage que lo es, para despues poder hacer preguntar los adm de contextos
                                                             y meterlos dentro de un tema privado con este usuario. igualmente redirigirlo a la sala, pero que no pueda hacer la accion
@@ -142,7 +142,7 @@ Template.loginGO.onCreated(function () {
                                                     if (modules.id == "ecoChat") {
                                                         arrayContextos.push(element.name)
                                                         js = JSON.stringify({ "contextos": arrayContextos })
-                                                        window.localStorage.setItem('contextos', js)
+                                                        localStorage.setItem('contextos', js)
                                                     }
                                                 })
                                             }
@@ -154,9 +154,9 @@ Template.loginGO.onCreated(function () {
                                 }
                             })
 
-                            window.localStorage.setItem("Meteor.loginToken:/:/chat", tokenChat);
-                            //window.localStorage.setItem("Meteor.loginToken", token);
-                            window.localStorage.setItem("dominio", dominioLow);
+                            localStorage.setItem("Meteor.loginToken:/:/chat", tokenChat);
+                            // localStorage.setItem("Meteor.loginToken", token);
+                            localStorage.setItem("dominio", dominioLow);
                             FlowRouter.go(`/home`);
 
                             //let name = dominioLow + "-" + contextoName;
