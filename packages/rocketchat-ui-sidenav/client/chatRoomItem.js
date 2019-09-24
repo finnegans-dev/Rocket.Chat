@@ -78,11 +78,11 @@ Template.chatRoomItem.helpers({
 		if(this.t == "l"){
 			return true;
 		}
-		let contextos = JSON.parse(window.localStorage.getItem('contextos'));
+		let contextos = JSON.parse(localStorage.getItem('contextos'));
 		if(this.prid){
 			return false;
 		}
-		let dominioURL = window.localStorage.getItem('dominio');
+		let dominioURL = localStorage.getItem('dominio');
 		let dominio = fname.substring(0, fname.indexOf('-'));
 		let contexto = fname.substring(fname.indexOf('-')+1, fname.length);
 		if (fname[0] == fname[0].toUpperCase()) {

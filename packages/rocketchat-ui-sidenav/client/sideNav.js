@@ -163,7 +163,7 @@ async function inviteAdmsToPrivateRoom (){
 
 	callbacks.run('afterCreateThread', Meteor.user(), result);
 
-	const cu = window.localStorage.getItem('currentuser');
+	const cu = localStorage.getItem('currentuser');
 	const { domain, token } = JSON.parse(cu);
 
 		HTTP.call('POST', `api/v1/customInvitations/${result.prid}/${result.rid}/${domain}/${token}`, function (err, res) {
@@ -178,16 +178,18 @@ async function inviteAdmsToPrivateRoom (){
 }
 
 Template.sideNav.onCreated(function () {
-	const isVertical = window.localStorage.getItem('isVertical');
+	const isVertical = localStorage.getItem('isVertical');
 	 root = __meteor_runtime_config__.ROOT_URL;
     //console.log(__meteor_runtime_config__);
 	url = root.substring(0, root.lastIndexOf(`/c`) + 1);
 	if ( isVertical.toLocaleUpperCase() == 'SI' ){
 
-		const cu = window.localStorage.getItem('currentuser');
+		const cu = localStorage.getItem('currentuser');
 		const { domain, token, email } = JSON.parse(cu);
-
-		HTTP.call('GET' ,`https://go-test.finneg.com/api/1/users/profile/${domain}/${email}?access_token=${token}`, function (err, res) {
+		root = __meteor_runtime_config__.ROOT_URL;    
+    	url = root.substring(0, root.lastIndexOf(`/c`) + 1);
+		//go-test.finneg
+		HTTP.call('GET' ,`${url}api/1/users/profile/${domain}/${email}?access_token=${token}`, function (err, res) {
 			const isContextCreate = res.data.contextCreation;
 			
 			if ( !isContextCreate ){

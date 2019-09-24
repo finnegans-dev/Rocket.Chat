@@ -15,13 +15,14 @@ Template.loginGO.onCreated(function () {
     let isVertical = FlowRouter.current().queryParams.vertical;
     let url = 'https://go-test.finneg.com/'
     let root = 'https://go-test.finneg.com/chat/'
-    console.log('NEW DEPLOY2')
+    console.log('NEW DEPLOY3')
     //window.localStorage.setItem("Meteor.loginToken", "");
-    localStorage.setItem("Meteor.loginToken:/:/chat", "");
+    localStorage.removeItem("Meteor.loginToken:/:/chat");
     localStorage.setItem("isVertical", isVertical);
 
     root = __meteor_runtime_config__.ROOT_URL;
     //console.log(__meteor_runtime_config__);
+
     url = root.substring(0, root.lastIndexOf(`/c`) + 1);
     // root = 'http://localhost:3000/';
 

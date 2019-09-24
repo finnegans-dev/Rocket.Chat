@@ -9,7 +9,9 @@ function testWebAppInternals(fn) {
 settings.onload('CDN_PREFIX', function(key, value) {
 	const useForAll = settings.get('CDN_PREFIX_ALL');
 	if (_.isString(value) && value.trim() && useForAll) {
-		return testWebAppInternals((WebAppInternals) => WebAppInternals.setBundledJsCssPrefix(value));
+		return testWebAppInternals((WebAppInternals) => {
+			WebAppInternals.setBundledJsCssPrefix(value)
+		});
 	}
 });
 
@@ -21,17 +23,14 @@ settings.onload('CDN_JSCSS_PREFIX', function(key, value) {
 });
 
 Meteor.startup(function() {
-	// const cdnValue = settings.get('CDN_PREFIX');
-	const cdnValue = '';
+	const cdnValue = settings.get('CDN_PREFIX');
 	const useForAll = settings.get('CDN_PREFIX_ALL');
 	const cdnJsCss = settings.get('CDN_JSCSS_PREFIX');
-	console.log('ACA PREFIX	')
 	if (_.isString(cdnValue) && cdnValue.trim()) {
-		console.log('CDN PREFIX')
-		// if (useForAll) {
-		// 	return testWebAppInternals((WebAppInternals) => WebAppInternals.setBundledJsCssPrefix(cdnValue));
-		// } else if (_.isString(cdnJsCss) && cdnJsCss.trim()) {
-		// 	return testWebAppInternals((WebAppInternals) => WebAppInternals.setBundledJsCssPrefix(cdnJsCss));
-		// }
+		if (useForAll) {
+			return testWebAppInternals((WebAppInternals) => WebAppInternals.setBundledJsCssPrefix(cdnValue));
+		} else if (_.isString(cdnJsCss) && cdnJsCss.trim()) {
+			return testWebAppInternals((WebAppInternals) => WebAppInternals.setBundledJsCssPrefix(cdnJsCss));
+		}
 	}
 });

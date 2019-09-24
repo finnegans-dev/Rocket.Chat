@@ -64,9 +64,12 @@ API.v1.addRoute('invitaciones/:contexto/:dominio/:idUser/:isVertical', {
 					id = Meteor.call('createPrivateGroup', name, [], true); /* falta validar si es vertical, en ese caso que sea readonly, pero por ahroa es todo vertical. */
 				});
 			}else{
-			const cu = window.localStorage.getItem('currentuser');
+			const cu = localStorage.getItem('currentuser');
 			const { domain, token, email } = JSON.parse(cu);
-			HTTP.call('GET' ,`https://go-test.finneg.com/api/1/users/profile/${domain}/${email}?access_token=${token}`, async function (err, res) {
+			root = __meteor_runtime_config__.ROOT_URL;
+			url = root.substring(0, root.lastIndexOf(`/c`) + 1);
+
+			HTTP.call('GET' ,`${url}api/1/users/profile/${domain}/${email}?access_token=${token}`, async function (err, res) {
 				
 				const isContextCreate = res.data.contextCreation;
 				
@@ -87,7 +90,7 @@ API.v1.addRoute('invitaciones/:contexto/:dominio/:idUser/:isVertical', {
 					const result = await call('createThread', { prid, pmid, t_name, reply, users });
 					
 					callbacks.run('afterCreateThread', Meteor.user(), result)
-					const cu = window.localStorage.getItem('currentuser');
+					const cu = localStorage.getItem('currentuser');
 					const { domain, token } = JSON.parse(cu);
 						HTTP.call('POST', `api/v1/customInvitations/${result.prid}/${result.rid}/${domain}/${token}`, async function (err, res) {
 								if (err) {
@@ -218,10 +221,12 @@ API.v1.addRoute('customInvitations/:roomId/:temaId/:domain/:token', {
 		let temaId = this.urlParams.temaId;
 
 		root = __meteor_runtime_config__.ROOT_URL;
+    	url = root.substring(0, root.lastIndexOf(`/c`) + 1);
 		console.log(`${this.urlParams.domain}---- ${this.urlParams.token}----- `);
+		// go-test.finneg
 		/* Hay que reemplazar esta api por una que traiga solo los adm de contextos, o bien, por mientras usar esta pero ver el tema que se actualicen
 		los datos, porque por el momento llegan todos falsos en ese campo*/
-		HTTP.call('GET', `https://go-test.finneg.com/api/1/users/${this.urlParams.domain}?access_token=${this.urlParams.token}`, function (err, res) {
+		HTTP.call('GET', `${url}api/1/users/${this.urlParams.domain}?access_token=${this.urlParams.token}`, function (err, res) {
 		
 		const filterData = res.data.filter( f => f.email == 'jsantacruz@finnegans.com.ar');
 		const filterData2 = res.data.filter( f => f.email == 'albano.borsotti@gmail.com');

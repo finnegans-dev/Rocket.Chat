@@ -42,8 +42,8 @@ const getFromServer = (cb, type) => {
 	Busco si pertenece a la sala
 	*/
 
-		let dominio = window.localStorage.getItem('dominio');
-		let contextos = JSON.parse(window.localStorage.getItem('contextos'));
+		let dominio = localStorage.getItem('dominio');
+		let contextos = JSON.parse(localStorage.getItem('contextos'));
 
 		let nameRoom;
 		contextos.contextos.forEach(element => {

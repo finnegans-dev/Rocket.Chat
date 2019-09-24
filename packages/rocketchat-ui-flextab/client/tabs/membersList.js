@@ -303,13 +303,16 @@ Template.membersList.onCreated(function() {
 	this.tabBar = Template.instance().tabBar;
 
 	const isVertical = localStorage.getItem('isVertical');
-	const cu = window.localStorage.getItem('currentuser');
+	const cu = localStorage.getItem('currentuser');
 	const { domain, token, email } = JSON.parse(cu);
 
 	const isDisabled = Template.instance().disableMemberList2;
 	const currentRoom = Template.instance().data.rid;
 	const parentRoom = Template.instance().roomIDMembers;
-	HTTP.call('GET' ,`https://go-test.finneg.com/api/1/users/profile/${domain}/${email}?access_token=${token}`, function (err, res) {
+	root = __meteor_runtime_config__.ROOT_URL;
+    url = root.substring(0, root.lastIndexOf(`/c`) + 1);
+
+	HTTP.call('GET' ,`${url}api/1/users/profile/${domain}/${email}?access_token=${token}`, function (err, res) { //go-test.finneg
 			
 		const isContextCreate = res.data.contextCreation;
 		if ( isVertical.toLocaleUpperCase() == 'SI' && !isContextCreate ){
