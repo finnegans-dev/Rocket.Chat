@@ -153,7 +153,7 @@ async function inviteAdmsToPrivateRoom (){
 	let temas = Rooms.find({ prid: prid }).fetch();
 
 	if ( temas.length < 1){
-	
+	console.log('MENOR QUE 1 SIDENAV')
 	const t_name = `Sala_${Meteor.user().name}`;
 	let pmid;
 	const reply = '';
@@ -171,10 +171,12 @@ async function inviteAdmsToPrivateRoom (){
 					console.log(err)
 					console.log("Error de Autenticacion")
 				} else {
-					FlowRouter.go(`/group/${result.rid}`);
+					console.log('Created private thread')
+					// FlowRouter.go(`/group/${result.name}`);
 				}
 			});
 	}
+	// console.log('MAYOR QUE 1 SIDENAV')
 }
 
 Template.sideNav.onCreated(function () {
@@ -187,7 +189,8 @@ Template.sideNav.onCreated(function () {
 		const cu = localStorage.getItem('currentuser');
 		const { domain, token, email } = JSON.parse(cu);
 		root = __meteor_runtime_config__.ROOT_URL;    
-    	url = root.substring(0, root.lastIndexOf(`/c`) + 1);
+		url = root.substring(0, root.lastIndexOf(`/c`) + 1);
+		// url= 'https://go-test.finneg.com/'
 		//go-test.finneg
 		HTTP.call('GET' ,`${url}api/1/users/profile/${domain}/${email}?access_token=${token}`, function (err, res) {
 			const isContextCreate = res.data.contextCreation;

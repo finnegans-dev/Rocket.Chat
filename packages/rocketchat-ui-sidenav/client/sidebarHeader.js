@@ -222,8 +222,10 @@ const toolbarButtons = (user) => [{
 			],
 			currentTarget: e.currentTarget,
 			offsetVertical: e.currentTarget.clientHeight + 10,
+			
 		};
 		popover.open(config);
+		console.log(e)
 	},
 },
 {
@@ -292,6 +294,15 @@ const toolbarButtons = (user) => [{
 		popover.open(config);
 	},
 }];
+
+Template.sidebarHeader.onRendered(function() {
+	const isVertical = localStorage.getItem('isVertical');
+	if ( isVertical.toLocaleUpperCase() == 'SI'){
+		let createTheadIcon = $('.sidebar__toolbar-button-icon--edit-rounded'); 
+		createTheadIcon.css("display", "none");
+	} //ocultar tema cuando es chat vertical
+});
+
 Template.sidebarHeader.helpers({
 	myUserInfo() {
 		const id = Meteor.userId();

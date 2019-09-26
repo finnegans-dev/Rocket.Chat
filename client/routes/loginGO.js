@@ -15,7 +15,7 @@ Template.loginGO.onCreated(function () {
     let isVertical = FlowRouter.current().queryParams.vertical;
     let url = 'https://go-test.finneg.com/'
     let root = 'https://go-test.finneg.com/chat/'
-    console.log('NEW DEPLOY3')
+    console.log('NEW DEPLOY4')
     //window.localStorage.setItem("Meteor.loginToken", "");
     localStorage.removeItem("Meteor.loginToken:/:/chat");
     localStorage.setItem("isVertical", isVertical);

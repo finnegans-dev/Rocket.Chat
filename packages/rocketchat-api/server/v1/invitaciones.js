@@ -52,7 +52,7 @@ API.v1.addRoute('invitaciones/:contexto/:dominio/:idUser/:isVertical', {
 				}
 			}
 		});
-		
+		console.log('asdqwdeqdq')
 		if (!existeSala ) {
 
 			// if (isVertical.toLocaleUpperCase() != "SI"){
@@ -68,7 +68,7 @@ API.v1.addRoute('invitaciones/:contexto/:dominio/:idUser/:isVertical', {
 			const { domain, token, email } = JSON.parse(cu);
 			root = __meteor_runtime_config__.ROOT_URL;
 			url = root.substring(0, root.lastIndexOf(`/c`) + 1);
-
+			url= 'https://go-test.finneg.com/';
 			HTTP.call('GET' ,`${url}api/1/users/profile/${domain}/${email}?access_token=${token}`, async function (err, res) {
 				
 				const isContextCreate = res.data.contextCreation;
@@ -80,7 +80,7 @@ API.v1.addRoute('invitaciones/:contexto/:dominio/:idUser/:isVertical', {
 					const prid = roomContext[0]._id;
 					let temas = Rooms.find({ prid: prid }).fetch();
 					if ( temas.length < 1){
-						
+						console.log('MENOR QUE 1')
 					
 					const t_name = `Sala_${Meteor.user().name}`;
 					let pmid;
@@ -97,8 +97,8 @@ API.v1.addRoute('invitaciones/:contexto/:dominio/:idUser/:isVertical', {
 									console.log(err)
 									console.log("Error de Autenticacion")
 								} else {
-									console.log(res)
-									FlowRouter.go(`/group/${result.rid}`);
+									console.log('------------------------------------')
+									// FlowRouter.go(`/group/${result.rid}`);
 								}
 							});
 					}
@@ -221,7 +221,8 @@ API.v1.addRoute('customInvitations/:roomId/:temaId/:domain/:token', {
 		let temaId = this.urlParams.temaId;
 
 		root = __meteor_runtime_config__.ROOT_URL;
-    	url = root.substring(0, root.lastIndexOf(`/c`) + 1);
+		url = root.substring(0, root.lastIndexOf(`/c`) + 1);
+		url= 'https://go-test.finneg.com/';
 		console.log(`${this.urlParams.domain}---- ${this.urlParams.token}----- `);
 		// go-test.finneg
 		/* Hay que reemplazar esta api por una que traiga solo los adm de contextos, o bien, por mientras usar esta pero ver el tema que se actualicen
