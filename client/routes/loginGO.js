@@ -95,7 +95,9 @@ Template.loginGO.onCreated(function () {
                                                 data.data.modules.forEach(modules => {
                                                     if (modules.id == "ecoChat") {
                                                         arrayContextos.push(element.name)
-                                                        HTTP.post(`${root}api/v1/invitaciones/${element.name}/${dominioLow}/${idUser}/${isVertical}`, {}, function (err, data) {
+                                                        //HTTP.post(`${root}api/v1/invitaciones/${element.name}/${dominioLow}/${idUser}/${isVertical}`, {}, function (err, data) {
+                                                        HTTP.post(`${root}api/v1/invitaciones/${element.name}/${dominioLow}/${idUser}`, {}, function (err, data) {
+
                                                             if (err) {
                                                                 console.log(err)
                                                             } else {
@@ -111,7 +113,7 @@ Template.loginGO.onCreated(function () {
                                                             /* Deberia comprobar si por url me llega que es un chat vertical
                                                             entonces setear en el local storage que lo es, para despues poder hacer preguntar los adm de contextos
                                                             y meterlos dentro de un tema privado con este usuario. igualmente redirigirlo a la sala, pero que no pueda hacer la accion
-                                                            de volver hacia atras a los demas contextos. */ 
+                                                            de volver hacia atras a los demas contextos. */
                                                             FlowRouter.go(`/group/${name}`);
                                                         })
                                                     }

@@ -18,8 +18,8 @@ Template.registrarGO.onCreated(function () {
     // root = "http://localhost:3000/";
 
     // HTTP.call('GET', `${root}api/v1/permisos`, function (err, res) {
-        //console.log(err)
-        //console.log(res)
+    //console.log(err)
+    //console.log(res)
     // });
 
     HTTP.call('GET', `${url}auth/token/info?access_token=${token}`, function (err, res) {
@@ -84,8 +84,9 @@ Template.registrarGO.onCreated(function () {
                                                 } else {
                                                     //console.log(data.data.modules);
                                                     data.data.modules.forEach(modules => {
-                                                        if (modules.id == "ecoChat") { 
-                                                            HTTP.post(`${root}api/v1/invitaciones/${element.name}/${dominioLow}/${res.user._id}/${isVertical}`, {}, function (err, data) {
+                                                        if (modules.id == "ecoChat") {
+                                                            // HTTP.post(`${root}api/v1/invitaciones/${element.name}/${dominioLow}/${res.user._id}/${isVertical}`, {}, function (err, data) {
+                                                            HTTP.post(`${root}api/v1/invitaciones/${element.name}/${dominioLow}/${res.user._id}`, {}, function (err, data) {
                                                                 if (err) {
                                                                     console.log(err)
                                                                 } else {
@@ -96,7 +97,7 @@ Template.registrarGO.onCreated(function () {
                                                     })
                                                 }
                                             });
-                                           
+
                                         });
 
                                     }
