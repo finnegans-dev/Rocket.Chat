@@ -2812,7 +2812,8 @@ rc-old select,
 
 			text-align: right;
 
-			& .time,
+			& .
+			,
 			& .role-tag,
 			& .is-bot {
 				display: none;

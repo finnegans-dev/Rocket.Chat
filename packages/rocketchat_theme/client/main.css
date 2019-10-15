@@ -437,8 +437,14 @@ svg.rc-icon.rc-icon--default-size.sidebar-item__icon.sidebar-item__icon--lock {
 
         & .info.border-component-color.color-info-font-color{
             float: right;
-            padding-right: 2rem;
+            /*padding-right: 2rem;*/
             padding-top: .5em;
+            /*Esto es nuevo*/
+            padding-right: 4rem;
+            display: block;
+            position: absolute;
+            right: 0;
+            bottom: 0;
 
             & .role-tag.color-secondary-color.border-component-color{
                 display: none;
@@ -446,7 +452,8 @@ svg.rc-icon.rc-icon--default-size.sidebar-item__icon.sidebar-item__icon--lock {
         }
 
         & .body.color-primary-font-color {
-            width: 55%;
+            /*width: 55%;*/
+            width: 58%;
             display: flex;
             flex-flow: column-reverse wrap;
             margin-left: 33%;
@@ -500,6 +507,7 @@ svg.rc-icon.rc-icon--default-size.sidebar-item__icon.sidebar-item__icon--lock {
 
     .message.sequential{
         margin-top: .5rem;
+        
     }
 
     .yours.sequential{
@@ -519,7 +527,8 @@ svg.rc-icon.rc-icon--default-size.sidebar-item__icon.sidebar-item__icon--lock {
     .own.sequential {
         & .info.border-component-color.color-info-font-color{
             width: 95%;
-            padding-right: 0;
+            /*padding-right: 0;*/
+            padding-right: 1em;
         }
 
         & .info{
@@ -742,6 +751,7 @@ svg.rc-icon.rc-icon--default-size.sidebar-item__icon.sidebar-item__icon--lock {
 
   }
   
+
 
 /* 1920 */
 @media (min-width: 1651px) and (max-width: 2000px){
@@ -1316,6 +1326,359 @@ dialog.rc-modal.rc-modal-- {
 
     
 }
+
+/*@media (min-width: 1281px) and (max-width: 1366px){
+
+
+    .rc-message-box.rc-new{
+        width: 93%
+    }
+
+    .contextual-bar__header-close.js-close{
+        display: none;
+    }
+
+    .message.sequential{
+        margin-top: .5rem;
+    }
+
+    .contextual-bar{
+        flex: 0 0 30%;
+    }
+     .attachment .attachment-block{
+        width: 100%;
+        margin: 10px 0;
+    }  
+
+    .attachment{
+        display: flex;
+        justify-content: flex-start;
+    }
+
+    .message.new-day::before{
+        left: 43.5%;
+        margin-top: .5rem;  
+        background-color: #E8F7FB !important;
+        border-radius: 5px;
+    }
+
+    .rc-old .messages-container-main{
+        flex: 0 0 70%
+    }
+    
+    .rocket-default-search-results .list .message{
+        right: 5rem;
+        width: 380px;
+        margin-left: 1rem
+    }
+
+    .message{
+        padding: 0px 0 4px 30px;  
+        margin-top: 1rem;    
+
+        & .thumb{
+            top: 5px;
+            left: 35px;
+            &:not(.thumb-small) .avatar {
+                width: 24px;
+                height: 24px;
+                border-radius: 50%;
+            }
+        }
+
+        & .user{
+            padding-left: 2rem;
+            padding-top: 1rem;
+        }
+    }
+    .own{         
+
+        margin-top: 1rem;
+
+        .relleno{
+            width: 63%;    
+            margin-left: 32%;
+        }
+
+        & .thumb.user-card-message{
+            visibility: hidden !important;
+        }
+
+        & .user.user-card-message.color-primary-font-color{
+            position: absolute;
+            visibility: hidden;
+        }
+
+        & .info.border-component-color.color-info-font-color{
+            float: right;
+            padding-right: 3rem;
+            padding-top: .5em;
+
+            & .role-tag.color-secondary-color.border-component-color{
+                display: none;
+            }
+        }
+
+        & .body.color-primary-font-color {
+            width: 55%;
+            display: flex;
+            flex-flow: column-reverse wrap;
+            margin-left: 35%;
+            padding-top: .5em;
+            word-break: break-word;
+        }
+
+        & .reactions{
+            display: flex;
+            justify-content: flex-start;
+            width: 500px;
+            margin-left: 35%;
+            flex-wrap: wrap;
+        }
+    }
+
+    .yours{
+
+        & .relleno{
+            width: 60%;
+        }
+
+        & .attachment {
+            width: 99%;
+        }
+
+        & .reactions{
+            width: 55%;
+            margin-left: .4rem;
+        }
+
+        & .message-actions{
+            right: 2rem;
+            width: 40%;
+        }
+
+        & .body.color-primary-font-color {
+            width: 55%;
+            display: flex;
+            flex-flow: column-reverse wrap;
+            padding-top: .5em;
+            padding-left: .5rem;
+            padding-bottom: .5rem;
+            word-break: break-word;
+        }
+    }
+
+    .own .message-actions{
+        right: 2rem;
+    }
+
+    .yours.sequential{
+    
+        & .info{
+            
+            top: 10px;
+    
+            & .time{
+                display: inline-block;
+                position: absolute;
+                width: 59%;
+            }
+        }
+    }
+
+    .own.sequential {
+        & .info.border-component-color.color-info-font-color{
+            width: 95%;
+            padding-right: 0;
+        }
+
+        & .info{
+            & .time{
+                display: block;
+            }
+        }
+
+    }
+
+    .rc-button.rc-button--nude.js-close {
+        margin-left: 200px;
+    }
+
+    .contextual-bar__content.flex-tab.starred-messages {
+        & .flex-tab__result.js-list{
+            & .list.clearfix{
+
+                & .yours.sequential{
+    
+                    & .info{
+
+                        & .time{
+                            width: 90%;
+                        }
+                    }
+                }
+
+                .own.sequential {
+                    & .info.border-component-color.color-info-font-color{
+                        width: 86%
+                    }
+                }
+
+                & .message.new-day::before{
+                    left: 33%
+                }
+
+                & .yours{
+                    & .attachment{
+                        width: 100%;
+                    }
+
+                    & .message-actions{
+                        width: 5%
+                    }
+
+                    & .body.color-primary-font-color {
+                        width: 95%;
+                    }
+
+                    & .relleno.yours{
+                        width: 90%;
+                        margin-left: -.5rem;
+                    }
+
+                    & .reactions{
+                        width: 300px;
+                    }
+                }
+
+
+                & .own{
+                    & .relleno.own{
+                        width: 90%;
+                        margin-left: -1rem;
+                    }
+
+                    & .body.color-primary-font-color {
+                        margin-left: 1rem;
+                        width: 85%;
+                    }
+
+                    & .user.user-card-message.color-primary-font-color{
+                        visibility: hidden;
+                        padding-top: .5em;
+                        padding-left: 1rem;
+
+                    }    
+
+                    & .reactions{
+                        margin-left: 1rem;
+                        width: 300px;
+                    }
+                }
+            }
+        }
+      }
+
+      .rocket-default-search-results{
+        & .flex-tab__result.js-list{
+            & .list.clearfix{
+
+               & .yours.sequential{
+    
+                    & .info{
+
+                        & .time{
+                            width: 85%;
+                        }
+                    }
+                }
+
+                & .message.new-day::before{
+                    margin-top: 1rem;
+                    left: 50%
+                }
+
+                & .yours{
+
+                    & .relleno.yours{
+                        margin-left: 0;
+                        width: 100%;
+                    }
+
+                    & .body.color-primary-font-color {
+                        width: 100%;
+                        margin-left: 2rem;
+                    }
+
+                    & .reactions{
+                        width: 100%;
+                        margin-left: 2rem;
+                    }
+
+                    & .user.color-info-font-color{
+                        display: none;
+                    }
+
+                    & .message-actions{
+                        & .message-actions__menu{
+                            position: relative;
+                            left: 100%;
+                            top: 10px;
+                        }
+                    }
+
+                    & .user{
+                        padding-left: 2rem;
+                    }
+                }
+
+                & .own{
+                    & .relleno.own{
+                        width: 100%;
+                        margin-left: 0;
+                    }
+
+                    & .body.color-primary-font-color {
+                        margin-left: 5%;
+                        width: 350px;
+                    }
+
+                    & .user.color-info-font-color{
+                        display: none;
+                    }
+
+                    & .reactions{
+                        margin-left: 5%;
+                        width: 320px;
+                    }
+
+                    & .message.user{                        
+                        margin-left: -1rem;
+                        margin-top: -1rem;
+
+                    }
+
+                    & .message-actions{
+                        top: 10px;
+                        right: -1rem;
+                    }
+
+                    & .info.border-component-color.color-info-font-color{
+                        padding-right: 0;
+                        display: flex;
+                        justify-content: flex-end
+                    }
+
+                    & .user.user-card-message.color-primary-font-color{
+                        visibility: hidden;
+                    }
+                }
+            }
+        }
+    }
+
+}*/
+
 
 @media (min-width: 767px) and (max-width: 1281px){
 
