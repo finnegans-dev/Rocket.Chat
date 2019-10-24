@@ -16,6 +16,12 @@
 
 		<h3 class="rooms-list__type clickTitulo">
 			<span class="rooms-list__type-text {{_ ../label}}">{{_ ../label}}</span>
+			<!-- Esto es lo nuevo -->
+			<button class="sidebar__toolbar-button rc-tooltip rc-tooltip--down js-button" aria-label="Crear un nuevo tema">
+				<svg class="rc-icon sidebar__toolbar-button-icon sidebar__toolbar-button-icon--edit-rounded" aria-hidden="true">
+					<use xlink:href="#icon-edit-rounded"></use>
+				</svg>
+			</button>
 			<span class="back-context">{{> icon block="rc-button-broadcast__icon" icon="reply"}}</span>
 			{{#if showRoomCounter}}
 			{{#with count}}

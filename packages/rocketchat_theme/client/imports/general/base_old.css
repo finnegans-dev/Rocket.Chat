@@ -2983,8 +2983,9 @@ rc-old select,
 
 	& .message-alias {
 		padding-left: 2px;
-
 		font-weight: 400;
+		/*Esto es nuevo*/
+		visibility: hidden;
 	}
 
 	&.livechat_navigation_history {

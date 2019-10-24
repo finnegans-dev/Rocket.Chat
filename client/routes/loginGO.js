@@ -61,7 +61,7 @@ Template.loginGO.onCreated(function () {
                         //  FlowRouter.go
                     } else {
 
-                        //console.log(response.data);
+                        console.log(response.data);
                         let data = JSON.parse(response.content)
                         //console.log(data)
                         let idUser = data.data.userId;
@@ -78,20 +78,21 @@ Template.loginGO.onCreated(function () {
                             }
                         });
 
-                        if (contextoToken != idContexto) {
+                        //if (contextoToken != idContexto) {
+                        if (true) {
 
                             HTTP.get(`${url}api/1/contexts?access_token=${token}`, function (err, data) {
                                 if (err) {
                                     console.log(err)
                                 } else {
-
+                                    console.log(data)
                                     let contexts = data.data;
                                     contexts.forEach(element => {
                                         HTTP.get(`${url}api/1/contexts/${element.id}?access_token=${token}`, function (err, data) {
                                             if (err) {
                                                 console.log(err)
                                             } else {
-                                                //console.log(data.data.modules);
+                                                console.log(data.data.modules);
                                                 data.data.modules.forEach(modules => {
                                                     if (modules.id == "ecoChat") {
                                                         arrayContextos.push(element.name)
@@ -133,7 +134,7 @@ Template.loginGO.onCreated(function () {
                                 if (err) {
                                     console.log(err)
                                 } else {
-
+                                    console.log(data)
                                     let contexts = data.data;
                                     contexts.forEach(element => {
                                         HTTP.get(`${url}api/1/contexts/${element.id}?access_token=${token}`, function (err, data) {
