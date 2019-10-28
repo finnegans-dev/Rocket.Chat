@@ -7,7 +7,7 @@
 			</div>
 			<div class="sidebar__toolbar">
 				{{#each toolbarButtons}}
-					<button class="sidebar__toolbar-button rc-tooltip rc-tooltip--down js-button" aria-label="{{name}}">
+					<button class="sidebar__toolbar-button rc-tooltip rc-tooltip--down js-button class-{{icon}}" aria-label="{{name}}" id="{{id}}">
 						{{> icon block="sidebar__toolbar-button-icon" icon=icon }}
 					</button>
 				{{/each}}

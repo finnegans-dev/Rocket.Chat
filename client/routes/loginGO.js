@@ -20,11 +20,13 @@ Template.loginGO.onCreated(function () {
     localStorage.removeItem("Meteor.loginToken:/:/chat");
     localStorage.setItem("isVertical", isVertical);
 
-    //root = __meteor_runtime_config__.ROOT_URL;
-    //console.log(__meteor_runtime_config__);
-
+    //descomentar
+    root = __meteor_runtime_config__.ROOT_URL;
+    
     url = root.substring(0, root.lastIndexOf(`/c`) + 1);
-    root = 'http://localhost:3000/';
+    
+    //comentar
+    //root = 'http://localhost:3000/';
 
     HTTP.call('GET', `${url}auth/token/info?access_token=${token}`, function (err, res) {
         if (err) {

@@ -181,6 +181,9 @@ h3.rooms-list__type:hover {
 
 button.sidebar__toolbar-button.rc-tooltip.rc-tooltip--down.js-button {
     color: #273347;
+    /*position: relative;
+    top: 42px;
+    z-index: 10;*/
 }
 
 .sidebar-item:hover{
@@ -2519,5 +2522,12 @@ Margen lateral derecho
 .rc-icon.sidebar__toolbar-button-icon.sidebar__toolbar-button-icon--list{
     display: none;
 }
+.rc-icon.sidebar__toolbar-button-icon.sidebar__toolbar-button-icon--magnifier{
+    /*display: none;*/
+}
 
-
+.sidebar__toolbar-button.rc-tooltip.rc-tooltip--down.js-button.class-edit-rounded{
+    position: relative;
+    top: 42px;
+    z-index: 10;
+}
