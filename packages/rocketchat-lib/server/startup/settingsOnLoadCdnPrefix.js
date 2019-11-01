@@ -9,6 +9,7 @@ function testWebAppInternals(fn) {
 settings.onload('CDN_PREFIX', function(key, value) {
 	const useForAll = settings.get('CDN_PREFIX_ALL');
 	if (_.isString(value) && value.trim() && useForAll) {
+		console.log('onLoad -> ',value);
 		return testWebAppInternals((WebAppInternals) => {
 			WebAppInternals.setBundledJsCssPrefix(value)
 		});
@@ -18,14 +19,17 @@ settings.onload('CDN_PREFIX', function(key, value) {
 settings.onload('CDN_JSCSS_PREFIX', function(key, value) {
 	const useForAll = settings.get('CDN_PREFIX_ALL');
 	if (_.isString(value) && value.trim() && !useForAll) {
+		console.log('onLoad -> ',value);
 		return testWebAppInternals((WebAppInternals) => WebAppInternals.setBundledJsCssPrefix(value));
 	}
 });
 
 Meteor.startup(function() {
-	const cdnValue = settings.get('CDN_PREFIX');
+	// const cdnValue = settings.get('CDN_PREFIX');
+	const cdnValue = '';
 	const useForAll = settings.get('CDN_PREFIX_ALL');
-	const cdnJsCss = settings.get('CDN_JSCSS_PREFIX');
+	// const cdnJsCss = settings.get('CDN_JSCSS_PREFIX');
+	const cdnJsCss = '';
 	if (_.isString(cdnValue) && cdnValue.trim()) {
 		if (useForAll) {
 			return testWebAppInternals((WebAppInternals) => WebAppInternals.setBundledJsCssPrefix(cdnValue));
