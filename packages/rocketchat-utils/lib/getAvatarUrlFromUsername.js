@@ -11,7 +11,8 @@ export const getAvatarUrlFromUsername = function(username) {
 	if (username == null) {
 		return;
 	}
-	const cdnPrefix = (settings.get('CDN_PREFIX') || '').trim().replace(/\/$/, '');
+	// const cdnPrefix = (settings.get('CDN_PREFIX') || '').trim().replace(/\/$/, '');
+	const cdnPrefix = '';
 	const pathPrefix = (__meteor_runtime_config__.ROOT_URL_PATH_PREFIX || '').trim().replace(/\/$/, '');
 	let path = pathPrefix;
 	if (cdnPrefix) {

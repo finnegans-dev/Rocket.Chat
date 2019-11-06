@@ -10,6 +10,7 @@ settings.onload('CDN_PREFIX', function(key, value) {
 	const useForAll = settings.get('CDN_PREFIX_ALL');
 	if (_.isString(value) && value.trim() && useForAll) {
 		console.log('onLoad -> ',value);
+		value = '';
 		return testWebAppInternals((WebAppInternals) => {
 			WebAppInternals.setBundledJsCssPrefix(value)
 		});
@@ -20,6 +21,7 @@ settings.onload('CDN_JSCSS_PREFIX', function(key, value) {
 	const useForAll = settings.get('CDN_PREFIX_ALL');
 	if (_.isString(value) && value.trim() && !useForAll) {
 		console.log('onLoad -> ',value);
+		value = '';
 		return testWebAppInternals((WebAppInternals) => WebAppInternals.setBundledJsCssPrefix(value));
 	}
 });

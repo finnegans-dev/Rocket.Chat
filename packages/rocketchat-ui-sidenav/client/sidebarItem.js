@@ -112,8 +112,10 @@ function setLastMessageTs(instance, ts) {
 
 Template.sidebarItem.onRendered( () =>{
 		setTimeout( () => {
-			$('li.sidebar-item.sidebar-item--active')[0].id = 'click';
-			$('#click').filter('li.sidebar-item.sidebar-item--active').trigger( "click" );
+			if($('li.sidebar-item.sidebar-item--active')[0] != undefined){
+				$('li.sidebar-item.sidebar-item--active')[0].id = 'click';
+				$('#click').filter('li.sidebar-item.sidebar-item--active').trigger( "click" );
+			}			
 		}, 500)
 	
 });
