@@ -12,7 +12,7 @@ export const getAvatarUrlFromUsername = function(username) {
 		return;
 	}
 	// const cdnPrefix = (settings.get('CDN_PREFIX') || '').trim().replace(/\/$/, '');
-	const cdnPrefix = '';
+	const cdnPrefix = 'https://d1mbeue1dr0bel.cloudfront.net/chat';
 	const pathPrefix = (__meteor_runtime_config__.ROOT_URL_PATH_PREFIX || '').trim().replace(/\/$/, '');
 	let path = pathPrefix;
 	if (cdnPrefix) {
