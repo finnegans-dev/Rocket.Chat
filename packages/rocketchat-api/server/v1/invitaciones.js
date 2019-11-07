@@ -6,6 +6,7 @@ import { HTTP } from 'meteor/http'
 import _ from 'underscore';
 import { Subscriptions } from 'meteor/rocketchat:models';
 import { GoTokens } from 'meteor/rocketchat:models';
+import { hasPermission } from 'meteor/rocketchat:authorization';
 
 //APIS Invitaciones
 /*Finneg
@@ -383,7 +384,23 @@ API.v1.addRoute('ping', {
 	get() {
 		return API.v1.success({
 			status: 'OK',
-			v: '06-Nov - fixed'
+			v: '07-Nov - fixed'
+		});
+	}
+});
+
+API.v1.addRoute('restartServer', { authRequired: true }, {
+	post() {
+		Meteor.setTimeout(() => {
+			Meteor.setTimeout(() => {
+				console.warn('Call to process.exit() timed out, aborting.');
+				process.abort();
+			}, 1000);
+			process.exit(1);
+		}, 1000);
+
+		return API.v1.success({
+			message: 'The_server_will_restart_in_s_seconds'
 		});
 	}
 });

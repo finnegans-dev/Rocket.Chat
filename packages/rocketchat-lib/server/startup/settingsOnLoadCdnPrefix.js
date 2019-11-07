@@ -10,7 +10,7 @@ settings.onload('CDN_PREFIX', function(key, value) {
 	const useForAll = settings.get('CDN_PREFIX_ALL');
 	if (_.isString(value) && value.trim() && useForAll) {
 		console.log('onLoad -> ',value);
-		value = 'https://d1mbeue1dr0bel.cloudfront.net/chat';
+		// value = 'https://d1mbeue1dr0bel.cloudfront.net/chat';
 		return testWebAppInternals((WebAppInternals) => {
 			WebAppInternals.setBundledJsCssPrefix(value)
 		});
@@ -21,17 +21,15 @@ settings.onload('CDN_JSCSS_PREFIX', function(key, value) {
 	const useForAll = settings.get('CDN_PREFIX_ALL');
 	if (_.isString(value) && value.trim() && !useForAll) {
 		console.log('onLoad -> ',value);
-		value = 'https://d1mbeue1dr0bel.cloudfront.net/chat';
+		// value = 'https://d1mbeue1dr0bel.cloudfront.net/chat';
 		return testWebAppInternals((WebAppInternals) => WebAppInternals.setBundledJsCssPrefix(value));
 	}
 });
 
 Meteor.startup(function() {
-	// const cdnValue = settings.get('CDN_PREFIX');
-	const cdnValue = 'https://d1mbeue1dr0bel.cloudfront.net/chat';
+	const cdnValue = settings.get('CDN_PREFIX');
 	const useForAll = settings.get('CDN_PREFIX_ALL');
-	// const cdnJsCss = settings.get('CDN_JSCSS_PREFIX');
-	const cdnJsCss = 'https://d1mbeue1dr0bel.cloudfront.net/chat';
+	const cdnJsCss = settings.get('CDN_JSCSS_PREFIX');
 	if (_.isString(cdnValue) && cdnValue.trim()) {
 		if (useForAll) {
 			return testWebAppInternals((WebAppInternals) => WebAppInternals.setBundledJsCssPrefix(cdnValue));

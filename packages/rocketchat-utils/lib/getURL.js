@@ -3,8 +3,7 @@ import { settings } from 'meteor/rocketchat:settings';
 import s from 'underscore.string';
 
 export const getURL = (path, { cdn = true, full = false } = {}) => {
-	// const cdnPrefix = s.rtrim(s.trim(settings.get('CDN_PREFIX') || ''), '/');
-	const cdnPrefix = 'https://d1mbeue1dr0bel.cloudfront.net/chat';
+	const cdnPrefix = s.rtrim(s.trim(settings.get('CDN_PREFIX') || ''), '/');
 	const pathPrefix = s.rtrim(s.trim(__meteor_runtime_config__.ROOT_URL_PATH_PREFIX || ''), '/');
 	
 	let basePath;
