@@ -15,7 +15,7 @@ Template.loginGO.onCreated(function () {
     let isVertical = FlowRouter.current().queryParams.vertical;
     let url = 'https://go-test.finneg.com/'
     let root = 'https://go-test.finneg.com/chat/'
-    console.log('NEW DEPLOY4')
+
     //window.localStorage.setItem("Meteor.loginToken", "");
     localStorage.removeItem("Meteor.loginToken:/:/chat");
     localStorage.setItem("isVertical", isVertical);
@@ -33,7 +33,6 @@ Template.loginGO.onCreated(function () {
             console.log(err)
             console.log("Error de Autenticacion")
         } else {
-            console.log(res);
             let dominio = res.data.domain;
             let dominioLow = dominio.toLowerCase();
             let emailRes = res.data.email;
@@ -62,10 +61,7 @@ Template.loginGO.onCreated(function () {
                         FlowRouter.go(`/registrarGO/${token}?email=${email}`);
                         //  FlowRouter.go
                     } else {
-
-                        console.log(response.data);
                         let data = JSON.parse(response.content)
-                        //console.log(data)
                         let idUser = data.data.userId;
                         let tokenChat = data.data.authToken;
                         //invitacionesLogin/:idUser/:dominio/:contexto
@@ -87,14 +83,12 @@ Template.loginGO.onCreated(function () {
                                 if (err) {
                                     console.log(err)
                                 } else {
-                                    console.log(data)
                                     let contexts = data.data;
                                     contexts.forEach(element => {
                                         HTTP.get(`${url}api/1/contexts/${element.id}?access_token=${token}`, function (err, data) {
                                             if (err) {
                                                 console.log(err)
                                             } else {
-                                                console.log(data.data.modules);
                                                 data.data.modules.forEach(modules => {
                                                     if (modules.id == "ecoChat") {
                                                         arrayContextos.push(element.name)
@@ -104,7 +98,7 @@ Template.loginGO.onCreated(function () {
                                                             if (err) {
                                                                 console.log(err)
                                                             } else {
-                                                                console.log(data)
+                                                                // console.log(data)
                                                             }
                                                             js = JSON.stringify({ "contextos": arrayContextos })
                                                             localStorage.setItem('contextos', js)
@@ -136,7 +130,6 @@ Template.loginGO.onCreated(function () {
                                 if (err) {
                                     console.log(err)
                                 } else {
-                                    console.log(data)
                                     let contexts = data.data;
                                     contexts.forEach(element => {
                                         HTTP.get(`${url}api/1/contexts/${element.id}?access_token=${token}`, function (err, data) {

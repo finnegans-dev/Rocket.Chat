@@ -9,8 +9,6 @@ function testWebAppInternals(fn) {
 settings.onload('CDN_PREFIX', function(key, value) {
 	const useForAll = settings.get('CDN_PREFIX_ALL');
 	if (_.isString(value) && value.trim() && useForAll) {
-		console.log('onLoad -> ',value);
-		// value = 'https://d1mbeue1dr0bel.cloudfront.net/chat';
 		return testWebAppInternals((WebAppInternals) => {
 			WebAppInternals.setBundledJsCssPrefix(value)
 		});
@@ -20,8 +18,6 @@ settings.onload('CDN_PREFIX', function(key, value) {
 settings.onload('CDN_JSCSS_PREFIX', function(key, value) {
 	const useForAll = settings.get('CDN_PREFIX_ALL');
 	if (_.isString(value) && value.trim() && !useForAll) {
-		console.log('onLoad -> ',value);
-		// value = 'https://d1mbeue1dr0bel.cloudfront.net/chat';
 		return testWebAppInternals((WebAppInternals) => WebAppInternals.setBundledJsCssPrefix(value));
 	}
 });

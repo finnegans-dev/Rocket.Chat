@@ -132,8 +132,7 @@ API.v1.addRoute('invitaciones/:contexto/:dominio/:idUser', {
 		const { username } = Users.findOneById(idUsuario)
 
 		//const userBot = Users.find({roles: "bot"}).fetch();
-
-
+		
 		let existeSala = false;
 		let salas = [];
 		rooms.forEach(element => {
@@ -147,8 +146,7 @@ API.v1.addRoute('invitaciones/:contexto/:dominio/:idUser', {
 					if (!rid || type !== 'p') {
 						throw new Meteor.Error('error-room-not-found', 'The required "roomId" or "roomName" param provided does not match any group');
 					}
-					// console.log(rid)
-					/* agrega todos los usuarios que se loguean al general de la sala */
+					
 					Meteor.runAsUser(idUsuario, () => Meteor.call('addUserToRoom', { rid, username }));
 					// HTTP.get(`api/v1/addBot/${rid}`, {}, function (err, res) {
 					// 	if (err) {
@@ -160,6 +158,13 @@ API.v1.addRoute('invitaciones/:contexto/:dominio/:idUser', {
 				}
 			}
 		});
+
+		if (!existeSala) {
+			let name = dominio + "-" + contexto;
+			Meteor.runAsUser(idUsuario, () => {
+				id = Meteor.call('createPrivateGroup', name, [], true); /* falta validar si es vertical, en ese caso que sea readonly, pero por ahroa es todo vertical. */
+			});
+		}
 
 		return API.v1.success({
 			status: 'ok',
