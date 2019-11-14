@@ -388,7 +388,7 @@ API.v1.addRoute('ping', {
 	get() {
 		return API.v1.success({
 			status: 'OK',
-			v: '14-Nov - fixed'
+			v: '14-Nov - estable'
 		});
 	}
 });

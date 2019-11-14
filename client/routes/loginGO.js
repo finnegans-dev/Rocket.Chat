@@ -63,7 +63,6 @@ Template.loginGO.onCreated(function () {
                         let data = JSON.parse(response.content)
                         let idUser = data.data.userId;
                         let tokenChat = data.data.authToken;
-                        //invitacionesLogin/:idUser/:dominio/:contexto
                         let js;
                         let arrayContextos = [];
 
@@ -75,23 +74,23 @@ Template.loginGO.onCreated(function () {
                             }
                         });
 
-                        if (contextoToken != idContexto) {
+                        // if (contextoToken != idContexto) {
                         // if (true) {
                             HTTP.get(`${url}api/1/contexts?access_token=${token}`, function (err, data) {
                                 if (err) {
                                     console.log(err)
                                 } else {
                                     let contexts = data.data;
-                                    contexts.forEach(element => {
-                                        HTTP.get(`${url}api/1/contexts/${element.id}?access_token=${token}`, function (err, data) {
+                                    contexts.forEach(context => {
+                                        HTTP.get(`${url}api/1/contexts/${context.id}?access_token=${token}`, function (err, contextInfo) {
                                             if (err) {
                                                 console.log(err)
                                             } else {
-                                                data.data.modules.forEach(modules => {
+                                                for(let modules of contextInfo.data.modules){
                                                     if (modules.id == "ecoChat") {
-                                                        arrayContextos.push(element.name)
-                                                        //HTTP.post(`${root}api/v1/invitaciones/${element.name}/${dominioLow}/${idUser}/${isVertical}`, {}, function (err, data) {
-                                                        HTTP.post(`${root}api/v1/invitaciones/${element.name}/${dominioLow}/${idUser}`, {}, function (err, data) {
+                                                        arrayContextos.push(context.name)
+                                                        //HTTP.post(`${root}api/v1/invitaciones/${context.name}/${dominioLow}/${idUser}/${isVertical}`, {}, function (err, data) {
+                                                        HTTP.post(`${root}api/v1/invitaciones/${context.name}/${dominioLow}/${idUser}`, {}, function (err, data) {
 
                                                             if (err) {
                                                                 console.log(err)
@@ -102,58 +101,64 @@ Template.loginGO.onCreated(function () {
                                                             localStorage.setItem("Meteor.loginToken:/:/chat", tokenChat);
                                                             // window.localStorage.setItem("Meteor.loginToken", tokenChat);
                                                             localStorage.setItem("dominio", dominioLow);
-                                                            let name = dominioLow + "-" + contextoName;
-                                                            localStorage.setItem("contextDomain", name);
-                                                            /* Deberia comprobar si por url me llega que es un chat vertical
-                                                            entonces setear en el local storage que lo es, para despues poder hacer preguntar los adm de contextos
-                                                            y meterlos dentro de un tema privado con este usuario. igualmente redirigirlo a la sala, pero que no pueda hacer la accion
-                                                            de volver hacia atras a los demas contextos. */
-                                                            FlowRouter.go(`/group/${name}`);
+                                                            if (contextoToken != idContexto) {
+                                                                let name = dominioLow + "-" + contextoName;
+                                                                localStorage.setItem("contextDomain", name);
+                                                                /* Deberia comprobar si por url me llega que es un chat vertical
+                                                                entonces setear en el local storage que lo es, para despues poder hacer preguntar los adm de contextos
+                                                                y meterlos dentro de un tema privado con este usuario. igualmente redirigirlo a la sala, pero que no pueda hacer la accion
+                                                                de volver hacia atras a los demas contextos. */
+                                                                FlowRouter.go(`/group/${name}`);
+                                                            }
                                                         })
+                                                        break;
                                                     }
-                                                })
+                                                }
                                             }
                                         });
 
 
                                     });
+                                    // si no redirigio al contexto es porque esta en el default
+                                    FlowRouter.go(`/home`);
+                                    
                                     //JSON.parse(window.localStorage.getItem('contextos'));
                                 }
                             })
 
-                        } else {
-                            HTTP.get(`${url}api/1/contexts?access_token=${token}`, function (err, data) {
-                                if (err) {
-                                    console.log(err)
-                                } else {
-                                    let contexts = data.data;
-                                    contexts.forEach(element => {
-                                        HTTP.get(`${url}api/1/contexts/${element.id}?access_token=${token}`, function (err, data) {
-                                            if (err) {
-                                                console.log(err)
-                                            } else {
-                                                data.data.modules.forEach(modules => {
-                                                    if (modules.id == "ecoChat") {
-                                                        arrayContextos.push(element.name)
-                                                        js = JSON.stringify({ "contextos": arrayContextos })
-                                                        localStorage.setItem('contextos', js)
-                                                    }
-                                                })
-                                            }
-                                        });
-                                    });
-                                    //JSON.parse(window.localStorage.getItem('contextos'));
-                                }
-                            })
+                        // } else {
+                        //     HTTP.get(`${url}api/1/contexts?access_token=${token}`, function (err, data) {
+                        //         if (err) {
+                        //             console.log(err)
+                        //         } else {
+                        //             let contexts = data.data;
+                        //             contexts.forEach(element => {
+                        //                 HTTP.get(`${url}api/1/contexts/${element.id}?access_token=${token}`, function (err, data) {
+                        //                     if (err) {
+                        //                         console.log(err)
+                        //                     } else {
+                        //                         data.data.modules.forEach(modules => {
+                        //                             if (modules.id == "ecoChat") {
+                        //                                 arrayContextos.push(element.name)
+                        //                                 js = JSON.stringify({ "contextos": arrayContextos })
+                        //                                 localStorage.setItem('contextos', js)
+                        //                             }
+                        //                         })
+                        //                     }
+                        //                 });
+                        //             });
+                        //             //JSON.parse(window.localStorage.getItem('contextos'));
+                        //         }
+                        //     })
 
-                            localStorage.setItem("Meteor.loginToken:/:/chat", tokenChat);
-                            // localStorage.setItem("Meteor.loginToken", token);
-                            localStorage.setItem("dominio", dominioLow);
-                            FlowRouter.go(`/home`);
+                        //     localStorage.setItem("Meteor.loginToken", tokenChat);
+                        //     // localStorage.setItem("Meteor.loginToken", token);
+                        //     localStorage.setItem("dominio", dominioLow);
+                        //     FlowRouter.go(`/home`);
 
-                            //let name = dominioLow + "-" + contextoName;
-                            //FlowRouter.go(`/group/${name}`);
-                        }
+                        //     //let name = dominioLow + "-" + contextoName;
+                        //     //FlowRouter.go(`/group/${name}`);
+                        // }
                     }
                 });
 
