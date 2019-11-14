@@ -389,7 +389,7 @@ API.v1.addRoute('ping', {
 	get() {
 		return API.v1.success({
 			status: 'OK',
-			v: '07-Nov - fixed'
+			v: '14-Nov'
 		});
 	}
 });
