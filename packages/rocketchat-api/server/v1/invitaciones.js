@@ -14,140 +14,140 @@ import { hasPermission } from 'meteor/rocketchat:authorization';
 import { Random } from 'meteor/random'
 import { Date } from 'core-js';
 
-API.v1.addRoute('invitaciones/:contexto/:dominio/:idUser/:isVertical', {
-	post() {
+// API pensada para chat vertical
+// API.v1.addRoute('invitaciones/:contexto/:dominio/:idUser/:isVertical', {
+// 	post() {
 
-		let contexto = this.urlParams.contexto;
-		let dominio = this.urlParams.dominio.toLowerCase();
-		let idUsuario = this.urlParams.idUser
-		let isVertical = this.urlParams.isVertical;
-		let rooms = Rooms.find({}).fetch();
-		const { username } = Users.findOneById(idUsuario)
+// 		let contexto = this.urlParams.contexto;
+// 		let dominio = this.urlParams.dominio.toLowerCase();
+// 		let idUsuario = this.urlParams.idUser
+// 		let isVertical = this.urlParams.isVertical;
+// 		let rooms = Rooms.find({}).fetch();
+// 		const { username } = Users.findOneById(idUsuario)
 
-		//const userBot = Users.find({roles: "bot"}).fetch();
-
-
-		let existeSala = false;
-		let salas = [];
-		rooms.forEach(element => {
-			if (element.name != undefined) {
-				let dominioRoom = element.name.substring(0, element.name.indexOf('-'))
-				let contextoRoom = element.name.substring(element.name.indexOf('-') + 1, element.name.lenght)
-				if (dominioRoom == dominio && contextoRoom == contexto) {
-					existeSala = true;
-					const { _id: rid, t: type } = Rooms.findOneByIdOrName(element._id);
-
-					if (!rid || type !== 'p') {
-						throw new Meteor.Error('error-room-not-found', 'The required "roomId" or "roomName" param provided does not match any group');
-					}
-					// console.log(rid)
-					/* agrega todos los usuarios que se loguean al general de la sala */
-					Meteor.runAsUser(idUsuario, () => Meteor.call('addUserToRoom', { rid, username }));
-					// HTTP.get(`api/v1/addBot/${rid}`, {}, function (err, res) {
-					// 	if (err) {
-					// 		console.log(err);
-					// 	} else {
-					// 		console.log(res);
-					// 	}
-					// });
-				}
-			}
-		});
-
-		console.log('asdqwdeqdq')
-		if (!existeSala) {
-
-			// if (isVertical.toLocaleUpperCase() != "SI"){
-
-			console.log("fsafsda")
-			// let name = dominio + "-contexto" + Random.hexString(2);
-			let name = dominio + "-" + contexto;
-			Meteor.runAsUser(idUsuario, () => {
-				id = Meteor.call('createPrivateGroup', name, [], true); /* falta validar si es vertical, en ese caso que sea readonly, pero por ahroa es todo vertical. */
-			});
-		} else {
-			const cu = localStorage.getItem('currentuser');
-			const { domain, token, email } = JSON.parse(cu);
-			root = __meteor_runtime_config__.ROOT_URL;
-			url = root.substring(0, root.lastIndexOf(`/c`) + 1);
-			url = 'https://go-test.finneg.com/';
-			HTTP.call('GET', `${url}api/1/users/profile/${domain}/${email}?access_token=${token}`, async function (err, res) {
-
-				const isContextCreate = res.data.contextCreation;
-
-				if (!isContextCreate) {
-					const nameContextAndDomain = localStorage.getItem('contextDomain').trim();
-					const roomContext = Rooms.find({ name: nameContextAndDomain }).fetch();
-
-					const prid = roomContext[0]._id;
-					let temas = Rooms.find({ prid: prid }).fetch();
-					if (temas.length < 1) {
-						console.log('MENOR QUE 1')
-
-						const t_name = `Sala_${Meteor.user().name}`;
-						let pmid;
-						const reply = '';
-						const users = [];
-
-						const result = await call('createThread', { prid, pmid, t_name, reply, users });
-
-						callbacks.run('afterCreateThread', Meteor.user(), result)
-						const cu = localStorage.getItem('currentuser');
-						const { domain, token } = JSON.parse(cu);
-						HTTP.call('POST', `api/v1/customInvitations/${result.prid}/${result.rid}/${domain}/${token}`, async function (err, res) {
-							if (err) {
-								console.log(err)
-								console.log("Error de Autenticacion")
-							} else {
-								console.log('------------------------------------')
-								// FlowRouter.go(`/group/${result.rid}`);
-							}
-						});
-					}
-				}
-
-			});
-			// }
+// 		//const userBot = Users.find({roles: "bot"}).fetch();
 
 
-		}
+// 		let existeSala = false;
+// 		let salas = [];
+// 		rooms.forEach(element => {
+// 			if (element.name != undefined) {
+// 				let dominioRoom = element.name.substring(0, element.name.indexOf('-'))
+// 				let contextoRoom = element.name.substring(element.name.indexOf('-') + 1, element.name.lenght)
+// 				if (dominioRoom == dominio && contextoRoom == contexto) {
+// 					existeSala = true;
+// 					const { _id: rid, t: type } = Rooms.findOneByIdOrName(element._id);
 
-		return API.v1.success({
-			status: 'ok',
-			group: this.composeRoomWithLastMessage(Rooms.findOneById(rid, { fields: API.v1.defaultFieldsToExclude }), idUser),
+// 					if (!rid || type !== 'p') {
+// 						throw new Meteor.Error('error-room-not-found', 'The required "roomId" or "roomName" param provided does not match any group');
+// 					}
+// 					// console.log(rid)
+// 					/* agrega todos los usuarios que se loguean al general de la sala */
+// 					Meteor.runAsUser(idUsuario, () => Meteor.call('addUserToRoom', { rid, username }));
+// 					// HTTP.get(`api/v1/addBot/${rid}`, {}, function (err, res) {
+// 					// 	if (err) {
+// 					// 		console.log(err);
+// 					// 	} else {
+// 					// 		console.log(res);
+// 					// 	}
+// 					// });
+// 				}
+// 			}
+// 		});
 
-		});
+// 		console.log('asdqwdeqdq')
+// 		if (!existeSala) {
 
-	},
-});
+// 			// if (isVertical.toLocaleUpperCase() != "SI"){
+
+// 			console.log("fsafsda")
+// 			// let name = dominio + "-contexto" + Random.hexString(2);
+// 			let name = dominio + "-" + contexto;
+// 			Meteor.runAsUser(idUsuario, () => {
+// 				id = Meteor.call('createPrivateGroup', name, [], true); /* falta validar si es vertical, en ese caso que sea readonly, pero por ahroa es todo vertical. */
+// 			});
+// 		} else {
+// 			const cu = localStorage.getItem('currentuser');
+// 			const { domain, token, email } = JSON.parse(cu);
+// 			root = __meteor_runtime_config__.ROOT_URL;
+// 			url = root.substring(0, root.lastIndexOf(`/c`) + 1);
+// 			url = 'https://go-test.finneg.com/';
+// 			HTTP.call('GET', `${url}api/1/users/profile/${domain}/${email}?access_token=${token}`, async function (err, res) {
+
+// 				const isContextCreate = res.data.contextCreation;
+
+// 				if (!isContextCreate) {
+// 					const nameContextAndDomain = localStorage.getItem('contextDomain').trim();
+// 					const roomContext = Rooms.find({ name: nameContextAndDomain }).fetch();
+
+// 					const prid = roomContext[0]._id;
+// 					let temas = Rooms.find({ prid: prid }).fetch();
+// 					if (temas.length < 1) {
+// 						console.log('MENOR QUE 1')
+
+// 						const t_name = `Sala_${Meteor.user().name}`;
+// 						let pmid;
+// 						const reply = '';
+// 						const users = [];
+
+// 						const result = await call('createThread', { prid, pmid, t_name, reply, users });
+
+// 						callbacks.run('afterCreateThread', Meteor.user(), result)
+// 						const cu = localStorage.getItem('currentuser');
+// 						const { domain, token } = JSON.parse(cu);
+// 						HTTP.call('POST', `api/v1/customInvitations/${result.prid}/${result.rid}/${domain}/${token}`, async function (err, res) {
+// 							if (err) {
+// 								console.log(err)
+// 								console.log("Error de Autenticacion")
+// 							} else {
+// 								console.log('------------------------------------')
+// 								// FlowRouter.go(`/group/${result.rid}`);
+// 							}
+// 						});
+// 					}
+// 				}
+
+// 			});
+// 			// }
+
+
+// 		}
+
+// 		return API.v1.success({
+// 			status: 'ok',
+// 			group: this.composeRoomWithLastMessage(Rooms.findOneById(rid, { fields: API.v1.defaultFieldsToExclude }), idUser),
+
+// 		});
+
+// 	},
+// });
 
 API.v1.addRoute('invitaciones/:contexto/:dominio/:idUser', {
 	post() {
 
 		let contexto = this.urlParams.contexto;
 		let dominio = this.urlParams.dominio.toLowerCase();
-		let idUsuario = this.urlParams.idUser
-		let isVertical = this.urlParams.isVertical;
+		let idUsuario = this.urlParams.idUser;
 		let rooms = Rooms.find({}).fetch();
 		const { username } = Users.findOneById(idUsuario)
 
 		//const userBot = Users.find({roles: "bot"}).fetch();
 		
 		let existeSala = false;
-		let salas = [];
-		rooms.forEach(element => {
-			if (element.name != undefined) {
-				let dominioRoom = element.name.substring(0, element.name.indexOf('-'))
-				let contextoRoom = element.name.substring(element.name.indexOf('-') + 1, element.name.lenght)
+		for(const room of rooms) {
+			if (room.name != undefined) {
+				let dominioRoom = room.name.substring(0, room.name.indexOf('-'))
+				let contextoRoom = room.name.substring(room.name.indexOf('-') + 1, room.name.lenght)
 				if (dominioRoom == dominio && contextoRoom == contexto) {
 					existeSala = true;
-					const { _id: rid, t: type } = Rooms.findOneByIdOrName(element._id);
+					const { _id: rid, t: type } = Rooms.findOneByIdOrName(room._id);
 
 					if (!rid || type !== 'p') {
 						throw new Meteor.Error('error-room-not-found', 'The required "roomId" or "roomName" param provided does not match any group');
 					}
-					
+
 					Meteor.runAsUser(idUsuario, () => Meteor.call('addUserToRoom', { rid, username }));
+
 					// HTTP.get(`api/v1/addBot/${rid}`, {}, function (err, res) {
 					// 	if (err) {
 					// 		console.log(err);
@@ -155,21 +155,20 @@ API.v1.addRoute('invitaciones/:contexto/:dominio/:idUser', {
 					// 		console.log(res);
 					// 	}
 					// });
+					break;
 				}
 			}
-		});
+		}
 
 		if (!existeSala) {
 			let name = dominio + "-" + contexto;
 			Meteor.runAsUser(idUsuario, () => {
-				id = Meteor.call('createPrivateGroup', name, [], true); /* falta validar si es vertical, en ese caso que sea readonly, pero por ahroa es todo vertical. */
+				roomId = Meteor.call('createPrivateGroup', name, [], true); /* falta validar si es vertical, en ese caso que sea readonly, pero por ahroa es todo vertical. */
 			});
 		}
 
 		return API.v1.success({
-			status: 'ok',
-			group: this.composeRoomWithLastMessage(Rooms.findOneById(rid, { fields: API.v1.defaultFieldsToExclude }), idUser),
-
+			status: 'ok'
 		});
 
 	},

@@ -59,7 +59,6 @@ Template.loginGO.onCreated(function () {
                         //Redirigo a registrar
                         console.log(error);
                         FlowRouter.go(`/registrarGO/${token}?email=${email}`);
-                        //  FlowRouter.go
                     } else {
                         let data = JSON.parse(response.content)
                         let idUser = data.data.userId;
@@ -76,9 +75,8 @@ Template.loginGO.onCreated(function () {
                             }
                         });
 
-                        //if (contextoToken != idContexto) {
-                        if (true) {
-
+                        if (contextoToken != idContexto) {
+                        // if (true) {
                             HTTP.get(`${url}api/1/contexts?access_token=${token}`, function (err, data) {
                                 if (err) {
                                     console.log(err)
@@ -97,13 +95,12 @@ Template.loginGO.onCreated(function () {
 
                                                             if (err) {
                                                                 console.log(err)
-                                                            } else {
-                                                                // console.log(data)
                                                             }
+
                                                             js = JSON.stringify({ "contextos": arrayContextos })
                                                             localStorage.setItem('contextos', js)
                                                             localStorage.setItem("Meteor.loginToken:/:/chat", tokenChat);
-                                                            //window.localStorage.setItem("Meteor.loginToken", token);
+                                                            // window.localStorage.setItem("Meteor.loginToken", tokenChat);
                                                             localStorage.setItem("dominio", dominioLow);
                                                             let name = dominioLow + "-" + contextoName;
                                                             localStorage.setItem("contextDomain", name);
@@ -125,7 +122,6 @@ Template.loginGO.onCreated(function () {
                             })
 
                         } else {
-
                             HTTP.get(`${url}api/1/contexts?access_token=${token}`, function (err, data) {
                                 if (err) {
                                     console.log(err)
@@ -136,7 +132,6 @@ Template.loginGO.onCreated(function () {
                                             if (err) {
                                                 console.log(err)
                                             } else {
-                                                //console.log(data.data.modules);
                                                 data.data.modules.forEach(modules => {
                                                     if (modules.id == "ecoChat") {
                                                         arrayContextos.push(element.name)
@@ -146,8 +141,6 @@ Template.loginGO.onCreated(function () {
                                                 })
                                             }
                                         });
-
-
                                     });
                                     //JSON.parse(window.localStorage.getItem('contextos'));
                                 }
@@ -160,13 +153,7 @@ Template.loginGO.onCreated(function () {
 
                             //let name = dominioLow + "-" + contextoName;
                             //FlowRouter.go(`/group/${name}`);
-
-
                         }
-
-
-
-
                     }
                 });
 
