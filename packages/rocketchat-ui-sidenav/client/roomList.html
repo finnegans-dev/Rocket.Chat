@@ -1,7 +1,8 @@
 <template name="roomList">
 
 	{{#if isLivechat}}
-	<div class="rooms-agrupada livechatTabRoom" >
+	<!-- <div class="rooms-agrupada livechatTabRoom" > -->
+	<div class="rooms-agrupada" >
 
 		{{> livechat . showLiveTab}}
 
@@ -11,12 +12,12 @@
 	{{#with rooms}}
 	{{#if shouldAppear .. .}}
 
-	<div class="rooms-agrupada directMessageTab tab-{{ roomType ..}}">
-		
+	<!-- <div class="rooms-agrupada directMessageTab tab-{{ roomType ..}}"> -->
+	<div class="rooms-agrupada">
 
 		<h3 class="rooms-list__type clickTitulo">
 			<span class="rooms-list__type-text {{_ ../label}}">{{_ ../label}}</span>
-			<span class="back-context">{{> icon block="rc-button-broadcast__icon" icon="reply"}}</span>
+			<span class="back-context {{_ ../label}}">{{> icon block="rc-button-broadcast__icon" icon="reply"}}</span>
 			{{#if showRoomCounter}}
 			{{#with count}}
 			{{#if .}}

@@ -56,7 +56,7 @@ Template.sideNav.helpers({
 });
 
 Template.sideNav.events({
-	'click .contextTab' (){
+	/*'click .contextTab' (){                                               
 		let directMessageOnTab = $('.directMessageTab.tab-type-d');
 		let livechatOnTab = $('.livechatTabRoom');
 		let contextOnTab = $('.directMessageTab.tab-type-p');
@@ -92,7 +92,7 @@ Template.sideNav.events({
 		$('.tabs .livechatTab').addClass('active-tab');
 		$('.tabs .contextTab').removeClass('active-tab');
 		$('.tabs .directTab').removeClass('active-tab');
-	},
+	},*/
 	'click .close-flex'() {
 		return SideNav.closeFlex();
 	},
@@ -129,11 +129,11 @@ Template.sideNav.events({
 });
 
 Template.sideNav.onRendered(function () {
-	let directMessageOnTab = $('.directMessageTab.tab-type-d');
+	/*let directMessageOnTab = $('.directMessageTab.tab-type-d');
 	let livechatTabRoom = $('.livechatTabRoom');
 	directMessageOnTab.css("display", "none");
 	livechatTabRoom.css("display", "none");
-	$('.tabs .contextTab').addClass('active-tab');
+	$('.tabs .contextTab').addClass('active-tab');    Esto lo acabo de comentar*/
 	SideNav.init();
 	menu.init();
 	lazyloadtick();

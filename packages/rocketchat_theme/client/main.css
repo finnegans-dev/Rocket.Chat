@@ -170,6 +170,8 @@ h3.rooms-list__type {
     width: 85%;
     margin-left: 1rem;
     padding-left: .5rem;
+    padding-top: 0.6rem;
+    padding-bottom: 0.6rem;
 }
 h3.rooms-list__type:hover {
     cursor: pointer;
@@ -388,11 +390,10 @@ svg.rc-icon.rc-icon--default-size.sidebar-item__icon.sidebar-item__icon--lock {
       color: #676D76
   }
 
-  @media (min-width: 1367px) and (max-width: 1650px){
+@media (min-width: 1367px) and (max-width: 1650px){
 
     .first-unread .body {
     	&::after {
-            /*margin-right: 42%;*/
             min-width: 140px;
             position: absolute;
             left: 50%;
@@ -448,10 +449,8 @@ svg.rc-icon.rc-icon--default-size.sidebar-item__icon.sidebar-item__icon--lock {
 
         & .info.border-component-color.color-info-font-color{
             float: right;
-            /*padding-right: 2rem;*/
             padding-top: .5em;
-            /*Esto es nuevo*/
-            padding-right: 4rem;
+            padding-right: 5.6%;
             display: block;
             position: absolute;
             right: 0;
@@ -463,7 +462,7 @@ svg.rc-icon.rc-icon--default-size.sidebar-item__icon.sidebar-item__icon--lock {
         }
 
         & .body.color-primary-font-color {
-            width: 58%;
+            width: 55%;
             display: flex;
             flex-flow: column-reverse wrap;
             margin-left: 33%;
@@ -558,7 +557,7 @@ svg.rc-icon.rc-icon--default-size.sidebar-item__icon.sidebar-item__icon--lock {
 
     .own.sequential {
         & .info.border-component-color.color-info-font-color{
-            width: 95%;
+            width: 95.3%;
             padding-right: 1em;
         }
 
@@ -575,7 +574,6 @@ svg.rc-icon.rc-icon--default-size.sidebar-item__icon.sidebar-item__icon--lock {
     }
 
     .message.new-day::before{
-        /*margin-top: .5rem;*/  
         background-color: #E8F7FB !important;
         border-radius: 5px;
         position: absolute;
@@ -794,7 +792,18 @@ svg.rc-icon.rc-icon--default-size.sidebar-item__icon.sidebar-item__icon--lock {
         flex: 0 0 70%
     }
 
-  }
+    .message-actions.own {
+        position: absolute;
+        top: -11px;
+        right: 4.5%;
+    }
+    .message-actions.yours {
+        position: absolute;
+        top: 14px;
+        right: 3%;
+    }
+
+}
   
 
 
@@ -830,8 +839,7 @@ svg.rc-icon.rc-icon--default-size.sidebar-item__icon.sidebar-item__icon--lock {
         margin-top: 75px;
     }
 
-    .message.new-day::before{
-        /*margin-top: .5rem;*/  
+    .message.new-day::before{ 
         background-color: #E8F7FB !important;
         border-radius: 5px;
         position: absolute;
@@ -906,7 +914,6 @@ svg.rc-icon.rc-icon--default-size.sidebar-item__icon.sidebar-item__icon--lock {
 
         & .info.border-component-color.color-info-font-color{
             float: right;
-            /*padding-right: 2rem;*/
             padding-right: 3.5%;
             padding-top: .5em;
             position: absolute;
@@ -1197,10 +1204,19 @@ svg.rc-icon.rc-icon--default-size.sidebar-item__icon.sidebar-item__icon--lock {
             }
         }
     }
+
+    .message-actions.own {
+        position: absolute;
+        top: -11px;
+        right: 2.5%;
+    }
+    .message-actions.yours {
+        position: absolute;
+        top: 14px;
+        right: 3%;
+    }
     
 }
-
-
 
 
 
@@ -1353,13 +1369,11 @@ dialog.rc-modal.rc-modal-- {
 
 /* header toolbar */
 .rc-header.rc-header--room{
-    /*display: flex;*/
-    display: none;
+    display: flex;
     justify-content: flex-end;
     width: 30%;
     position: absolute;
     right: 0;
-    top: 0;
 
     & .rc-header__wrap{
         background-color: #F8F8F9;
@@ -1454,10 +1468,6 @@ dialog.rc-modal.rc-modal-- {
     }
 
     .message.new-day::before{
-        /*position: absolute;
-        left: 50%;
-        -webkit-transform: translateX(-50%) !important;
-        transform: translateX(-50%);*/
         min-width: 190px;
         border-radius: 5px;
         text-align: center;
@@ -1500,7 +1510,6 @@ dialog.rc-modal.rc-modal-- {
 
         .relleno{
             width: 63%;    
-            /*margin-left: 28%*/
             margin-left: 28%;
         }
 
@@ -1528,11 +1537,9 @@ dialog.rc-modal.rc-modal-- {
         }
 
         & .body.color-primary-font-color {
-            /*width: 55%;*/
             width: 80%;
             display: flex;
             flex-flow: column-reverse wrap;
-            /*margin-left: 35%;*/
             margin-left: 8%;
             padding-top: .5em;
             word-break: break-word;            
@@ -1575,11 +1582,6 @@ dialog.rc-modal.rc-modal-- {
             padding-left: .5rem;
             padding-bottom: .5rem;
             word-break: break-word;
-            /*
-            width: 79%;
-            word-break: break-word;
-            padding-left: 1rem;
-            */
         }
 
         & .info.border-component-color.color-info-font-color{
@@ -1829,6 +1831,17 @@ dialog.rc-modal.rc-modal-- {
         margin-top: 1.4rem;
     }
 
+    .message-actions.own {
+        position: absolute;
+        top: -11px;
+        right: 3%;
+    }
+    .message-actions.yours {
+        position: absolute;
+        top: 14px;
+        right: 1%;
+    }
+
 
 }
 
@@ -1843,7 +1856,7 @@ dialog.rc-modal.rc-modal-- {
     .message{
 
         padding: 10px 0 0 40px;
-        margin-top: 1rem;
+        margin-top: 1.4rem;
 
         & .thumb{
             width: 22px;
@@ -1884,7 +1897,7 @@ dialog.rc-modal.rc-modal-- {
     .own{
 
         & .body.color-primary-font-color {
-            width: 81%;
+            width: 80%;
             /*width: 90%;*/
             word-break: break-word;
             padding-left: 1rem;
@@ -1938,7 +1951,7 @@ dialog.rc-modal.rc-modal-- {
         & .info.border-component-color.color-info-font-color{
             padding-right: 0;
             margin-right: 9%;
-            /*width: 97%;*/
+            width: 91%;
             padding-top: .5rem;
             position: absolute;
             bottom: 0;
@@ -1972,8 +1985,14 @@ dialog.rc-modal.rc-modal-- {
 
     .own.sequential{
         & .body.color-primary-font-color {
-            /*width: 80%;*/
-            width: 81%;
+            width: 80%;
+        }
+        & .info{
+            & .time{
+                position: absolute;
+                bottom: 0;
+                right: 0;
+            }
         }
     }
 
@@ -1982,12 +2001,9 @@ dialog.rc-modal.rc-modal-- {
 
         & .info{
             & .time{
-                width: 90%;
-                width: 81%;
                 position: absolute;
                 bottom: 0;
                 right: 0;
-                margin-right: 8%;
             }
         }
       
@@ -2028,8 +2044,8 @@ dialog.rc-modal.rc-modal-- {
     }
 
     .rc-header.rc-header--room{
-        /*display: block;*/
-        display: none;
+        display: block;
+        /*display: none;*/
         position: relative;
         width: 100%;
         background-color: #F8F8F9;
@@ -2083,6 +2099,17 @@ dialog.rc-modal.rc-modal-- {
         margin-top: 1.7rem;
     }
 
+    .message-actions.own {
+        position: absolute;
+        top: 14px;
+        right: 9.8%;
+    }
+    .message-actions.yours {
+        position: absolute;
+        top: 14px;
+        right: 7%;
+    }
+
 }
 
 @media (max-width: 767px) {
@@ -2090,7 +2117,7 @@ dialog.rc-modal.rc-modal-- {
     .message{
 
         padding: 10px 0 0 40px;
-        margin-top: 1rem;
+        margin-top: 1.4rem;
 
         & .thumb{
             width: 22px;
@@ -2129,8 +2156,8 @@ dialog.rc-modal.rc-modal-- {
     }
 
     .rc-header.rc-header--room{
-        /*display: block;*/
-        display: none;
+        display: block;
+        /*display: none;*/
         position: relative;
         width: 100%;
         background-color: #F8F8F9;
@@ -2445,10 +2472,109 @@ dialog.rc-modal.rc-modal-- {
         margin-top: 1.7rem;
     }
 
+    .message-actions.own {
+        position: absolute;
+        top: 14px;
+        right: 9.8%;
+    }
+    .message-actions.yours {
+        position: absolute;
+        top: 14px;
+        right: 12%;
+    }
+
+    .sidebar {
+        background-color: #F8F8F9;
+        -webkit-box-flex: 0;
+        -ms-flex: 0 0 35%;
+        flex: 0 0 35%;
+        max-width: 50%;
+        width: 50%;
+    }
+
+}
+
+@media (min-width: 300px) and (max-width: 550px){
+    .own .body.color-primary-font-color {
+        width: 75%;
+        word-break: break-word;
+        padding-left: 1rem;
+    }
+    .own.sequential .body.color-primary-font-color {
+        width: 75%;
+    }
+    .own .info.border-component-color.color-info-font-color {
+        padding-right: 0;
+        padding-top: .5rem;
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        text-align: right;
+    }
+    .own .info.border-component-color.color-info-font-color .time {
+        display: inline-block;
+        position: absolute;
+        margin-left: -5%;
+    }
 
 
+    .yours .body.color-primary-font-color {
+        width: 74%;
+        word-break: break-word;
+        padding-left: 0rem!important;
+    }
 
+    .message:hover .message-actions, .message.active .message-actions {
+        display: flex;
+    }
+    .message-actions.own {
+        position: absolute;
+        top: 14px;
+        right: 8%;
+    }
+    .message-actions.yours {
+        position: absolute;
+        top: 14px;
+        right: 12%;
+    }
 
+    .rc-button.rc-button--nude.js-close {
+        margin-left: 0px;
+    }
+
+    .sidebar {
+        background-color: #F8F8F9;
+        -webkit-box-flex: 0;
+        -ms-flex: 0 0 35%;
+        flex: 0 0 35%;
+        max-width: 80%;
+        width: 80%;
+    }
+
+}
+
+@media (min-width: 300px) and (max-width: 400px){
+    .sidebar__header {
+        margin: 0px;
+        position: relative;
+        display: flex;
+        padding-top: 24px;
+        padding-bottom: 24px;
+        padding-right: 12px;
+        padding-left: 12px;
+        width: 100%;
+        -webkit-box-align: center;
+        align-items: center;
+    }
+    .sidebar__toolbar{
+        margin: 0px;
+        top: -8px;
+        position: relative;
+    }
+    .sidebar__toolbar-button.rc-tooltip.rc-tooltip--down.js-button.class-edit-rounded.show {
+        top: 71px !important;
+        right: 7.5%;
+    }
 }
 
 
@@ -2476,41 +2602,12 @@ dialog.rc-modal.rc-modal-- {
     }
 }
 
-
-/*
-Margen lateral derecho
-
-.tab-button-icon--user{
-    display: none;
+.message a {
+    width: 100%;
 }
-
-.tab-button-icon--star {
-    fill: none;
-    display: none;
+.rc-old blockquote:last-child {
+    width: 100%;
 }
-
-.rc-room-actions__action,
-	.rc-room-actions__more-action {
-		display: -webkit-box;
-		display: -ms-flexbox;
-		display: flex;
-		-webkit-box-orient: vertical;
-		-webkit-box-direction: normal;
-		    -ms-flex-direction: column;
-		        flex-direction: column;
-
-		margin: 0 4px;
-
-		cursor: pointer;
-		-webkit-transition: all 0.3s;
-		transition: all 0.3s;
-
-		font-size: 20px;
-		-webkit-box-align: center;
-		    -ms-flex-align: center;
-		        align-items: center;
-    }
-*/
     
 /*Solapa margen izquierdo*/
 
@@ -2523,11 +2620,84 @@ Margen lateral derecho
     display: none;
 }
 .rc-icon.sidebar__toolbar-button-icon.sidebar__toolbar-button-icon--magnifier{
-    /*display: none;*/
+    visibility: hidden;
 }
 
 .sidebar__toolbar-button.rc-tooltip.rc-tooltip--down.js-button.class-edit-rounded{
+    display: none;
+}
+.sidebar__toolbar-button.rc-tooltip.rc-tooltip--down.js-button.class-edit-rounded.show{
+    display: block !important;
     position: relative;
-    top: 42px;
-    z-index: 10;
+    top: 62px;
+    z-index: 1;
+    color: #273347;
+}
+
+.sidebar__toolbar-button.rc-tooltip.rc-tooltip--down.js-button.class-magnifier{
+    width: 100%;
+    height: 44px;
+}
+
+.sidebar__toolbar-button.rc-tooltip.rc-tooltip--down.js-button.class-magnifier::after{
+    display: none;
+}
+.sidebar__toolbar-button.rc-tooltip.rc-tooltip--down.js-button.class-magnifier::before{
+    display: none;
+}
+.rc-tooltip::after {
+    min-height: auto;
+}
+
+.sidebar-item__user-status {
+    -webkit-box-flex: 0;
+    -ms-flex: 0 0 auto;
+    flex: 0 0 auto;
+    width: 6px;
+    width: var(--sidebar-item-user-status-size);
+    height: 6px;
+    height: var(--sidebar-item-user-status-size);
+    margin: 0 7px;
+    border-radius: 50%;
+    border-radius: var(--sidebar-item-user-status-radius);
+    display: none;
+}
+.content-background-color-grey {
+    background-color: #f8f8f9 !important;
+}
+.rc-old .messages-container-main{
+    background-color: white;
+}
+
+
+.rooms-list__type-text.Contextos{
+    max-width: 82%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+.back-context{
+    display: none;
+}
+.back-context.back-context-room{
+    position: relative;
+    right: 10px;
+    top: -2px;
+}
+.back-context.Contextos.back-context-room{
+    display: block !important;
+}
+
+/*rc-room-actions*/
+.rc-room-actions{
+    display: none;
+}
+/*Con esto veo la hamburguesa*/
+.rc-old.burger { 
+    display: inline-block;
+    visibility: visible;
+}
+.rc-header__block {
+    margin: 0 0rem;
 }

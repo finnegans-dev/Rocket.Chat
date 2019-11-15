@@ -87,7 +87,7 @@
 		</div>
 		{{/with}}
 		{{#unless system}}
-			<div class="message-actions">
+			<div class="message-actions {{own}} {{yours}}" >
 				{{#if messageActions 'message'}}
 					<div class="message-actions__buttons">
 						{{#each action in messageActions 'message'}}
