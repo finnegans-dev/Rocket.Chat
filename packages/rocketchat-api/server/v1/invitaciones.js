@@ -174,6 +174,51 @@ API.v1.addRoute('invitaciones/:contexto/:dominio/:idUser', {
 	},
 });
 
+API.v1.addRoute('invitacionesContextos/:dominio/:idUser', {
+	post() {
+		let contextLst = this.bodyParams;
+		let dominio = this.urlParams.dominio.toLowerCase();
+		let idUsuario = this.urlParams.idUser;
+		let rooms = Rooms.find({}).fetch();
+		let contextNames = [];
+		const { username } = Users.findOneById(idUsuario)
+		
+		for(const context of contextLst){
+			let existeSala = false;
+			for(const room of rooms) {
+				if (room.name != undefined) {
+					let dominioRoom = room.name.substring(0, room.name.indexOf('-'))
+					let contextoRoom = room.name.substring(room.name.indexOf('-') + 1, room.name.lenght)
+					if (dominioRoom == dominio && contextoRoom == context.name) {
+						const { _id: rid, t: type } = Rooms.findOneByIdOrName(room._id);
+	
+						if (rid && type == 'p') {
+							existeSala = true;	
+							contextNames.push(context.name);
+							Meteor.runAsUser(idUsuario, () => Meteor.call('addUserToRoom', { rid, username }));
+							break;
+						}						
+					}
+				}
+			}
+	
+			if (!existeSala) {
+				let name = dominio + "-" + context.name;
+				contextNames.push(context.name);
+				Meteor.runAsUser(idUsuario, () => {
+					roomId = Meteor.call('createPrivateGroup', name, [], true);
+				});
+			}
+		}
+		
+		return API.v1.success({
+			status: 'ok',
+			contextNames
+		});
+
+	},
+});
+
 API.v1.addRoute('invitacionesLogin/:idUser/:dominio/:contexto', {
 	post() {
 		let idUsuario = this.urlParams.idUser;
@@ -388,7 +433,7 @@ API.v1.addRoute('ping', {
 	get() {
 		return API.v1.success({
 			status: 'OK',
-			v: '14-Nov - estable'
+			v: '15-Nov'
 		});
 	}
 });
