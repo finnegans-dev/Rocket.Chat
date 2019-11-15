@@ -1,5 +1,22 @@
 <template name="sidebarHeader">
 	<header class="sidebar__header">
+			<div class="toolbar">
+					<form class="toolbar__wrapper" role="search">
+						<div class="toolbar__search">
+							<div class="rc-input">
+								<label class="rc-input__label">
+									<div class="rc-input__wrapper">
+										<div class="rc-input__icon">
+											</div>
+												<input type="text" class="rc-input__element rc-input__element--small js-search" placeholder="Buscar">
+											<div class="rc-input__icon rc-input__icon--right">
+										</div>
+									</div>
+								</label>
+							</div>
+						</div>
+					</form>
+				</div>		
 		{{#with myUserInfo}}
 			<div class="sidebar__header-thumb">
 				{{> avatar username=username}}
@@ -7,7 +24,7 @@
 			</div>
 			<div class="sidebar__toolbar">
 				{{#each toolbarButtons}}
-					<button class="sidebar__toolbar-button rc-tooltip rc-tooltip--down js-button class-{{icon}}" aria-label="{{name}}" id="{{id}}">
+					<button class="sidebar__toolbar-button rc-tooltip rc-tooltip--down js-button class-{{icon}}" aria-label="{{name}}" id="{{icon}}">
 						{{> icon block="sidebar__toolbar-button-icon" icon=icon }}
 					</button>
 				{{/each}}

@@ -164,6 +164,10 @@ Template.roomList.events({
 		clase = '.rooms-list__list.type-p .' + event.currentTarget.classList[0] + '.'+ event.currentTarget.classList[1];
 		$('.rooms-list__list.type-p .test').addClass('contexto-noactivo')
 		$(clase).removeClass('contexto-noactivo')
+
+		$('.sidebar__toolbar-button.rc-tooltip.rc-tooltip--down.js-button.class-edit-rounded').addClass('show');
+
+		$('.content-background-color').addClass('content-background-color-grey');
 		
 		//Avatares
 		clase = '.'+event.currentTarget.classList[0]+'.'+event.currentTarget.classList[1] + ' .context .icon-contexto.cerrar';
@@ -183,11 +187,12 @@ Template.roomList.events({
 		}
 
 		//flecha de back
-		$('.back-context').addClass('back-context-room');
+		$('.back-context').addClass('back-context-room');   
 		
 		
 	}, 
 	'click .clickTitulo': function(event, instance){
+		$('.sidebar__toolbar-button.rc-tooltip.rc-tooltip--down.js-button.class-edit-rounded.show').removeClass('show');
 		$('.rooms-list__type-text.Contextos')[0].innerHTML = "Contextos"
 		$('.rooms-list__list.type-p .test').removeClass('contexto-noactivo')
 		$('.context .temas-contexto').addClass('cerrar');
@@ -199,11 +204,12 @@ Template.roomList.events({
 		//Nombre
 		$(instance.clase.get())[0].innerHTML = instance.nameSala.get();
 
-		$('.back-context').removeClass('back-context-room');
+		$('.back-context').removeClass('back-context-room');             
 		
 	},
 	'click .back-context-room': function(event, instance){
-		$('.back-context').removeClass('back-context-room');
+		$('.back-context').removeClass('back-context-room')
+		$('.sidebar__toolbar-button.rc-tooltip.rc-tooltip--down.js-button.class-edit-rounded.show').removeClass('show');
 	},
 	'click .test': function(e, i){
 		let classList = e.currentTarget.className;

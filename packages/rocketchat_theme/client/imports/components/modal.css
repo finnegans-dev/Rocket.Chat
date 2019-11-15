@@ -128,6 +128,9 @@
 		background: #f7f8fa;
 		justify-content: space-between;
 
+		width: 290px;
+    	margin-left: 20px;
+
 		& > .rc-button {
 			margin: 0;
 		}
@@ -149,7 +152,7 @@
 		width: 100%;
 		min-width: 100%;
 		max-width: 100%;
-		margin: 0 16px;
+		/*margin: 0 16px;*/
 
 		animation: dropup-show 0.3s cubic-bezier(0.45, 0.05, 0.55, 0.95);
 	}

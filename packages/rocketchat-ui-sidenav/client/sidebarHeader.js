@@ -413,3 +413,5 @@ Template.sidebarHeader.events({
 		}
 	},
 });
+
+
