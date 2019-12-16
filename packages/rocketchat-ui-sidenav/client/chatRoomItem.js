@@ -120,6 +120,7 @@ Template.chatRoomItem.events({
 });
 
 callbacks.add('enter-room', (sub) => {
+	
 	const items = $('.rooms-list .sidebar-item');
 	items.filter('.sidebar-item--active').removeClass('sidebar-item--active');
 	if (sub) {

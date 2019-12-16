@@ -129,6 +129,11 @@ Template.roomList.helpers({
 		*/
 	},
 
+	nameRoom(room){
+		let name= room.fname.replace(/ /g,'')
+		return name
+	},
+
 	noSubscriptionText() {
 		const instance = Template.instance();
 		return roomTypes.roomTypes[instance.data.identifier].getUiText(UiTextContext.NO_ROOMS_SUBSCRIBED) || 'No_channels_yet';

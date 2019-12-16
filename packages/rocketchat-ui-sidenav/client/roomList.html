@@ -29,7 +29,7 @@
 		<ul class="rooms-list__list  {{ roomType ..}} ">
 			{{#each room in this}}
 
-			<div class="test {{room.fname}}">
+			<div class="test {{ nameRoom room}}">
 				{{> chatRoomItem room }}
 			</div>
 

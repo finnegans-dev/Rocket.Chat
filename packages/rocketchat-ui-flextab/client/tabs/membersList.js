@@ -311,7 +311,7 @@ Template.membersList.onCreated(function() {
 	const parentRoom = Template.instance().roomIDMembers;
 	root = __meteor_runtime_config__.ROOT_URL;
     url = root.substring(0, root.lastIndexOf(`/c`) + 1);
-	url= 'https://go-test.finneg.com/'
+	//url= 'https://go-test.finneg.com/'
 	HTTP.call('GET' ,`${url}api/1/users/profile/${domain}/${email}?access_token=${token}`, function (err, res) { //go-test.finneg
 			
 		const isContextCreate = res.data.contextCreation;

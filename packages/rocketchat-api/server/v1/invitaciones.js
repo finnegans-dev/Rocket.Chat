@@ -323,7 +323,7 @@ API.v1.addRoute('customInvitations/:roomId/:temaId/:domain/:token', {
 
 		root = __meteor_runtime_config__.ROOT_URL;
 		url = root.substring(0, root.lastIndexOf(`/c`) + 1);
-		url = 'https://go-test.finneg.com/';
+		//url = 'https://go-test.finneg.com/';
 		console.log(`${this.urlParams.domain}---- ${this.urlParams.token}----- `);
 		// go-test.finneg
 		/* Hay que reemplazar esta api por una que traiga solo los adm de contextos, o bien, por mientras usar esta pero ver el tema que se actualicen
@@ -433,7 +433,7 @@ API.v1.addRoute('ping', {
 	get() {
 		return API.v1.success({
 			status: 'OK',
-			v: '15-Nov'
+			v: '16-Dic'
 		});
 	}
 });

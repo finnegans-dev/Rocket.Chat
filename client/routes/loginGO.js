@@ -24,7 +24,7 @@ Template.loginGO.onCreated(function () {
     root = __meteor_runtime_config__.ROOT_URL;
     
     url = root.substring(0, root.lastIndexOf(`/c`) + 1);
-    
+    //url = 'https://go-test.finneg.com/'
     //comentar
     //root = 'http://localhost:3000/';
 
