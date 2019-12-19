@@ -152,6 +152,17 @@ Template.roomList.onCreated(function() {
 
 
 Template.roomList.events({
+
+
+	'click .js-action'(e, instance) {
+		console.log("Click")
+		!this.action || this.action.call(this, e, instance.data.data);
+
+	},
+	'click .js-close'() {
+		popover.close();
+	},
+
 	'click .rooms-list__list.type-p .test ': function (event, instance) {
 		
 		let nombreSala = event.currentTarget.className;

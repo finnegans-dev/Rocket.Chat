@@ -55,7 +55,6 @@ Template.registrarGO.onCreated(function () {
                         let de = 'ÁÃÀÄÂÉËÈÊÍÏÌÎÓÖÒÔÚÜÙÛÑÇáãàäâéëèêíïìîóöòôúüùûñç',
                             a = 'AAAAAEEEEIIIIOOOOUUUUNCaaaaaeeeeiiiioooouuuunc',
                             re = new RegExp('[' + de + ']', 'ug');
-
                         let text = username.replace(                                    re,
                                 match => a.charAt(de.indexOf(match))
                             );

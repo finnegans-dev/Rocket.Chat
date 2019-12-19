@@ -2,7 +2,7 @@
 
 	{{#if isLivechat}}
 	<!-- <div class="rooms-agrupada livechatTabRoom" > -->
-	<div class="rooms-agrupada" >
+	<div class="rooms-agrupada">
 
 		{{> livechat . showLiveTab}}
 
@@ -26,6 +26,8 @@
 			{{/with}}
 			{{/if}}
 		</h3>
+
+
 		<ul class="rooms-list__list  {{ roomType ..}} ">
 			{{#each room in this}}
 
@@ -45,5 +47,5 @@
 	{{/with}}
 	{{/if}}
 
-	
+
 </template>

@@ -2572,8 +2572,9 @@ dialog.rc-modal.rc-modal-- {
         position: relative;
     }
     .sidebar__toolbar-button.rc-tooltip.rc-tooltip--down.js-button.class-edit-rounded.show {
-        top: 71px !important;
-        left: 20px;
+        top: 4.3rem !important;
+        /* left: 20px; */
+        left: 10px !important; 
         right: 7.5%;
     }
 }
@@ -2630,7 +2631,7 @@ dialog.rc-modal.rc-modal-- {
 .sidebar__toolbar-button.rc-tooltip.rc-tooltip--down.js-button.class-edit-rounded.show{
     display: block !important;
     position: relative;
-    top: 62px;
+    top: 3.9rem;
     left: 20px;
     z-index: 1;
     color: #273347;
