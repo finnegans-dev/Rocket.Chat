@@ -376,6 +376,18 @@
     }
 }
 
+.rooms-agrupada.tab-type-d{
+    display: none;
+    & .back-context{
+        display: none;
+    }
 
+    & .back-context-room{
+        display: none;
+    }
 
+    & .new-thread{
+        display: none;
+    }
+}
 

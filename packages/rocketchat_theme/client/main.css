@@ -121,6 +121,10 @@ header.sidebar__header {
     & .back-context-room{
         display: none;
     }
+    & .new-thread{
+        display: none !important;
+    }
+    
 }
 
 .rooms-agrupada.livechatTabRoom{
@@ -174,7 +178,7 @@ h3.rooms-list__type {
     padding-bottom: 0.6rem;
 }
 h3.rooms-list__type:hover {
-    cursor: pointer;
+    /* cursor: pointer; */
 }
 
 .sidebar-item.sidebar-item--active {
@@ -2572,6 +2576,7 @@ dialog.rc-modal.rc-modal-- {
         position: relative;
     }
     .sidebar__toolbar-button.rc-tooltip.rc-tooltip--down.js-button.class-edit-rounded.show {
+        display: none !important;
         top: 4.3rem !important;
         /* left: 20px; */
         left: 10px !important; 
@@ -2629,7 +2634,7 @@ dialog.rc-modal.rc-modal-- {
     display: none;
 }
 .sidebar__toolbar-button.rc-tooltip.rc-tooltip--down.js-button.class-edit-rounded.show{
-    display: block !important;
+    /* display: block !important; */
     position: relative;
     top: 3.9rem;
     left: 20px;
@@ -2684,12 +2689,18 @@ dialog.rc-modal.rc-modal-- {
     display: none;
 }
 .back-context.back-context-room{
-    position: relative;
+    /* position: relative;
     right: 10px;
-    top: -2px;
+    top: -2px; 
+    Agrupando botones
+    */
+    position: relative;
+    right: 2.5rem;
+    top: 1rem;
 }
 .back-context.Contextos.back-context-room{
     display: block !important;
+    /* padding-left: 6rem !important; */
 }
 
 /*rc-room-actions*/
@@ -2703,4 +2714,34 @@ dialog.rc-modal.rc-modal-- {
 }
 .rc-header__block {
     margin: 0 0rem;
+}
+span.new-thread.type-d{
+    display: none !important;
+}
+.icon-new-thread{
+    width: 1.2rem;
+    height: 1.2rem;
+    color: #273347;
+}
+
+.new-thread{
+    display: none;
+}
+
+.new-thread-room{
+    display: block;
+}
+
+.buttons-actions {
+    top: -0.5rem;
+    position: relative;
+    left: 2.3rem;
+}
+
+.back-context:hover{
+    cursor: pointer;
+}
+
+.new-thread:hover{
+    cursor: pointer;
 }

@@ -9,6 +9,7 @@ import { Users, ChatSubscription } from 'meteor/rocketchat:models';
 import { settings } from 'meteor/rocketchat:settings';
 import { hasAtLeastOnePermission } from 'meteor/rocketchat:authorization';
 import { menu } from 'meteor/rocketchat:ui-utils';
+import { modal } from 'meteor/rocketchat:ui-utils';
 
 import { Rooms } from 'meteor/rocketchat:models';
 
@@ -44,23 +45,23 @@ Template.sidebarItem.helpers({
 	// 	if (this._id) {
 	// 		console.log('_id', this._id);
 	// 		console.log('rid', this.rid);
-			// const nameContextAndDomain = localStorage.getItem('contextDomain').trim();
-			// const roomContext = Rooms.find({name: nameContextAndDomain }).fetch();
-			// console.log('room',roomContext)
-			// console.log(this.roomID.get())
-			// console.log(this.roomID)
-			// console.log(Template.instance().roomID.get())
-			// if ( Template.instance().roomID.get() == this.rid){
-				// let temas = Rooms.find({ prid: this.rid }).fetch(); 
-				// console.log('ACAAAAAAAAAAAAAAAAAAAA')
-				// return temas;
+	// const nameContextAndDomain = localStorage.getItem('contextDomain').trim();
+	// const roomContext = Rooms.find({name: nameContextAndDomain }).fetch();
+	// console.log('room',roomContext)
+	// console.log(this.roomID.get())
+	// console.log(this.roomID)
+	// console.log(Template.instance().roomID.get())
+	// if ( Template.instance().roomID.get() == this.rid){
+	// let temas = Rooms.find({ prid: this.rid }).fetch(); 
+	// console.log('ACAAAAAAAAAAAAAAAAAAAA')
+	// return temas;
 
-			// }
-			/* Al cargar la lista de contextos, se cargan la lista de temas, entonces habria que hacer que se carguen al hacer 
-			click en un contexto. */
-		// } else {
-			// return;
-		// }
+	// }
+	/* Al cargar la lista de contextos, se cargan la lista de temas, entonces habria que hacer que se carguen al hacer 
+	click en un contexto. */
+	// } else {
+	// return;
+	// }
 	// },
 	nombreTema(tema) {
 		let name = tema.substring(tema.indexOf('-') + 1, tema.length);
@@ -75,13 +76,13 @@ Template.sidebarItem.helpers({
 		//this.t != "l" && 
 		return !this.username;
 	},
-	roomID(){
+	roomID() {
 		return Template.instance().roomID.get();
 	},
-	subjectList(){
+	subjectList() {
 		return Template.instance().privatesSubjects.get();
 	}
-	
+
 });
 
 
@@ -110,14 +111,14 @@ function setLastMessageTs(instance, ts) {
 
 
 
-Template.sidebarItem.onRendered( () =>{
-		setTimeout( () => {
-			if($('li.sidebar-item.sidebar-item--active')[0] != undefined){
-				$('li.sidebar-item.sidebar-item--active')[0].id = 'click';
-				$('#click').filter('li.sidebar-item.sidebar-item--active').trigger( "click" );
-			}			
-		}, 500)
-	
+Template.sidebarItem.onRendered(() => {
+	setTimeout(() => {
+		if ($('li.sidebar-item.sidebar-item--active')[0] != undefined) {
+			$('li.sidebar-item.sidebar-item--active')[0].id = 'click';
+			$('#click').filter('li.sidebar-item.sidebar-item--active').trigger("click");
+		}
+	}, 500)
+
 });
 
 Template.sidebarItem.onCreated(function () {
@@ -161,8 +162,10 @@ Template.sidebarItem.onCreated(function () {
 
 
 Template.sidebarItem.events({
-	'click .temas' : function (event, instance) {
-		let temas = $('.active-temas'); 
+	'click .temas': function (event, instance) {
+		let temas = $('.active-temas');
+
+
 		// console.log(event)
 		// console.log(instance)
 		for (let i = 0; i < temas.length; i++) {
@@ -172,22 +175,22 @@ Template.sidebarItem.events({
 		$(event.currentTarget).addClass('active');
 
 	},
-	'click li.sidebar-item' : async function (e, i) {
+	'click li.sidebar-item': async function (e, i) {
 		i.privatesSubjects.set([]);
-		let temas = $('.active-temas'); 
+		let temas = $('.active-temas');
 		i.isShowSubject.set(false);
 		i.roomID.set(i.data.rid);
 
-		if ( this.rid == i.data.rid ){
+		if (this.rid == i.data.rid) {
 			i.isShowSubject.set(true);
-			let subjects = await Rooms.find({ prid: i.data.rid }).fetch(); 
+			let subjects = await Rooms.find({ prid: i.data.rid }).fetch();
 			i.privatesSubjects.set(subjects);
 		}
 
 		for (let i = 0; i < temas.length; i++) {
 			temas.children().removeClass('active');
 		}
-		
+
 	},
 	'click [data-id], click .sidebar-item__link'() {
 		return menu.close();

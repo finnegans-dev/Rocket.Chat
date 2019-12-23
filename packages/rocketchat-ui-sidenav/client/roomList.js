@@ -4,6 +4,8 @@ import { Template } from 'meteor/templating';
 import { ChatSubscription, Rooms, Users, Subscriptions } from 'meteor/rocketchat:models';
 import { UiTextContext, getUserPreference, roomTypes } from 'meteor/rocketchat:utils';
 import { settings } from 'meteor/rocketchat:settings';
+import { modal } from 'meteor/rocketchat:ui-utils';
+
 
 Template.roomList.helpers({
 	rooms() {
@@ -96,10 +98,10 @@ Template.roomList.helpers({
 		return ChatSubscription.find(query, { sort });
 	},
 
-	isLivechat() {		
+	isLivechat() {
 		return this.identifier === 'l';
 	},
-	showLiveTab(){
+	showLiveTab() {
 		$('.sidebar__footer .tabs .livechatTab.padding-top-tabs').css("display", "block");
 	},
 
@@ -129,8 +131,8 @@ Template.roomList.helpers({
 		*/
 	},
 
-	nameRoom(room){
-		let name= room.fname.replace(/ /g,'')
+	nameRoom(room) {
+		let name = room.fname.replace(/ /g, '')
 		return name
 	},
 
@@ -145,7 +147,7 @@ Template.roomList.helpers({
 
 });
 
-Template.roomList.onCreated(function() {
+Template.roomList.onCreated(function () {
 	this.clase = new ReactiveVar('');
 	this.nameSala = new ReactiveVar('');
 });
@@ -164,50 +166,82 @@ Template.roomList.events({
 	},
 
 	'click .rooms-list__list.type-p .test ': function (event, instance) {
-		
+
 		let nombreSala = event.currentTarget.className;
 		let name = nombreSala.substring(nombreSala.indexOf('-') + 1, nombreSala.length);
 		$('.rooms-list__type-text.Contextos')[0].innerHTML = name.toUpperCase();
 		//Cambio nombre al contexto y lo pongo como general
-		
+
 		//Temas
 		$('.context .temas-contexto').addClass('cerrar');
-		let clase = '.'+event.currentTarget.classList[0]+'.'+event.currentTarget.classList[1] + ' .context .temas-contexto.cerrar';
+		let clase = '.' + event.currentTarget.classList[0] + '.' + event.currentTarget.classList[1] + ' .context .temas-contexto.cerrar';
 		$(clase).removeClass('cerrar')
-		
-		
+
+
 		//Contextos
-		clase = '.rooms-list__list.type-p .' + event.currentTarget.classList[0] + '.'+ event.currentTarget.classList[1];
+		clase = '.rooms-list__list.type-p .' + event.currentTarget.classList[0] + '.' + event.currentTarget.classList[1];
 		$('.rooms-list__list.type-p .test').addClass('contexto-noactivo')
 		$(clase).removeClass('contexto-noactivo')
 
 		$('.sidebar__toolbar-button.rc-tooltip.rc-tooltip--down.js-button.class-edit-rounded').addClass('show');
 
 		$('.content-background-color').addClass('content-background-color-grey');
-		
+
 		//Avatares
-		clase = '.'+event.currentTarget.classList[0]+'.'+event.currentTarget.classList[1] + ' .context .icon-contexto.cerrar';
+		clase = '.' + event.currentTarget.classList[0] + '.' + event.currentTarget.classList[1] + ' .context .icon-contexto.cerrar';
 		$(clase).removeClass('cerrar')
-		clase = '.'+event.currentTarget.classList[0]+'.'+event.currentTarget.classList[1] + ' .context .sidebar-item__picture.avatar-contexto';
+		clase = '.' + event.currentTarget.classList[0] + '.' + event.currentTarget.classList[1] + ' .context .sidebar-item__picture.avatar-contexto';
 		$(clase).addClass('cerrar')
 
 		//Name
 		//sidebar-item__ellipsis
-		
-		clase = '.'+event.currentTarget.classList[0]+'.'+event.currentTarget.classList[1] + ' .context .sidebar-item__ellipsis';
-			
-		if($(clase)[0].innerHTML!="General"){
+
+		clase = '.' + event.currentTarget.classList[0] + '.' + event.currentTarget.classList[1] + ' .context .sidebar-item__ellipsis';
+
+		if ($(clase)[0].innerHTML != "General") {
 			instance.clase.set(clase);
 			instance.nameSala.set($(clase)[0].innerHTML);
 			$(clase)[0].innerHTML = "General"
 		}
 
 		//flecha de back
-		$('.back-context').addClass('back-context-room');   
+		$('.back-context').addClass('back-context-room');
 		
-		
-	}, 
-	'click .clickTitulo': function(event, instance){
+		$('.new-thread').addClass('new-thread-room');
+
+
+	},
+	'click .new-thread': function (event, instance) {
+		modal.open({
+			content: 'CreateThread',
+			data: {
+				onCreate() {
+					modal.close();
+				},
+			},
+			showConfirmButton: false,
+			showCancelButton: false,
+		});
+	},
+	'click .clickTitulo': function (event, instance) {
+
+		// $('.sidebar__toolbar-button.rc-tooltip.rc-tooltip--down.js-button.class-edit-rounded.show').removeClass('show');
+		// $('.rooms-list__type-text.Contextos')[0].innerHTML = "Contextos"
+		// $('.rooms-list__list.type-p .test').removeClass('contexto-noactivo')
+		// $('.context .temas-contexto').addClass('cerrar');
+		// //Avatares
+		// $('.context .icon-contexto').addClass('cerrar')
+		// //sidebar-item__picture avatar-contexto cerrar
+		// $('.context .sidebar-item__picture.avatar-contexto.cerrar').removeClass('cerrar')
+
+		// //Nombre
+		// $(instance.clase.get())[0].innerHTML = instance.nameSala.get();
+
+		// $('.back-context').removeClass('back-context-room');             
+
+	},
+	'click .back-context-room': function (event, instance) {
+
 		$('.sidebar__toolbar-button.rc-tooltip.rc-tooltip--down.js-button.class-edit-rounded.show').removeClass('show');
 		$('.rooms-list__type-text.Contextos')[0].innerHTML = "Contextos"
 		$('.rooms-list__list.type-p .test').removeClass('contexto-noactivo')
@@ -216,20 +250,21 @@ Template.roomList.events({
 		$('.context .icon-contexto').addClass('cerrar')
 		//sidebar-item__picture avatar-contexto cerrar
 		$('.context .sidebar-item__picture.avatar-contexto.cerrar').removeClass('cerrar')
-		
+
 		//Nombre
 		$(instance.clase.get())[0].innerHTML = instance.nameSala.get();
 
-		$('.back-context').removeClass('back-context-room');             
-		
-	},
-	'click .back-context-room': function(event, instance){
+		$('.back-context').removeClass('back-context-room');
+		$('.new-thread').removeClass('new-thread-room');
+
+
+
 		$('.back-context').removeClass('back-context-room')
 		$('.sidebar__toolbar-button.rc-tooltip.rc-tooltip--down.js-button.class-edit-rounded.show').removeClass('show');
 	},
-	'click .test': function(e, i){
+	'click .test': function (e, i) {
 		let classList = e.currentTarget.className;
-		const roomName = classList.replace('test','');
+		const roomName = classList.replace('test', '');
 		roomName ? localStorage.setItem("contextDomain", roomName) : '';
 	}
 });
@@ -260,13 +295,13 @@ const mergeRoomSub = (room) => {
 	Subscriptions.update({
 		rid: room._id,
 	}, {
-			$set: {
-				lastMessage: room.lastMessage,
-				lm: room._updatedAt,
-				streamingOptions: room.streamingOptions,
-				...getLowerCaseNames(room, sub.name, sub.fname),
-			},
-		});
+		$set: {
+			lastMessage: room.lastMessage,
+			lm: room._updatedAt,
+			streamingOptions: room.streamingOptions,
+			...getLowerCaseNames(room, sub.name, sub.fname),
+		},
+	});
 
 	return room;
 };
