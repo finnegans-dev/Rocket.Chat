@@ -163,7 +163,7 @@ API.v1.addRoute('invitaciones/:contexto/:dominio/:idUser', {
 		if (!existeSala) {
 			let name = dominio + "-" + contexto;
 			Meteor.runAsUser(idUsuario, () => {
-				roomId = Meteor.call('createPrivateGroup', name, [], true); /* falta validar si es vertical, en ese caso que sea readonly, pero por ahroa es todo vertical. */
+				roomId = Meteor.call('createPrivateGroup', name, [], false); /* falta validar si es vertical, en ese caso que sea readonly, pero por ahroa es todo vertical. */
 			});
 		}
 
@@ -206,7 +206,7 @@ API.v1.addRoute('invitacionesContextos/:dominio/:idUser', {
 				let name = dominio + "-" + context.name;
 				contextNames.push(context.name);
 				Meteor.runAsUser(idUsuario, () => {
-					roomId = Meteor.call('createPrivateGroup', name, [], true);
+					roomId = Meteor.call('createPrivateGroup', name, [], false);
 				});
 			}
 		}
@@ -340,7 +340,7 @@ API.v1.addRoute('customInvitations/:roomId/:temaId/:domain/:token', {
 			const members = subscriptions.fetch().map((s) => s.u && s.u._id);
 			const { _id: rid, t: type, fname: tname, u: owner } = Rooms.findOneByIdOrName(temaId);
 
-			const isVerticalChat = true;
+			const isVerticalChat = false;
 
 			members.forEach(element => {
 				const { emails, username } = Users.findOneById(element)
