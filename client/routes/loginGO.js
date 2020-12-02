@@ -22,7 +22,7 @@ Template.loginGO.onCreated(function () {
 
     //descomentar
     root = __meteor_runtime_config__.ROOT_URL;
-    
+
     url = root.substring(0, root.lastIndexOf(`/c`) + 1);
     //url = 'https://go-test.finneg.com/'
     //comentar
@@ -48,7 +48,7 @@ Template.loginGO.onCreated(function () {
                     top--;
                     i++;
                 }
-                
+
                 HTTP.post(`${root}api/v1/login`, {
                     data: {
                         "user": email,
@@ -76,6 +76,9 @@ Template.loginGO.onCreated(function () {
                         HTTP.get(`${url}api/1/contexts?withProduct=ecoChat&access_token=${token}`, function (err, data) {
                             if (err) {
                                 console.log(err)
+                                localStorage.setItem("Meteor.loginToken:/:/chat", tokenChat);
+                                localStorage.setItem("dominio", dominioLow);
+                                FlowRouter.go(`/home`);
                             } else {
                                 let contexts = data.data;
                                 HTTP.post(`${root}api/v1/invitacionesContextos/${dominioLow}/${idUser}`, { data: contexts }, function (err, data) {
@@ -95,7 +98,7 @@ Template.loginGO.onCreated(function () {
                                             FlowRouter.go(`/home`);
                                         }
                                     }
-                                });                              
+                                });
                             }
                         })
                     }
