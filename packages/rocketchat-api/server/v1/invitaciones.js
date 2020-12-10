@@ -195,8 +195,12 @@ API.v1.addRoute('invitacionesContextos/:dominio/:idUser', {
 						if (rid && type == 'p') {
 							existeSala = true;	
 							contextNames.push(context.name);
-							Meteor.runAsUser(idUsuario, () => Meteor.call('addUserToRoom', { rid, username }));
-							break;
+							try{
+								Meteor.runAsUser(idUsuario, () => Meteor.call('addUserToRoom', { rid, username }));
+								break;
+							}catch(e){
+								console.log(e)
+							}
 						}						
 					}
 				}
@@ -433,7 +437,7 @@ API.v1.addRoute('ping', {
 	get() {
 		return API.v1.success({
 			status: 'OK',
-			v: '09-Dic'
+			v: '10-Dic'
 		});
 	}
 });

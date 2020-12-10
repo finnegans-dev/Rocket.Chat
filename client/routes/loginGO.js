@@ -16,17 +16,17 @@ Template.loginGO.onCreated(function () {
     let url = 'https://go-test.finneg.com/'
     let root = 'https://go-test.finneg.com/chat/'
 
-    //window.localStorage.setItem("Meteor.loginToken", "");
-    localStorage.removeItem("Meteor.loginToken:/:/chat");
-    localStorage.setItem("isVertical", isVertical);
-
+    
     //descomentar
     root = __meteor_runtime_config__.ROOT_URL;
-
+    localStorage.removeItem("Meteor.loginToken:/:/chat");
+    localStorage.setItem("isVertical", isVertical);
+    
     url = root.substring(0, root.lastIndexOf(`/c`) + 1);
-    //url = 'https://go-test.finneg.com/'
     //comentar
+    //url = 'https://go-test.finneg.com/'
     //root = 'http://localhost:3000/';
+    //window.localStorage.setItem("Meteor.loginToken", "");
 
     HTTP.call('GET', `${url}auth/token/info?access_token=${token}`, function (err, res) {
         if (err) {
@@ -76,6 +76,7 @@ Template.loginGO.onCreated(function () {
                         HTTP.get(`${url}api/1/contexts?withProduct=ecoChat&access_token=${token}`, function (err, data) {
                             if (err) {
                                 console.log(err)
+                                //localStorage.setItem("Meteor.loginToken", tokenChat);                                
                                 localStorage.setItem("Meteor.loginToken:/:/chat", tokenChat);
                                 localStorage.setItem("dominio", dominioLow);
                                 FlowRouter.go(`/home`);
@@ -84,9 +85,14 @@ Template.loginGO.onCreated(function () {
                                 HTTP.post(`${root}api/v1/invitacionesContextos/${dominioLow}/${idUser}`, { data: contexts }, function (err, data) {
                                     if (err) {
                                         console.log(err)
+                                        //localStorage.setItem("Meteor.loginToken", tokenChat);                                
+                                        localStorage.setItem("Meteor.loginToken:/:/chat", tokenChat);
+                                        localStorage.setItem("dominio", dominioLow);
+                                        FlowRouter.go(`/home`);
                                     } else {
                                         js = JSON.stringify({ "contextos": data.data.contextNames });
                                         localStorage.setItem("contextos", js);
+                                        //localStorage.setItem("Meteor.loginToken", tokenChat);
                                         localStorage.setItem("Meteor.loginToken:/:/chat", tokenChat);
                                         localStorage.setItem("dominio", dominioLow);
                                         if (contextoID != defaultContext) {
