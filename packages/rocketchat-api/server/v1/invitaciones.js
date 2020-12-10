@@ -209,9 +209,13 @@ API.v1.addRoute('invitacionesContextos/:dominio/:idUser', {
 			if (!existeSala) {
 				let name = dominio + "-" + context.name;
 				contextNames.push(context.name);
-				Meteor.runAsUser(idUsuario, () => {
-					roomId = Meteor.call('createPrivateGroup', name, [], false);
-				});
+				try{
+					Meteor.runAsUser(idUsuario, () => {
+						roomId = Meteor.call('createPrivateGroup', name, [], false);
+					});
+				}catch(e){
+
+				}
 			}
 		}
 		
